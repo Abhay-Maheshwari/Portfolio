@@ -1,0 +1,159 @@
+import { useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const AppShowcase = () => {
+  const sectionRef = useRef(null);
+  const rydeRef = useRef(null);
+  const libraryRef = useRef(null);
+  const ycDirectoryRef = useRef(null);
+
+  useGSAP(() => {
+    // Animation for the main section
+    gsap.fromTo(
+      sectionRef.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 1.5 }
+    );
+
+    // Animations for each app showcase
+    const cards = [rydeRef.current, libraryRef.current, ycDirectoryRef.current];
+
+    cards.forEach((card, index) => {
+      gsap.fromTo(
+        card,
+        {
+          y: 50,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          delay: 0.3 * (index + 1),
+          scrollTrigger: {
+            trigger: card,
+            start: "top bottom-=100",
+          },
+        }
+      );
+    });
+  }, []);
+
+  return (
+    <div id="work" ref={sectionRef} className="app-showcase">
+      <div className="w-full">
+        <div className="showcaselayout">
+          <div ref={rydeRef} className="first-project-wrapper">
+              <video
+                src="/images/project01.mp4"
+                alt="Holdings Manager App Demo"
+                autoPlay
+                loop
+                muted
+                className="rounded-2xl"
+                preload="none"
+              />
+              <label htmlFor="video"><div className="text-content">
+              <h2>
+                Smart Portfolio Tracking
+              </h2>
+              <p className="text-white-50 md:text-xl">
+                A secure fintech tool built with Python, Streamlit, and Pandas to consolidate multi-account shareholding data, automate reconciliation, and deliver dynamic, user-centric reporting. <br /><br />
+                
+              </p>
+            </div></label>
+            {/* <div className="image-wrapper">
+              <div className="image-wrapper">
+
+
+              </div> */}
+              {/* <img src="/images/project1.png" alt="Holdings Manager Interface" /> */}
+            {/* </div> */}
+            <div className="project" ref={libraryRef}>
+                <img
+                  src="/images/project2 (2).png"
+                  alt="Library Management Platform"
+                  />
+                  {/* <video
+                    src="/images/project01.mp4"
+                    alt="Holdings Manager App Demo"
+                    autoPlay
+                    loop
+                    muted
+                    className="rounded-2xl w-full max-w-md h-auto mx-auto left-align"
+                    preload="none"
+                  /> */}
+                
+              <label htmlFor="video"><div className="text-content">
+              <h2>
+                Smart Portfolio Tracking
+              </h2>
+              <p className="text-white-50 md:text-xl">
+                A secure fintech tool built with Python, Streamlit, and Pandas to consolidate multi-account shareholding data, automate reconciliation, and deliver dynamic, user-centric reporting.
+              </p>
+            </div></label>
+            </div>
+
+            
+          </div>
+
+          <div className="project-list-wrapper overflow-hidden">
+          <div className="project" ref={libraryRef}>
+                {/* <img
+                  src="/images/project2.png"
+                  alt="Library Management Platform"
+                  /> */}
+                  <video
+                    src="/images/project01.mp4"
+                    alt="Holdings Manager App Demo"
+                    autoPlay
+                    loop
+                    muted
+                    className="rounded-2xl"
+                    preload="none"
+                  />
+                
+              <label htmlFor="video"><div className="text-content">
+              <h2>
+                Smart Portfolio Tracking
+              </h2>
+              <p className="text-white-50 md:text-xl">
+                A secure fintech tool built with Python, Streamlit, and Pandas to consolidate multi-account shareholding data, automate reconciliation, and deliver dynamic, user-centric reporting.
+              </p>
+            </div></label>
+            </div>
+
+            <div className="project" ref={ycDirectoryRef}>
+   
+              <video
+                    src="/images/project01.mp4"
+                    alt="Holdings Manager App Demo"
+                    autoPlay
+
+                    muted
+                    className="rounded-2xl"
+                    preload="none"
+                  />
+                {/* <img src="/images/project3.png" alt="YC Directory App" /> */}
+                <label htmlFor="video"><div className="text-content">
+              <h2>
+                Smart Portfolio Tracking
+              </h2>
+              <p className="text-white-50 md:text-xl">
+                A secure fintech tool built with Python, Streamlit, and Pandas to consolidate multi-account shareholding data, automate reconciliation, and deliver dynamic, user-centric reporting.
+              </p>
+            </div></label>
+              <h2></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AppShowcase;
