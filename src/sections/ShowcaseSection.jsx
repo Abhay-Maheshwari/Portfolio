@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import LazyVideo from "../components/LazyVideo";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -48,14 +49,10 @@ const AppShowcase = () => {
       <div className="w-full">
         <div className="showcaselayout">
           <div ref={rydeRef} className="first-project-wrapper">
-              <video
+              <LazyVideo
                 src="/images/project01.mp4"
                 alt="Holdings Manager App Demo"
-                autoPlay
-                loop
-                muted
                 className="rounded-2xl"
-                preload="none"
               />
               <label htmlFor="video"><div className="text-content">
               <h2>
@@ -78,15 +75,6 @@ const AppShowcase = () => {
                   src="/images/project2 (2).png"
                   alt="Library Management Platform"
                   />
-                  {/* <video
-                    src="/images/project01.mp4"
-                    alt="Holdings Manager App Demo"
-                    autoPlay
-                    loop
-                    muted
-                    className="rounded-2xl w-full max-w-md h-auto mx-auto left-align"
-                    preload="none"
-                  /> */}
                 
               <label htmlFor="video"><div className="text-content">
               <h2>
@@ -107,14 +95,10 @@ const AppShowcase = () => {
                   src="/images/project2.png"
                   alt="Library Management Platform"
                   /> */}
-                  <video
+                  <LazyVideo
                     src="/images/project01.mp4"
                     alt="Holdings Manager App Demo"
-                    autoPlay
-                    loop
-                    muted
                     className="rounded-2xl"
-                    preload="none"
                   />
                 
               <label htmlFor="video"><div className="text-content">
@@ -129,14 +113,10 @@ const AppShowcase = () => {
 
             <div className="project" ref={ycDirectoryRef}>
    
-              <video
+              <LazyVideo
                     src="/images/project01.mp4"
                     alt="Holdings Manager App Demo"
-                    autoPlay
-
-                    muted
                     className="rounded-2xl"
-                    preload="none"
                   />
                 {/* <img src="/images/project3.png" alt="YC Directory App" /> */}
                 <label htmlFor="video"><div className="text-content">
