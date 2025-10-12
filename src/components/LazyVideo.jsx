@@ -1,8 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
 
-/**
- * LazyVideo component - loads and plays video only when visible
- */
 const LazyVideo = ({ 
   src, 
   alt, 
@@ -23,7 +20,6 @@ const LazyVideo = ({
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            // Load and play video when visible
             if (videoRef.current) {
               videoRef.current.load();
               if (autoPlay) {
@@ -37,7 +33,7 @@ const LazyVideo = ({
         });
       },
       {
-        rootMargin: '100px', // Start loading 100px before visible
+        rootMargin: '100px',
         threshold: 0.1,
       }
     );
@@ -63,7 +59,7 @@ const LazyVideo = ({
         ref={videoRef}
         className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
         poster={poster}
-        autoPlay={false} // Control autoplay manually
+        autoPlay={false}
         loop={loop}
         muted={muted}
         playsInline

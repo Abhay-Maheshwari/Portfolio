@@ -1,8 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 
-/**
- * LazyImage component with intersection observer for optimal loading
- */
 const LazyImage = ({ 
   src, 
   alt, 
@@ -28,7 +25,7 @@ const LazyImage = ({
           });
         },
         {
-          rootMargin: '50px', // Start loading 50px before element is visible
+          rootMargin: '50px',
         }
       );
       

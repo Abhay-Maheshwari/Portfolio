@@ -52,11 +52,11 @@ const AppShowcase = () => {
               <LazyVideo
                 src="/images/project01.mp4"
                 alt="Holdings Manager App Demo"
-                className="rounded-2xl"
+                className="video-main"
               />
               <label htmlFor="video"><div className="text-content">
               <h2>
-                Smart Portfolio Tracking
+                Holdings Manager
               </h2>
               <p className="text-white-50 md:text-xl">
                 A secure fintech tool built with Python, Streamlit, and Pandas to consolidate multi-account shareholding data, automate reconciliation, and deliver dynamic, user-centric reporting. <br /><br />
@@ -71,17 +71,18 @@ const AppShowcase = () => {
               {/* <img src="/images/project1.png" alt="Holdings Manager Interface" /> */}
             {/* </div> */}
             <div className="project" ref={libraryRef}>
-                <img
-                  src="/images/project2 (2).png"
-                  alt="Library Management Platform"
-                  />
+            <LazyVideo
+                src="/images/proj2.mp4"
+                alt="Holdings Manager App Demo"
+                className="video-wide"
+              />
                 
               <label htmlFor="video"><div className="text-content">
               <h2>
-                Smart Portfolio Tracking
+              Code-Enhanced AI Training Research
               </h2>
               <p className="text-white-50 md:text-xl">
-                A secure fintech tool built with Python, Streamlit, and Pandas to consolidate multi-account shareholding data, automate reconciliation, and deliver dynamic, user-centric reporting.
+              An AI research initiative using Ollama and Python to fine-tune three Llama models on retail operations data. This project proved that augmenting training datasets with code slashes model hallucination rates by 40%, enhancing reliability for real-world business analytics.
               </p>
             </div></label>
             </div>

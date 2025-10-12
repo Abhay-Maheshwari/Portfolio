@@ -1,6 +1,6 @@
 import { lazy, Suspense, useState, useEffect } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
-// Lazy load heavy components
 const Footer = lazy(() => import("./sections/Footer"));
 const Contact = lazy(() => import("./sections/Contact"));
 const TechStack = lazy(() => import("./sections/TechStack"));
@@ -9,7 +9,6 @@ const ShowcaseSection = lazy(() => import("./sections/ShowcaseSection"));
 const LogoShowcase = lazy(() => import("./sections/LogoShowcase"));
 const FeatureCards = lazy(() => import("./sections/FeatureCards"));
 
-// Loading component
 const LoadingFallback = () => (
   <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-gray-900 to-black">
     <div className="text-center">
@@ -19,17 +18,14 @@ const LoadingFallback = () => (
   </div>
 );
 
-// Section loading skeleton
 const SectionLoader = () => (
   <div className="w-full h-64 bg-gray-800/50 animate-pulse rounded-lg my-8"></div>
 );
 
-// Lazy Spline iframe component
 const LazySpline = () => {
   const [shouldLoad, setShouldLoad] = useState(false);
   
   useEffect(() => {
-    // Delay Spline loading to prioritize critical content
     const timer = setTimeout(() => setShouldLoad(true), 1000);
     return () => clearTimeout(timer);
   }, []);
@@ -58,11 +54,8 @@ const LazySpline = () => {
 
 const App = () => (
   <Suspense fallback={<LoadingFallback />}>
-    {/* <Navbar /> */}
     <LazySpline />
-    {/* <Hero /> */}
-    {/* <Landing /> */}
-    <a href="/images/project2 (2).png" target="_blank" className="download-btn">
+    <a href="/images/project2 (2).mp4" target="_blank" className="download-btn">
       📄 Download CV
     </a>
     
@@ -86,7 +79,6 @@ const App = () => (
       <TechStack />
     </Suspense>
     
-    {/* <Testimonials /> */}
     
     <Suspense fallback={<SectionLoader />}>
       <Contact />
@@ -95,6 +87,8 @@ const App = () => (
     <Suspense fallback={<SectionLoader />}>
       <Footer />
     </Suspense>
+    
+    <Analytics />
   </Suspense>
 );
 
