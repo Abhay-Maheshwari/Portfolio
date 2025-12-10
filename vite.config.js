@@ -1,11 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  
+  plugins: [react()],
+
   build: {
     // Enable code splitting
     rollupOptions: {
@@ -23,12 +22,12 @@ export default defineConfig({
     // Enable minification with esbuild (faster than terser)
     minify: 'esbuild',
   },
-  
+
   // Optimize dependencies
   optimizeDeps: {
     include: ['react', 'react-dom', 'three', '@react-three/fiber', '@react-three/drei'],
   },
-  
+
   // Performance improvements
   server: {
     hmr: {
