@@ -145,6 +145,7 @@ const Hero3D = () => {
 
                     {/* CTA Button */}
                     <div className="cta-container">
+                        <div className="cta-glow" aria-hidden="true" />
                         <button className="cta-btn" id="exploreBtn" onClick={handleExploreClick}>
                             <span className="cta-text">EXPLORE NOW</span>
                         </button>
@@ -168,8 +169,8 @@ const Hero3D = () => {
                             <span className="info-value">CONNECTED</span>
                         </div>
                         <div className="info-line">
-                            <span className="info-label">EXPLORATION:</span>
-                            <span className="info-value">NOW MONITORING</span>
+                            <span className="info-label">YEAR:</span>
+                            <span className="info-value">2025</span>
                         </div>
                     </div>
                 </footer>

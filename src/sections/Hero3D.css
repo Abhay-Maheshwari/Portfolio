@@ -10,7 +10,7 @@
     overflow: hidden;
     background-color: #08080a;
     background: radial-gradient(circle at 50% 50%, #1a1a20 0%, #08080a 100%);
-    z-index: 0;
+    z-index: auto;
 }
 
 /* Canvas */
@@ -155,7 +155,7 @@
     -webkit-backdrop-filter: blur(50px);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 100px;
-    z-index: 1000;
+    z-index: 9999;
     opacity: 0;
     animation: headerSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.5s forwards;
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
@@ -456,6 +456,33 @@
     align-items: center;
     padding-bottom: 0;
     margin-top: 0;
+    position: relative;
+}
+
+/* Gradient glow behind buttons */
+.cta-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 120px;
+    background: radial-gradient(ellipse at center,
+            rgba(139, 92, 246, 0.25) 0%,
+            rgba(139, 92, 246, 0.1) 30%,
+            rgba(59, 130, 246, 0.05) 50%,
+            transparent 70%);
+    filter: blur(30px);
+    pointer-events: none;
+
+    opacity: 0;
+    animation: glowFadeIn 2s ease-out 2.5s forwards;
+}
+
+@keyframes glowFadeIn {
+    to {
+        opacity: 1;
+    }
 }
 
 .cta-btn {
@@ -474,17 +501,22 @@
     text-transform: uppercase;
     cursor: pointer;
     overflow: hidden;
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    transform: translateY(0);
     animation:
-        ctaFadeIn 1.5s cubic-bezier(0.19, 1, 0.22, 1) 2s forwards,
         ctaBreathing 3s ease-in-out 3.5s infinite;
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    transition: transform 0.1s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.3s ease;
+    transition: transform 0.1s ease-out, box-shadow 0.1s ease-out, border-color 0.1s ease-out, color 0.1s ease-out;
+    z-index: 1;
 }
 
 @keyframes ctaFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -500,8 +532,8 @@
     }
 
     50% {
-        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0 0 40px rgba(139, 92, 246, 0.4), 0 0 80px rgba(139, 92, 246, 0.6);
-        transform: scale(1.05);
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3), 0 0 30px rgba(139, 92, 246, 0.3), 0 0 60px rgba(139, 92, 246, 0.15);
+        transform: scale(1.02);
     }
 }
 
@@ -512,16 +544,21 @@
     background: #ededed;
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-    z-index: -1;
+    transition: transform 0.1s ease-out;
+    z-index: 0;
 }
 
 .cta-btn:hover {
     color: #08080a;
     border-color: #ededed;
     background: transparent;
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3), 0 0 60px rgba(139, 92, 246, 0.3);
-    transform: translateY(0) scale(1.02);
+    box-shadow:
+        0 0 20px rgba(255, 255, 255, 0.4),
+        0 0 40px rgba(139, 92, 246, 0.5),
+        0 0 80px rgba(139, 92, 246, 0.3),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px) scale(1.03);
+    animation-play-state: paused;
 }
 
 .cta-btn:hover::before {
@@ -548,7 +585,7 @@
     border: none;
     cursor: pointer;
     padding: 4px;
-    z-index: 200;
+    z-index: 9000;
 }
 
 .menu-toggle span {
@@ -645,7 +682,7 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        z-index: 150;
+        z-index: 9000;
         opacity: 0;
         visibility: hidden;
         transform: translateY(-10px);

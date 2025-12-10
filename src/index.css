@@ -257,7 +257,7 @@ section {
 
   .timeline {
     @apply absolute z-30 h-[110%] -top-10 w-14 md:w-28;
-    background-color: #080808;
+    background-color: #020202;
   }
 
   .timeline-logo {
