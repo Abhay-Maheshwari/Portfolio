@@ -41,6 +41,7 @@ const TechIconCardExperience = ({ model }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
+    const currentCanvas = canvasRef.current;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -55,13 +56,13 @@ const TechIconCardExperience = ({ model }) => {
       }
     );
 
-    if (canvasRef.current) {
-      observer.observe(canvasRef.current);
+    if (currentCanvas) {
+      observer.observe(currentCanvas);
     }
 
     return () => {
-      if (canvasRef.current) {
-        observer.unobserve(canvasRef.current);
+      if (currentCanvas) {
+        observer.unobserve(currentCanvas);
       }
     };
   }, []);

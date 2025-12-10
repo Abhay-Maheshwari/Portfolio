@@ -1,0 +1,760 @@
+/* ========================================
+   Hero3D Component Styles
+   Reference: Spline-style dark UI
+   ======================================== */
+
+.hero3d-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #08080a;
+    background: radial-gradient(circle at 50% 50%, #1a1a20 0%, #08080a 100%);
+    z-index: 0;
+}
+
+/* Canvas */
+.hero3d-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    cursor: default;
+    outline: none;
+}
+
+/* ========================================
+   Noise Overlay
+   ======================================== */
+.grain-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9000;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+}
+
+/* ========================================
+   Background Name (Behind 3D)
+   ======================================== */
+.bg-name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', -apple-system, sans-serif;
+    font-size: clamp(3rem, 10vw, 8rem);
+    font-weight: 800;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: rgba(255, 255, 255, 0);
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
+    opacity: 0;
+    animation: bgNameFade 2s cubic-bezier(0.19, 1, 0.22, 1) 0.5s forwards;
+    mix-blend-mode: overlay;
+}
+
+.bg-name span {
+    display: block;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+@keyframes bgNameFade {
+    to {
+        opacity: 1;
+    }
+}
+
+/* ========================================
+   Loader
+   ======================================== */
+.hero3d-loader {
+    position: absolute;
+    inset: 0;
+    z-index: 10000;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1), visibility 1s;
+}
+
+.loader-ring {
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-top-color: #ededed;
+    border-radius: 50%;
+    animation: loaderSpin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes loaderSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loader-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(237, 237, 237, 0.4);
+}
+
+/* ========================================
+   UI Overlay
+   ======================================== */
+.ui-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.ui-overlay>* {
+    pointer-events: auto;
+}
+
+/* ========================================
+   Header
+   ======================================== */
+.hero3d-header {
+    position: fixed;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    width: min(90%, 1400px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: rgba(10, 10, 10, 0.4);
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    z-index: 1000;
+    opacity: 0;
+    animation: headerSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.5s forwards;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes headerSlideIn {
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Brand */
+.brand {
+    flex: 0 0 auto;
+}
+
+.brand-text {
+    font-family: 'Outfit', -apple-system, sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: #ededed;
+}
+
+/* Navigation */
+.hero3d-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    flex: 1;
+    max-width: 70%;
+}
+
+.nav-link {
+    position: relative;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(237, 237, 237, 0.6);
+    text-decoration: none;
+    padding: 0.5rem 0.8rem;
+    transition: color 0.3s ease, background 0.3s ease;
+    border-radius: 4px;
+}
+
+.nav-link:hover {
+    color: #ededed;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: #ededed;
+    transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1), left 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+/* Header Right */
+.header-right {
+    flex: 0 0 auto;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: rgba(237, 237, 237, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    background: #4ade80;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
+    animation: pulseStatus 2s infinite;
+}
+
+@keyframes pulseStatus {
+    0% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+}
+
+/* ========================================
+   Hero Content (Primary - Always Visible)
+   ======================================== */
+.hero-content {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 15;
+    text-align: center;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+/* Wrapper for clipping */
+.reveal-wrapper {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+/* Inner text that moves up */
+.reveal-text {
+    display: inline-block;
+    transform: translateY(110%);
+    opacity: 0;
+    transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: transform, opacity;
+}
+
+/* Triggered by JS or Animation */
+.reveal-text.in-view,
+.hero-content .reveal-text {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.hero-name {
+    font-family: 'Outfit', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    color: #ededed;
+    text-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    margin: 0;
+    line-height: 0.9;
+    white-space: nowrap;
+    opacity: 1;
+    transform: none;
+    animation: none;
+}
+
+.hero-title {
+    font-family: 'Outfit', -apple-system, sans-serif;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(237, 237, 237, 0.6);
+    margin: 0.5rem 0 0 0;
+    opacity: 1;
+    transform: none;
+    animation: none;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.hero-specialization {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #4ade80;
+    text-shadow: 0 0 20px rgba(74, 222, 128, 0.6);
+    margin: 0;
+    opacity: 1;
+    transform: none;
+    animation: none;
+}
+
+/* Reveal animation delays */
+.hero-name .reveal-text {
+    transition-delay: 0.8s;
+}
+
+.hero-title .reveal-text {
+    transition-delay: 1.0s;
+}
+
+.hero-specialization .reveal-text {
+    transition-delay: 1.2s;
+}
+
+/* ========================================
+   Bottom Section
+   ======================================== */
+.bottom-section {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 2rem 4rem;
+    gap: 2rem;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.bottom-section>* {
+    pointer-events: auto;
+}
+
+/* Info Panels */
+.info-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: infoPanelFade 1s cubic-bezier(0.19, 1, 0.22, 1) 1.8s forwards;
+    min-width: 0;
+}
+
+@keyframes infoPanelFade {
+    to {
+        opacity: 1;
+    }
+}
+
+.info-panel-left {
+    align-items: flex-start;
+    text-align: left;
+    justify-self: start;
+}
+
+.info-panel-right {
+    align-items: flex-end;
+    text-align: right;
+    justify-self: end;
+}
+
+.info-line {
+    display: flex;
+    gap: 0.75rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.4;
+}
+
+.info-panel-right .info-line {
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.info-label {
+    color: #888888;
+    font-weight: 400;
+    font-size: 0.75rem;
+}
+
+.info-value {
+    color: #e0e0e0;
+    font-weight: 500;
+}
+
+.info-value.status-active {
+    color: #4ade80;
+    text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+}
+
+/* ========================================
+   CTA Button
+   ======================================== */
+.cta-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 0;
+    margin-top: 0;
+}
+
+.cta-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.1rem 3.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50px;
+    color: #ededed;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    animation:
+        ctaFadeIn 1.5s cubic-bezier(0.19, 1, 0.22, 1) 2s forwards,
+        ctaBreathing 3s ease-in-out 3.5s infinite;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: transform 0.1s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.3s ease;
+}
+
+@keyframes ctaFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes ctaBreathing {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 0.05);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0 0 40px rgba(139, 92, 246, 0.4), 0 0 80px rgba(139, 92, 246, 0.6);
+        transform: scale(1.05);
+    }
+}
+
+.cta-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #ededed;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: -1;
+}
+
+.cta-btn:hover {
+    color: #08080a;
+    border-color: #ededed;
+    background: transparent;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3), 0 0 60px rgba(139, 92, 246, 0.3);
+    transform: translateY(0) scale(1.02);
+}
+
+.cta-btn:hover::before {
+    transform: scaleX(1);
+}
+
+.cta-text {
+    position: relative;
+    z-index: 2;
+}
+
+/* ========================================
+   Mobile Menu Toggle
+   ======================================== */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 200;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #ededed;
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    transform-origin: center;
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ========================================
+   Responsive
+   ======================================== */
+
+@media (max-width: 1200px) {
+    .hero3d-header {
+        width: 95%;
+        padding: 1rem 1.5rem;
+    }
+
+    .hero-content {
+        top: 41%;
+    }
+
+    .bg-name {
+        font-size: clamp(2.5rem, 8vw, 6rem);
+    }
+
+    .hero-name {
+        font-size: clamp(2rem, 6vw, 4.5rem);
+    }
+
+    .hero3d-nav {
+        gap: 1.5rem;
+    }
+
+    .nav-link {
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero3d-header {
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        transform: translateX(0) translateY(-100%);
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 1rem 1.5rem;
+        justify-content: space-between;
+    }
+
+    @keyframes headerSlideIn {
+        to {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
+        }
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .hero3d-nav {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        max-height: calc(100vh - 60px);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: rgba(5, 5, 5, 0.98);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        z-index: 150;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
+    }
+
+    .hero3d-nav.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .nav-link {
+        font-size: 1rem;
+        letter-spacing: 0.15em;
+        padding: 1.4rem 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        text-align: left;
+    }
+
+    .nav-link:last-child {
+        border-bottom: none;
+    }
+
+    .header-right {
+        display: none;
+    }
+
+    .bottom-section {
+        position: relative;
+        margin-top: auto;
+        padding: 1rem 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+        text-align: center;
+        pointer-events: auto;
+        padding-bottom: 3rem;
+    }
+
+    .info-panel {
+        display: none !important;
+    }
+
+    .cta-container {
+        margin: 0;
+        order: 1;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-content {
+        top: 30%;
+        padding: 0 1rem;
+    }
+
+    .hero-name {
+        font-size: clamp(1.8rem, 7vw, 3rem);
+        white-space: normal;
+        line-height: 1;
+    }
+
+    .hero-title {
+        font-size: 0.8rem;
+        letter-spacing: 0.2em;
+    }
+
+    .hero-specialization {
+        font-size: 0.65rem;
+    }
+
+    .info-panel {
+        gap: 0.4rem;
+    }
+
+    .info-line {
+        font-size: 0.65rem;
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .cta-btn {
+        padding: 1rem 2.5rem;
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content {
+        top: 35%;
+    }
+
+    .hero-name {
+        font-size: clamp(1.5rem, 8vw, 2.5rem);
+    }
+
+    .bottom-section {
+        padding: 1rem 0.5rem 2rem;
+    }
+
+    .info-panel-right {
+        display: none;
+    }
+
+    .cta-btn {
+        padding: 0.9rem 2rem;
+    }
+}

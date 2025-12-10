@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 
-const LazyImage = ({ 
-  src, 
-  alt, 
-  className = '', 
+const LazyImage = ({
+  src,
+  alt,
+  className = '',
   placeholder = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect fill="%23374151" width="100" height="100"/%3E%3C/svg%3E',
-  ...props 
+  ...props
 }) => {
   const [imageSrc, setImageSrc] = useState(placeholder);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -13,8 +13,9 @@ const LazyImage = ({
 
   useEffect(() => {
     let observer;
-    
-    if (imgRef.current) {
+    const currentImg = imgRef.current;
+
+    if (currentImg) {
       observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -28,13 +29,13 @@ const LazyImage = ({
           rootMargin: '50px',
         }
       );
-      
-      observer.observe(imgRef.current);
+
+      observer.observe(currentImg);
     }
-    
+
     return () => {
-      if (observer && imgRef.current) {
-        observer.unobserve(imgRef.current);
+      if (observer && currentImg) {
+        observer.unobserve(currentImg);
       }
     };
   }, [src]);

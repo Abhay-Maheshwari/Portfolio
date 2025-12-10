@@ -14,9 +14,9 @@ const Footer = () => {
                 href={owner.socials[socialImg.name]}
                 target="_blank"
                 rel="noreferrer noopener"
-                aria-label={socialImg.name}
+                aria-label={`Visit ${socialImg.name} profile`}
               >
-                <img src={socialImg.imgPath} alt="social icon" />
+                <img src={socialImg.imgPath} alt={`${socialImg.name} icon`} />
               </a>
             </div>
           ))}

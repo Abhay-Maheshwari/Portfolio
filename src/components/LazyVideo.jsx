@@ -1,29 +1,29 @@
 import { useRef, useEffect, useState } from 'react';
 
-const LazyVideo = ({ 
-  src, 
-  alt, 
+const LazyVideo = ({
+  src,
   className = '',
   poster,
   autoPlay = true,
   loop = true,
   muted = true,
-  ...props 
+  ...props
 }) => {
   const videoRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    const currentVideo = videoRef.current;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            if (videoRef.current) {
-              videoRef.current.load();
+            if (currentVideo) {
+              currentVideo.load();
               if (autoPlay) {
-                videoRef.current.play().catch(err => {
+                currentVideo.play().catch(err => {
                   console.warn('Video autoplay failed:', err);
                 });
               }
@@ -38,13 +38,13 @@ const LazyVideo = ({
       }
     );
 
-    if (videoRef.current) {
-      observer.observe(videoRef.current);
+    if (currentVideo) {
+      observer.observe(currentVideo);
     }
 
     return () => {
-      if (videoRef.current) {
-        observer.unobserve(videoRef.current);
+      if (currentVideo) {
+        observer.unobserve(currentVideo);
       }
     };
   }, [autoPlay]);

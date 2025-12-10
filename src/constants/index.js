@@ -20,13 +20,11 @@ const navLinks = [
 // Site owner metadata used across the app
 const owner = {
   name: "Abhay Maheshwari",
-  role: "Developer",
-  email: "abhaymaheshwari2627@gmail.com",
+  role: "Software Engineer",
+  email: "maheshwariabhay49@gmail.com",
   socials: {
-    insta: "https://www.instagram.com/",
-    fb: "https://www.facebook.com/",
-    x: "https://x.com/",
-    linkedin: "https://www.linkedin.com/in/abhay-maheshwari",
+    linkedin: "https://www.linkedin.com/in/maheshwari-abhay",
+    github: "https://github.com/abhay-maheshwari",
   },
   bio:
     "Building interactive experiences and robust products — available for collaboration and freelance.",
@@ -44,10 +42,10 @@ const words = [
 ];
 
 const counterItems = [
-  { value: 15, suffix: "+", label: "Years of Experience" },
-  { value: 200, suffix: "+", label: "Satisfied Clients" },
-  { value: 108, suffix: "+", label: "Completed Projects" },
-  { value: 90, suffix: "%", label: "Client Retention Rate" },
+  { value: 4, suffix: "+", label: "Years of Experience" },
+  { value: 15, suffix: "+", label: "Clients Served" },
+  { value: 25, suffix: "+", label: "Events & Projects" },
+  { value: 8.81, suffix: "", label: "VIT CGPA" },
 ];
 
 const logoIconsList = [
@@ -148,7 +146,7 @@ const techStackImgs = [
     name: "GitHub",
     imgPath: "/images/logos/git.svg",
   },
-  
+
 
 
 ];
@@ -158,13 +156,13 @@ const techStackIcons = [
     name: "React Developer",
     modelPath: "/models/react_logo-transformed.glb",
     scale: 1,
-    rotation: [0,-Math.PI ,0],
+    rotation: [0, -Math.PI, 0],
   },
   {
     name: "Python Developer",
     modelPath: "/models/python-transformed.glb",
     scale: 0.8,
-    rotation: [0, -Math.PI , 0],
+    rotation: [0, -Math.PI, 0],
   },
   {
     name: "Backend Developer",
@@ -194,7 +192,7 @@ const techStackIcons = [
     name: "Content Creator",
     modelPath: "/models/python-transformed.glb",
     scale: 0.8,
-    rotation: [0, -Math.PI , 0],
+    rotation: [0, -Math.PI, 0],
   },
   {
     name: "UI/UX Developer",
@@ -237,9 +235,9 @@ const expCards = [
     title: "Co-Founder & CTO",
     date: "Jan 2020 – May 2025",
     responsibilities: [
-     " Deployed 20+ client servers across multiple hosting platforms.",
-     "Handled client communications, delivery, and troubleshooting.",
-     "Tested plugins, fixed vulnerabilities, and optimized multiplayer systems.",
+      " Deployed 20+ client servers across multiple hosting platforms.",
+      "Handled client communications, delivery, and troubleshooting.",
+      "Tested plugins, fixed vulnerabilities, and optimized multiplayer systems.",
       "Gained experience in marketing through AI-driven content creation.",
     ],
   },
@@ -253,9 +251,9 @@ const expCards = [
       "Led a 30-member team and coordinated 25+ technical events.",
 
       "Mentored junior members, preparing them for future leadership roles.",
-      
+
       "Managed event content — workshops, speaker sessions, and awareness programs.",
-      
+
       "Oversaw budgeting, logistics, and stakeholder communication",
     ],
   },
@@ -278,65 +276,43 @@ const expLogos = [
 
 const testimonials = [
   {
-    name: "Esther Howard",
-    mentions: "@estherhoward",
+    name: "Oracle Cloud Infrastructure",
+    mentions: "2025 Certified Foundations Associate",
     review:
-      "I can’t say enough good things about Abhay. He was able to take our complex project requirements and turn them into a seamless, functional website. His problem-solving abilities are outstanding.",
-    imgPath: "/images/client1.png",
+      "Demonstrated foundational knowledge of Oracle Cloud Infrastructure services, core concepts, and cloud computing principles.",
+    imgPath: "/images/logos/company-logo-2.png",
   },
   {
-    name: "Wade Warren",
-    mentions: "@wadewarren",
+    name: "Oracle Data Platform",
+    mentions: "2025 Certified Foundations Associate",
     review:
-      "Working with Abhay was a fantastic experience. He transformed our outdated website into a modern, user-friendly platform. His attention to detail and commitment to quality are unmatched. Highly recommend him for any web dev projects.",
-    imgPath: "/images/client3.png",
+      "Certified in Oracle Data Platform fundamentals including data management, analytics, and database services.",
+    imgPath: "/images/logos/company-logo-2.png",
   },
   {
-    name: "Guy Hawkins",
-    mentions: "@guyhawkins",
+    name: "Oracle Fusion AI",
+    mentions: "2025 Certified Foundations Associate",
     review:
-      "Collaborating with Abhay was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Abhay's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Abhay is the ideal partner.",
-    imgPath: "/images/client2.png",
+      "Foundational certification in Oracle AI/ML capabilities and Fusion applications architecture.",
+    imgPath: "/images/logos/company-logo-2.png",
   },
   {
-    name: "Marvin McKinney",
-    mentions: "@marvinmckinney",
+    name: "NVIDIA Deep Learning Institute",
+    mentions: "DLI Certificate in Deep Learning",
     review:
-      "Abhay was a pleasure to work with. He turned our outdated website into a fresh, intuitive platform that’s both modern and easy to navigate. Fantastic work overall.",
-    imgPath: "/images/client5.png",
-  },
-  {
-    name: "Floyd Miles",
-    mentions: "@floydmiles",
-    review:
-      "Abhay’s expertise in web development is truly impressive. He delivered a robust and scalable solution for our e-commerce site, and our online sales have significantly increased since the launch. He’s a true professional!",
-    imgPath: "/images/client4.png",
-  },
-  {
-    name: "Albert Flores",
-    mentions: "@albertflores",
-    review:
-      "Abhay was a pleasure to work with. He understood our requirements perfectly and delivered a website that exceeded our expectations. His skills in both frontend and backend dev are top-notch.",
-    imgPath: "/images/client6.png",
+      "Completed hands-on training in deep learning fundamentals, neural networks, and GPU-accelerated computing.",
+    imgPath: "/images/logos/company-logo-5.png",
   },
 ];
 
 const socialImgs = [
   {
-    name: "insta",
-    imgPath: "/images/insta.png",
-  },
-  {
-    name: "fb",
-    imgPath: "/images/fb.png",
-  },
-  {
-    name: "x",
-    imgPath: "/images/x.png",
-  },
-  {
     name: "linkedin",
     imgPath: "/images/linkedin.png",
+  },
+  {
+    name: "github",
+    imgPath: "/images/git.svg",
   },
 ];
 
