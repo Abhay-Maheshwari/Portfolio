@@ -80,23 +80,6 @@ const logoIconsList = [
   },
 ];
 
-const abilities = [
-  {
-    imgPath: "/images/seo.png",
-    title: "Innovation-Driven",
-    desc: "Always exploring new technologies, AI tools, and creative approaches to deliver solutions that are not just functional but forward-thinking.",
-  },
-  {
-    imgPath: "/images/chat.png",
-    title: "Clear & Impactful Communication",
-    desc: "Skilled at breaking down complex technical ideas into simple, actionable insights and ensuring teams, clients, and juniors stay aligned.",
-  },
-  {
-    imgPath: "/images/time.png",
-    title: "End-to-End Ownership",
-    desc: "From ideation to execution, I take complete responsibility — balancing engineering precision, product thinking, and creative direction to deliver with consistency.",
-  },
-];
 
 const educationList = [
   {
@@ -448,7 +431,7 @@ const socialImgs = [
 
 export {
   words,
-  abilities,
+
   logoIconsList,
   counterItems,
   expCards,

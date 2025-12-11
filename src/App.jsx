@@ -10,7 +10,6 @@ import Experience from "./sections/Experience";
 import Education from "./sections/Education";
 import ShowcaseSection from "./sections/ShowcaseSection";
 import LogoShowcase from "./sections/LogoShowcase";
-import FeatureCards from "./sections/FeatureCards";
 
 /**
  * App Component with Radial Reveal System
@@ -31,7 +30,6 @@ const App = () => (
             {/* Main website content - rendered underneath hero overlay */}
             <ShowcaseSection />
             <LogoShowcase />
-            <FeatureCards />
             <Education />
             <Experience />
             <TechStack />
