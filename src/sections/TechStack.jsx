@@ -85,17 +85,17 @@ const TechStack = () => {
                     {skillsData.map((category, index) => (
                         <div
                             key={category.category}
-                            className="skill-category p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors duration-300"
+                            className="skill-category p-6 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 backdrop-blur-lg hover:border-blue-500/50 transition-all duration-500 group hover:shadow-[0_0_50px_0_rgba(59,130,246,0.15)]"
                         >
                             <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                                <span className="w-2 h-8 bg-gradient-to-b from-purple-500 to-blue-500 rounded-full inline-block" />
+                                <span className="w-2 h-8 bg-gradient-to-b from-blue-400 to-blue-600 rounded-full inline-block" />
                                 {category.category}
                             </h3>
                             <div className="flex flex-wrap gap-2">
                                 {category.skills.map((skill) => (
                                     <span
                                         key={skill}
-                                        className="px-3 py-1.5 text-sm text-white-50 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10 hover:text-white transition-all duration-300 transform hover:-translate-y-1"
+                                        className="px-4 py-2 text-sm text-white bg-blue-500/10 rounded-xl border border-blue-500/30 hover:bg-blue-600/20 hover:border-blue-500/80 hover:text-white transition-all duration-300 transform hover:-translate-y-1 shadow-[0_0_10px_rgba(59,130,246,0.15)] hover:shadow-[0_4px_20px_rgba(59,130,246,0.5)]"
                                     >
                                         {skill}
                                     </span>

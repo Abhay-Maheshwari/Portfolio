@@ -308,8 +308,8 @@ const techStackIcons = [
   {
     name: "Three.js",
     modelPath: "/models/three.js-transformed.glb",
-    scale: 0.8,
-    rotation: [0, 0, 0],
+    scale: 1.3,
+    rotation: [Math.PI / 2, -Math.PI / 4, 0],
     category: "tech"
   },
 

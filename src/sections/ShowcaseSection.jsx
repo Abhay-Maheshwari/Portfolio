@@ -27,12 +27,9 @@ const AppShowcase = () => {
     // = titleWidth + gap + (7 projects * (cardWidth + gap)) + buffer
     // (7 projects because the 8th one should be at left edge, not scrolled past)
     const isMobile = window.innerWidth < 768;
-    const buffer = isMobile ? window.innerWidth * 0.3 : 260; // 30% of viewport on mobile, 260px on desktop
+    const buffer = isMobile ? 10 : 260; // 30% of viewport on mobile, 260px on desktop
 
-    const actualScrollDistance =
-      titleWidth + gap +  // title block and its gap
-      (7 * (cardWidth + gap)) + // 7 projects with their gaps (before the last one)
-      buffer;
+    const actualScrollDistance = titleWidth + gap + (8 * (cardWidth + gap)) + buffer;
 
     const getScrollAmount = () => {
       return -actualScrollDistance;
@@ -84,7 +81,7 @@ const AppShowcase = () => {
             />
           ))}
           {/* Mobile spacer cards (hidden on desktop via CSS) */}
-          {[...Array(4)].map((_, i) => (
+          {[...Array(9)].map((_, i) => (
             <div
               key={`spacer-mobile-${i}`}
               className="w-[85vw] h-[60vh] shrink-0 block md:hidden"

@@ -59,7 +59,7 @@ const Experience = () => {
   return (
     <section id="experience" className="section-padding relative overflow-hidden" ref={containerRef}>
       {/* Background Elements */}
-      <div className="absolute top-0 right-0 -z-10 w-[500px] h-[500px] bg-purple-500/20 rounded-full blur-[120px] opacity-30" />
+      <div className="absolute top-0 right-0 -z-10 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[120px] opacity-30" />
       <div className="absolute bottom-0 left-0 -z-10 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[100px] opacity-30" />
 
       <div className="container mx-auto px-5">
@@ -91,7 +91,7 @@ const Experience = () => {
                     {/* Top: Rectangular Logo Section - Left Aligned */}
                     <div className="h-40 w-full bg-black/40 border-b border-white/5 flex items-center justify-start relative overflow-hidden group-hover:bg-black/50 transition-colors duration-500">
                       {/* Subtle background glow behind logo */}
-                      <div className="absolute left-12 bg-purple-500/20 w-20 h-20 blur-2xl rounded-full" />
+                      <div className="absolute left-12 bg-blue-500/20 w-20 h-20 blur-2xl rounded-full" />
 
                       <div className="relative z-10 p-4 h-full flex items-center justify-start pl-8">
                         <img
@@ -107,7 +107,7 @@ const Experience = () => {
 
                       <h3 className="text-2xl font-bold text-white leading-tight mb-1">{card.title}</h3>
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4">
-                        <p className="text-base text-purple-300 font-medium">{card.company}</p>
+                        <p className="text-base text-blue-300 font-medium">{card.company}</p>
                         <span className="w-1 h-1 rounded-full bg-white/30" />
                         <span className="text-sm font-light text-white/60">
                           {card.date}
@@ -127,7 +127,7 @@ const Experience = () => {
                             {card.technologies.map((tech, idx) => (
                               <span
                                 key={idx}
-                                className="px-3 py-1.5 text-xs font-medium rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 hover:bg-purple-500/30 transition-colors duration-300"
+                                className="px-3 py-1.5 text-xs font-medium rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 hover:bg-blue-500/30 transition-colors duration-300"
                               >
                                 {tech}
                               </span>
