@@ -65,7 +65,7 @@ const Experience = () => {
       <div className="container mx-auto px-5">
         <TitleHeader
           title="Work Experience"
-          sub="My Professional Journey"
+          sub=""
           containerClass="mb-20 text-center"
         />
 
@@ -88,16 +88,16 @@ const Experience = () => {
                     {/* Hover Glow Effect */}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                    {/* Top: Rectangular Logo Section */}
-                    <div className="h-40 w-full bg-black/40 border-b border-white/5 flex items-center justify-center relative overflow-hidden group-hover:bg-black/50 transition-colors duration-500">
+                    {/* Top: Rectangular Logo Section - Left Aligned */}
+                    <div className="h-40 w-full bg-black/40 border-b border-white/5 flex items-center justify-start relative overflow-hidden group-hover:bg-black/50 transition-colors duration-500">
                       {/* Subtle background glow behind logo */}
-                      <div className="absolute bg-purple-500/20 w-20 h-20 blur-2xl rounded-full" />
+                      <div className="absolute left-12 bg-purple-500/20 w-20 h-20 blur-2xl rounded-full" />
 
-                      <div className="relative z-10 p-4 h-full w-full flex items-center justify-center">
+                      <div className="relative z-10 p-4 h-full flex items-center justify-start pl-8">
                         <img
                           src={card.imgPath}
                           alt={card.company}
-                          className="h-full w-auto object-contain"
+                          className="max-h-full w-auto object-contain"
                         />
                       </div>
                     </div>
@@ -119,18 +119,20 @@ const Experience = () => {
                         "{card.review}"
                       </p>
 
-                      {/* Responsibilities List */}
-                      {card.responsibilities && (
+                      {/* Technology Tags */}
+                      {card.technologies && (
                         <div>
-                          <h4 className="text-xs uppercase tracking-wider text-white/40 font-semibold mb-3">Key Responsibilities</h4>
-                          <ul className="space-y-2.5">
-                            {card.responsibilities.map((item, idx) => (
-                              <li key={idx} className="flex items-start gap-3 text-sm text-gray-400 group-hover:text-gray-200 transition-colors">
-                                <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-400/80 shadow-[0_0_8px_rgba(192,132,252,0.6)] flex-shrink-0" />
-                                <span className="leading-snug">{item}</span>
-                              </li>
+                          <h4 className="text-xs uppercase tracking-wider text-white/40 font-semibold mb-3">Technologies</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {card.technologies.map((tech, idx) => (
+                              <span
+                                key={idx}
+                                className="px-3 py-1.5 text-xs font-medium rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 hover:bg-purple-500/30 transition-colors duration-300"
+                              >
+                                {tech}
+                              </span>
                             ))}
-                          </ul>
+                          </div>
                         </div>
                       )}
                     </div>

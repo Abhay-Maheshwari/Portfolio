@@ -11,7 +11,6 @@ import Education from "./sections/Education";
 import ShowcaseSection from "./sections/ShowcaseSection";
 import LogoShowcase from "./sections/LogoShowcase";
 import FeatureCards from "./sections/FeatureCards";
-import Testimonials from "./sections/Testimonials";
 
 /**
  * App Component with Radial Reveal System
@@ -24,25 +23,24 @@ import Testimonials from "./sections/Testimonials";
  * Wrapped in SmoothScroll for premium buttery-smooth scrolling
  */
 const App = () => (
-  <SmoothScroll>
-    {/* Persistent navbar - OUTSIDE RadialReveal so it's never masked */}
-    <PersistentNav />
-    
-    <RadialReveal heroContent={<Hero3D />}>
-      {/* Main website content - rendered underneath hero overlay */}
-      <ShowcaseSection />
-      <LogoShowcase />
-      <FeatureCards />
-      <Education />
-      <Experience />
-      <TechStack />
-      <Testimonials />
-      <Contact />
-      <Footer />
-    </RadialReveal>
-    
-    <Analytics />
-  </SmoothScroll>
+    <SmoothScroll>
+        {/* Persistent navbar - OUTSIDE RadialReveal so it's never masked */}
+        <PersistentNav />
+
+        <RadialReveal heroContent={<Hero3D />}>
+            {/* Main website content - rendered underneath hero overlay */}
+            <ShowcaseSection />
+            <LogoShowcase />
+            <FeatureCards />
+            <Education />
+            <Experience />
+            <TechStack />
+            <Contact />
+            <Footer />
+        </RadialReveal>
+
+        <Analytics />
+    </SmoothScroll>
 );
 
 export default App;

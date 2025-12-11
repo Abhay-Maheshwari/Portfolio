@@ -32,15 +32,15 @@ const PersistentNav = () => {
             </a>
 
             {/* Navigation */}
-            <nav 
-                className={`persistent-nav ${isMenuOpen ? 'active' : ''}`} 
-                role="navigation" 
+            <nav
+                className={`persistent-nav ${isMenuOpen ? 'active' : ''}`}
+                role="navigation"
                 aria-label="Main navigation"
             >
                 <a href="#work" className="nav-link" onClick={handleNavClick}>WORK</a>
                 <a href="#experience" className="nav-link" onClick={handleNavClick}>EXPERIENCE</a>
                 <a href="#skills" className="nav-link" onClick={handleNavClick}>SKILLS</a>
-                <a href="#testimonials" className="nav-link" onClick={handleNavClick}>CERTIFICATIONS</a>
+
                 <a href="#contact" className="nav-link" onClick={handleNavClick}>CONTACT</a>
             </nav>
 

@@ -33,9 +33,9 @@ const Hero3D = () => {
         // Scroll to trigger full radial reveal and reach first content section
         // Scrolling by 100vh completes the reveal, then a bit more to reach content
         const scrollTarget = window.innerHeight + 100;
-        window.scrollTo({ 
-            top: scrollTarget, 
-            behavior: 'smooth' 
+        window.scrollTo({
+            top: scrollTarget,
+            behavior: 'smooth'
         });
     };
 

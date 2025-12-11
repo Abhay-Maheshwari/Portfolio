@@ -20,9 +20,9 @@ const Certifications = () => {
             >
               {/* Icon/Image */}
               <div className="mb-4 h-12 w-12 flex items-center justify-center bg-white-10 rounded-lg p-2">
-                <img 
-                  src={cert.imgPath} 
-                  alt={cert.name} 
+                <img
+                  src={cert.imgPath}
+                  alt={cert.name}
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -41,6 +41,18 @@ const Certifications = () => {
               <p className="text-white-50 text-sm leading-relaxed">
                 {cert.review}
               </p>
+
+              {/* Verify Link */}
+              {cert.verifyUrl && cert.verifyUrl !== "#" && (
+                <a
+                  href={cert.verifyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 mt-4 text-sm font-medium text-secondary hover:text-white transition-colors"
+                >
+                  Verify Certificate →
+                </a>
+              )}
 
               {/* Subtle glow on hover */}
               <div

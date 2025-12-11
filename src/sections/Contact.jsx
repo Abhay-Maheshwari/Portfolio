@@ -45,7 +45,7 @@ const Contact = () => {
       <div className="w-full h-full md:px-10 px-5">
         <TitleHeader
           title="Get in Touch – Let’s Connect"
-          sub="💬 Have questions or ideas? Let’s talk! 🚀"
+          sub=""
         />
         <div className="mt-4">
           <p className="text-white-50 md:text-lg">
@@ -54,6 +54,11 @@ const Contact = () => {
               Email: {owner.email}
             </a>
           </p>
+          {owner.location && (
+            <p className="text-white-50 md:text-lg mt-2">
+              📍 Based in {owner.location}
+            </p>
+          )}
         </div>
         <div className="grid-12-cols mt-16">
           <div className="xl:col-span-5">

@@ -5,7 +5,7 @@ const navLinks = [
     link: "#work",
   },
   {
-    name: "Education",
+    name: "Background",
     link: "#education",
   },
   {
@@ -16,10 +16,6 @@ const navLinks = [
     name: "Skills",
     link: "#skills",
   },
-  {
-    name: "Certifications",
-    link: "#testimonials",
-  },
 ];
 
 // Site owner metadata used across the app
@@ -27,6 +23,7 @@ const owner = {
   name: "Abhay Maheshwari",
   role: "Software Engineer",
   email: "maheshwariabhay49@gmail.com",
+  location: "India",
   socials: {
     linkedin: "https://www.linkedin.com/in/maheshwari-abhay",
     github: "https://github.com/abhay-maheshwari",
@@ -122,24 +119,6 @@ const educationList = [
       "Artificial Intelligence"
     ]
   },
-  {
-    id: 2,
-    institution: "Gyan Ganga International Academy, Bhopal",
-    date: "June 2021 - April 2022",
-    degree: "CBSE - Class 12th",
-    grade: "88.2%",
-    desc: "Specialized in Science with Mathematics.",
-    icon: "/images/logos/logo-placeholder.png"
-  },
-  {
-    id: 3,
-    institution: "Billabong High International School, Bhopal",
-    date: "June 2019 - April 2020",
-    degree: "ICSE - Class 10th",
-    grade: "92.8%",
-    desc: "Strong foundation in mathematics and computer applications.",
-    icon: "/images/logos/logo-placeholder.png"
-  },
 ];
 
 const skillsData = [
@@ -162,8 +141,8 @@ const projects = [
     title: "Scalable LLM Fine-Tuning Platform",
     desc: "Built full-stack platform for local LLM fine-tuning with automated evaluation (10+ metrics), cutting testing time by 70%. Developed FastAPI backend with 45+ REST endpoints.",
     subdesc: "Built with Python, FastAPI, Streamlit, Ollama, REST API",
-    href: "https://github.com/abhay-maheshwari",
-    texture: "/images/project1.png", // placeholder
+    href: "https://github.com/Abhay-Maheshwari/FineTuning-Project",
+    texture: "/images/project1.png",
     spotlight: "/assets/spotlight1.png",
     tags: [
       {
@@ -174,47 +153,47 @@ const projects = [
       {
         id: 2,
         name: "FastAPI",
-        path: "/images/logos/react.png", // placeholder
+        path: "/images/logos/react.png",
       },
     ],
   },
   {
-    title: "Autonomous AI Curation Agent",
-    desc: "Developed an AI-driven system that autonomously collects, analyzes, and publishes weekly briefings on AI tech trends. 80% reduction in manual research effort.",
-    subdesc: "Built using Make.com, Gemini, Webhooks",
-    href: "https://github.com/abhay-maheshwari",
-    texture: "/images/project2.png", // placeholder
+    title: "Smart Task Planner",
+    desc: "AI-powered task planning app using Ollama to break down complex goals into actionable tasks with realistic time estimates and smart dependency management.",
+    subdesc: "Built with TypeScript, React, Ollama, Local AI",
+    href: "https://github.com/Abhay-Maheshwari/Smart-Task-Planner",
+    texture: "/images/project2.png",
     spotlight: "/assets/spotlight2.png",
     tags: [
       {
         id: 1,
-        name: "Make.com",
-        path: "/images/logos/react.png", // placeholder
+        name: "TypeScript",
+        path: "/images/logos/react.png",
       },
       {
         id: 2,
-        name: "Gemini",
-        path: "/images/logos/react.png", // placeholder
+        name: "React",
+        path: "/images/logos/react.png",
       },
     ],
   },
   {
     title: "Holdings Manager Tool",
-    desc: "Engineered fintech tool processing 10M+ assets, automating consolidation of 15+ accounts. Architected interactive dashboards serving 100+ users.",
-    subdesc: "Built with Python, Streamlit, Pandas, SQL",
-    href: "https://github.com/abhay-maheshwari",
-    texture: "/images/project3.png", // placeholder
+    desc: "Engineered fintech tool processing 10M+ assets, automating consolidation of 15+ accounts. Architected interactive dashboards serving 100+ users with pivot generation.",
+    subdesc: "Built with TypeScript, Python, Streamlit, Pandas, SQL",
+    href: "https://github.com/Abhay-Maheshwari/HoldingManager",
+    texture: "/images/project3.png",
     spotlight: "/assets/spotlight3.png",
     tags: [
       {
         id: 1,
-        name: "Python",
+        name: "TypeScript",
         path: "/images/logos/python.svg",
       },
       {
         id: 2,
-        name: "Pandas",
-        path: "/images/logos/react.png", // placeholder
+        name: "Streamlit",
+        path: "/images/logos/react.png",
       },
     ],
   },
@@ -222,8 +201,8 @@ const projects = [
     title: "Web Game Automation Framework",
     desc: "Constructed an extensible automation framework tested across multiple web-based games. Refined DOM handling to reduce redundant browser interactions by 200%.",
     subdesc: "Built with Python, Selenium, OOP",
-    href: "https://github.com/abhay-maheshwari",
-    texture: "/images/project4.png", // placeholder
+    href: "https://github.com/Abhay-Maheshwari/Web-Game-Automation",
+    texture: "/images/project4.png",
     spotlight: "/assets/spotlight4.png",
     tags: [
       {
@@ -234,7 +213,87 @@ const projects = [
       {
         id: 2,
         name: "Selenium",
-        path: "/images/logos/react.png", // placeholder
+        path: "/images/logos/react.png",
+      },
+    ],
+  },
+  {
+    title: "FocusShift Browser Extension",
+    desc: "In-development browser extension designed to boost productivity with intelligent focus management and distraction blocking. Modern UI with seamless browser integration.",
+    subdesc: "Built with JavaScript, Browser APIs, Chrome Extension",
+    href: "https://github.com/Abhay-Maheshwari/FocusShift",
+    texture: "/images/project1.png",
+    spotlight: "/assets/spotlight5.png",
+    tags: [
+      {
+        id: 1,
+        name: "JavaScript",
+        path: "/images/logos/react.png",
+      },
+      {
+        id: 2,
+        name: "Extension",
+        path: "/images/logos/react.png",
+      },
+    ],
+  },
+  {
+    title: "hackSimulator",
+    desc: "Interactive hacking simulator game with realistic terminal UI and engaging gameplay. Built for fun while demonstrating frontend skills and creative problem-solving.",
+    subdesc: "Built with JavaScript, HTML, CSS",
+    href: "https://github.com/Abhay-Maheshwari/hackSimulator",
+    texture: "/images/project2.png",
+    spotlight: "/assets/spotlight6.png",
+    tags: [
+      {
+        id: 1,
+        name: "JavaScript",
+        path: "/images/logos/react.png",
+      },
+      {
+        id: 2,
+        name: "Game Dev",
+        path: "/images/logos/react.png",
+      },
+    ],
+  },
+  {
+    title: "Chat Index Extension",
+    desc: "TypeScript-powered browser extension for efficient chat indexing and search. Demonstrates proficiency in TypeScript and browser extension development.",
+    subdesc: "Built with TypeScript, Browser APIs",
+    href: "https://github.com/Abhay-Maheshwari/Chat-Index-Extension",
+    texture: "/images/project3.png",
+    spotlight: "/assets/spotlight7.png",
+    tags: [
+      {
+        id: 1,
+        name: "TypeScript",
+        path: "/images/logos/react.png",
+      },
+      {
+        id: 2,
+        name: "Extension",
+        path: "/images/logos/react.png",
+      },
+    ],
+  },
+  {
+    title: "Autonomous AI Curation Agent",
+    desc: "Developed an AI-driven system that autonomously collects, analyzes, and publishes weekly briefings on AI tech trends. 80% reduction in manual research effort.",
+    subdesc: "Built using Make.com, Gemini, Webhooks",
+    href: "https://github.com/Abhay-Maheshwari",
+    texture: "/images/project4.png",
+    spotlight: "/assets/spotlight8.png",
+    tags: [
+      {
+        id: 1,
+        name: "Make.com",
+        path: "/images/logos/react.png",
+      },
+      {
+        id: 2,
+        name: "Gemini",
+        path: "/images/logos/react.png",
       },
     ],
   },
@@ -304,12 +363,7 @@ const expCards = [
     title: "SAP ABAP Project Intern",
     company: "Protiviti India Member Firm",
     date: "May 2025 - June 2025",
-    responsibilities: [
-      "Designed and developed multi-table SAP reports using ABAP programming.",
-      "Created custom database tables and maintenance generators.",
-      "Executed data migration ensuring data integrity.",
-      "Presented RICEFW framework and best practices for transport management.",
-    ],
+    technologies: ["SAP ABAP", "SQL", "Data Migration", "RICEFW"],
   },
   {
     review: "Directed technical strategy for cloud-based hosting platform, deploying 20+ client servers. Managed end-to-end client communications and service delivery. Spearheaded quality assurance processes including plugin testing, vulnerability analysis, and performance optimization.",
@@ -318,26 +372,16 @@ const expCards = [
     title: "Technical Lead & CoFounder",
     company: "iCave Enterprises",
     date: "Jan 2021 - May 2024",
-    responsibilities: [
-      "Directed technical strategy and infrastructure for cloud-based hosting platform.",
-      "Deployed 20+ client servers and managed client communications.",
-      "Spearheaded quality assurance, plugin testing, and vulnerability analysis.",
-      "Optimized multiplayer systems and performance.",
-    ],
+    technologies: ["Server Management", "Ionos", "Pterodactyl", "Bukkit"],
   },
   {
-    review: "Guiding a 30-member team and mentoring juniors through large-scale events pushed me to think like a strategist, balancing technical depth with accessibility. The role showed me that real impact comes from empowering people and building a culture where ideas can thrive.",
+    review: "Guiding a 40+ member team and mentoring juniors through large-scale events pushed me to think like a strategist, balancing technical depth with accessibility. The role showed me that real impact comes from empowering people and building a culture where ideas can thrive.",
     imgPath: "/images/exp3.png",
     logoPath: "/images/logo3.png",
     title: "Chairperson",
     company: "Student Chapter",
     date: "April 2024 - April 2025",
-    responsibilities: [
-      "Led a 30-member team and coordinated 25+ technical events.",
-      "Mentored junior members for future leadership roles.",
-      "Managed event content — workshops, speaker sessions, and awareness programs.",
-      "Oversaw budgeting, logistics, and stakeholder communication.",
-    ],
+    technologies: ["Event Management", "Leadership", "Public Speaking", "Team Building"],
   },
 ];
 
@@ -363,6 +407,7 @@ const testimonials = [
     review:
       "Demonstrated foundational knowledge of Oracle Cloud Infrastructure services, core concepts, and cloud computing principles.",
     imgPath: "/images/logos/company-logo-2.png",
+    verifyUrl: "#", // TODO: Add Oracle verification URL
   },
   {
     name: "Oracle Data Platform",
@@ -370,6 +415,7 @@ const testimonials = [
     review:
       "Certified in Oracle Data Platform fundamentals including data management, analytics, and database services.",
     imgPath: "/images/logos/company-logo-2.png",
+    verifyUrl: "#", // TODO: Add Oracle verification URL
   },
   {
     name: "Oracle Fusion AI",
@@ -377,6 +423,7 @@ const testimonials = [
     review:
       "Foundational certification in Oracle AI/ML capabilities and Fusion applications architecture.",
     imgPath: "/images/logos/company-logo-2.png",
+    verifyUrl: "#", // TODO: Add Oracle verification URL
   },
   {
     name: "NVIDIA Deep Learning Institute",
@@ -384,6 +431,7 @@ const testimonials = [
     review:
       "Completed hands-on training in deep learning fundamentals, neural networks, and GPU-accelerated computing.",
     imgPath: "/images/logos/company-logo-5.png",
+    verifyUrl: "#", // TODO: Add NVIDIA DLI verification URL
   },
 ];
 
