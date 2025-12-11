@@ -26,10 +26,13 @@ const AppShowcase = () => {
     // Calculate the scroll distance for the ACTUAL content only:
     // = titleWidth + gap + (7 projects * (cardWidth + gap)) + buffer
     // (7 projects because the 8th one should be at left edge, not scrolled past)
+    const isMobile = window.innerWidth < 768;
+    const buffer = isMobile ? window.innerWidth * 0.3 : 260; // 30% of viewport on mobile, 260px on desktop
+
     const actualScrollDistance =
       titleWidth + gap +  // title block and its gap
       (7 * (cardWidth + gap)) + // 7 projects with their gaps (before the last one)
-      260; // buffer to reach ~7500px total
+      buffer;
 
     const getScrollAmount = () => {
       return -actualScrollDistance;
@@ -72,11 +75,19 @@ const AppShowcase = () => {
           ref={trackRef}
           className="flex gap-10 md:gap-20 px-5 md:px-20 h-full items-center w-max"
         >
-          {/* 9 Blank spacer cards to offset the scroll position */}
+          {/* Desktop spacer cards (hidden on mobile via CSS) */}
           {[...Array(9)].map((_, i) => (
             <div
-              key={`spacer-${i}`}
-              className="w-[85vw] md:w-[800px] h-[60vh] md:h-[70vh] shrink-0"
+              key={`spacer-desktop-${i}`}
+              className="w-[800px] h-[70vh] shrink-0 hidden md:block"
+              aria-hidden="true"
+            />
+          ))}
+          {/* Mobile spacer cards (hidden on desktop via CSS) */}
+          {[...Array(4)].map((_, i) => (
+            <div
+              key={`spacer-mobile-${i}`}
+              className="w-[85vw] h-[60vh] shrink-0 block md:hidden"
               aria-hidden="true"
             />
           ))}
