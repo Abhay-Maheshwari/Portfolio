@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import LazyVideo from "../components/LazyVideo";
+import { projects } from "../constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -50,6 +51,8 @@ const AppShowcase = () => {
     });
   }, []);
 
+  const [project1, project2, project3, project4] = projects;
+
   return (
     <div id="work" ref={sectionRef} className="app-showcase">
       <div className="w-full">
@@ -57,31 +60,31 @@ const AppShowcase = () => {
           <div ref={project1Ref} className="first-project-wrapper">
             <LazyVideo
               src="/images/project01.mp4"
-              alt="Holdings Manager App Demo"
+              alt={project1.title}
               className="video-main"
             />
             <label htmlFor="video"><div className="text-content">
               <h2>
-                Holdings Manager
+                {project1.title}
               </h2>
               <p className="text-white-50 md:text-xl">
-                A secure fintech tool built with Python, Streamlit, and Pandas to consolidate multi-account shareholding data, automate reconciliation, and deliver dynamic, user-centric reporting.
+                {project1.desc}
               </p>
             </div></label>
 
             <div className="project" ref={project2Ref}>
               <LazyVideo
                 src="/images/proj2.mp4"
-                alt="AI Training Research Demo"
+                alt={project2.title}
                 className="video-wide"
               />
 
               <label htmlFor="video"><div className="text-content">
                 <h2>
-                  Code-Enhanced AI Training Research
+                  {project2.title}
                 </h2>
                 <p className="text-white-50 md:text-xl">
-                  An AI research initiative using Ollama and Python to fine-tune three Llama models on retail operations data. This project proved that augmenting training datasets with code slashes model hallucination rates by 40%, enhancing reliability for real-world business analytics.
+                  {project2.desc}
                 </p>
               </div></label>
             </div>
@@ -91,16 +94,16 @@ const AppShowcase = () => {
             <div className="project" ref={project3Ref}>
               <LazyVideo
                 src="/images/proj2.mp4"
-                alt="Web Game Automation Demo"
+                alt={project3.title}
                 className="rounded-2xl"
               />
 
               <label htmlFor="video"><div className="text-content">
                 <h2>
-                  Web Game Automation Framework
+                  {project3.title}
                 </h2>
                 <p className="text-white-50 md:text-xl">
-                  An extensible Python automation framework using Selenium and OOP design patterns. Optimized DOM handling and wait strategies improved runtime efficiency, reducing redundant browser interactions by 200%.
+                  {project3.desc}
                 </p>
               </div></label>
             </div>
@@ -108,15 +111,15 @@ const AppShowcase = () => {
             <div className="project" ref={project4Ref}>
               <LazyVideo
                 src="/images/project01.mp4"
-                alt="3D Portfolio Demo"
+                alt={project4.title}
                 className="rounded-2xl"
               />
               <label htmlFor="video"><div className="text-content">
                 <h2>
-                  3D Interactive Portfolio
+                  {project4.title}
                 </h2>
                 <p className="text-white-50 md:text-xl">
-                  Built with React, Three.js, and WebGL featuring complex GSAP animation sequences, interactive glow cards, animated counters, and responsive 3D modeling with 99.9% uptime.
+                  {project4.desc}
                 </p>
               </div></label>
             </div>

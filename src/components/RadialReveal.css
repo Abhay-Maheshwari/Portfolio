@@ -1,0 +1,159 @@
+/* ========================================
+   Shopify Renaissance Edition - Blob Reveal Styles
+   Reference: https://www.shopify.com/editions/winter2026
+   
+   Organic blob with soft feathered edges
+   ======================================== */
+
+.radial-reveal-root {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    isolation: isolate;
+    overflow-x: hidden;
+}
+
+
+/* ========================================
+   SCROLL TRIGGER ZONE
+   100vh scroll = full circle reveal
+   ======================================== */
+.scroll-trigger-zone {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    pointer-events: none;
+    background: transparent;
+}
+
+/* ========================================
+   MAIN CONTENT LAYER
+   - Visible through expanding mask cutout
+   ======================================== */
+.main-content-layer {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    background-color: #020202;
+}
+
+/* ========================================
+   HERO OVERLAY LAYER
+   Circle mask reveals work section through hero
+   ======================================== */
+.hero-overlay-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    pointer-events: auto;
+    
+    /* GPU acceleration */
+    transform: translateZ(0);
+    will-change: mask-image, -webkit-mask-image;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    
+    /* Mask rendering */
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    
+    /* Smooth transition */
+    transition: visibility 0.3s ease;
+}
+
+.hero-overlay-layer.fully-revealed {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+
+/* ========================================
+   GLOWING CIRCLE BORDER RING
+   Pure CSS - GPU accelerated
+   ======================================== */
+.circle-border-ring {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    pointer-events: none;
+    
+    /* Circle shape */
+    border-radius: 50%;
+    
+    /* White border */
+    border: 3px solid white;
+    
+    /* Glow effect */
+    box-shadow: 
+        0 0 15px 2px rgba(255, 255, 255, 0.8),
+        0 0 30px 5px rgba(255, 255, 255, 0.5),
+        0 0 60px 10px rgba(255, 255, 255, 0.3),
+        inset 0 0 15px 2px rgba(255, 255, 255, 0.3);
+    
+    /* GPU acceleration */
+    will-change: width, height;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+
+/* Hero content fills the overlay */
+.hero-overlay-layer > * {
+    width: 100%;
+    height: 100%;
+}
+
+/* ========================================
+   PERFORMANCE: Smooth Scrolling
+   Handled by Lenis - native scroll disabled
+   ======================================== */
+html {
+    /* scroll-behavior handled by Lenis for premium smooth scrolling */
+    /* Prevent scroll chaining on mobile */
+    overscroll-behavior: none;
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    .scroll-trigger-zone {
+        height: 50vh;
+    }
+    
+    .hero-overlay-layer {
+        will-change: auto;
+        contain: layout style;
+    }
+    
+    /* Lenis is disabled for reduced motion users */
+}
+
+/* ========================================
+   MOBILE OPTIMIZATIONS
+   ======================================== */
+@media (max-width: 768px) {
+    .scroll-trigger-zone {
+        height: 80vh;
+    }
+    
+    .hero-overlay-layer {
+        contain: layout paint;
+    }
+}
+
+/* High refresh rate displays */
+@media (min-resolution: 2dppx) {
+    .hero-overlay-layer {
+        /* Higher quality rendering on retina */
+        image-rendering: -webkit-optimize-contrast;
+    }
+}

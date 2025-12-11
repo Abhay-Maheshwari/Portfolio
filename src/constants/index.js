@@ -1,7 +1,12 @@
+
 const navLinks = [
   {
     name: "Work",
     link: "#work",
+  },
+  {
+    name: "Education",
+    link: "#education",
   },
   {
     name: "Experience",
@@ -12,7 +17,7 @@ const navLinks = [
     link: "#skills",
   },
   {
-    name: "Testimonials",
+    name: "Certifications",
     link: "#testimonials",
   },
 ];
@@ -49,8 +54,6 @@ const counterItems = [
 ];
 
 const logoIconsList = [
-
-  //SAP, Oracle, IEEE, GitHub, AWS, Streamlit, Canva, VIT, Figma
   {
     imgPath: "/images/logos/company-logo-1.png",
   },
@@ -75,17 +78,10 @@ const logoIconsList = [
   {
     imgPath: "/images/logos/company-logo-8.png",
   },
-  // {
-  //   imgPath: "/images/logos/company-logo-9.png",
-  // },
-  // {
-  //   imgPath: "/images/logos/company-logo-10.png",
-  // },
   {
     imgPath: "/images/logos/company-logo-11.png",
   },
 ];
-
 
 const abilities = [
   {
@@ -105,156 +101,242 @@ const abilities = [
   },
 ];
 
-const techStackImgs = [
+const educationList = [
   {
-    name: "React Developer",
-    imgPath: "/images/logos/react.png",
+    id: 1,
+    institution: "Vellore Institute of Technology, Vellore",
+    date: "Sept 2022 - July 2026",
+    degree: "B.Tech Computer Science and Engineering",
+    grade: "CGPA: 8.81",
+    desc: "Focused on core CS fundamentals, algorithms, and system design. Active in technical clubs and leadership roles.",
+    icon: "/images/logos/logo-placeholder.png",
+    coursework: [
+      "Data Structures and Algorithms",
+      "Software Engineering",
+      "Object Oriented Programming",
+      "Database Management System",
+      "Machine Learning",
+      "Computer Networks",
+      "Operating Systems",
+      "IoT Programming",
+      "Artificial Intelligence"
+    ]
   },
   {
-    name: "Python Developer",
-    imgPath: "/images/logos/python.svg",
+    id: 2,
+    institution: "Gyan Ganga International Academy, Bhopal",
+    date: "June 2021 - April 2022",
+    degree: "CBSE - Class 12th",
+    grade: "88.2%",
+    desc: "Specialized in Science with Mathematics.",
+    icon: "/images/logos/logo-placeholder.png"
   },
   {
-    name: "Backend Developer",
-    imgPath: "/images/logos/node.png",
+    id: 3,
+    institution: "Billabong High International School, Bhopal",
+    date: "June 2019 - April 2020",
+    degree: "ICSE - Class 10th",
+    grade: "92.8%",
+    desc: "Strong foundation in mathematics and computer applications.",
+    icon: "/images/logos/logo-placeholder.png"
   },
-  {
-    name: "Interactive Developer",
-    imgPath: "/images/logos/three.png",
-  },
-  {
-    name: "Project Manager",
-    imgPath: "/images/logos/git.svg",
-  },
-  {
-    name: "Product Manager",
-    imgPath: "/images/logos/react.png",
-  },
-  {
-    name: "Content Creator",
-    imgPath: "/images/logos/python.svg",
-  },
-  {
-    name: "UI/UX Developer",
-    imgPath: "/images/logos/node.png",
-  },
-  {
-    name: "Cloud Computing",
-    imgPath: "/images/logos/three.png",
-  },
-  {
-    name: "GitHub",
-    imgPath: "/images/logos/git.svg",
-  },
+];
 
+const skillsData = [
+  {
+    category: "Programming Languages",
+    skills: ["Python", "Java", "SQL", "C++", "JavaScript", "HTML", "CSS", "SAP ABAP"]
+  },
+  {
+    category: "Frameworks & Technologies",
+    skills: ["ASP.NET", "React.js", "FastAPI", "Streamlit", "Pandas", "Selenium", "MySQL", "Git", "AWS"]
+  },
+  {
+    category: "Data & Automation",
+    skills: ["Data Visualization", "Reporting Solutions", "Web Automation", "OOP", "Data Structures", "Algorithms"]
+  }
+];
 
-
+const projects = [
+  {
+    title: "Scalable LLM Fine-Tuning Platform",
+    desc: "Built full-stack platform for local LLM fine-tuning with automated evaluation (10+ metrics), cutting testing time by 70%. Developed FastAPI backend with 45+ REST endpoints.",
+    subdesc: "Built with Python, FastAPI, Streamlit, Ollama, REST API",
+    href: "https://github.com/abhay-maheshwari",
+    texture: "/images/project1.png", // placeholder
+    spotlight: "/assets/spotlight1.png",
+    tags: [
+      {
+        id: 1,
+        name: "Python",
+        path: "/images/logos/python.svg",
+      },
+      {
+        id: 2,
+        name: "FastAPI",
+        path: "/images/logos/react.png", // placeholder
+      },
+    ],
+  },
+  {
+    title: "Autonomous AI Curation Agent",
+    desc: "Developed an AI-driven system that autonomously collects, analyzes, and publishes weekly briefings on AI tech trends. 80% reduction in manual research effort.",
+    subdesc: "Built using Make.com, Gemini, Webhooks",
+    href: "https://github.com/abhay-maheshwari",
+    texture: "/images/project2.png", // placeholder
+    spotlight: "/assets/spotlight2.png",
+    tags: [
+      {
+        id: 1,
+        name: "Make.com",
+        path: "/images/logos/react.png", // placeholder
+      },
+      {
+        id: 2,
+        name: "Gemini",
+        path: "/images/logos/react.png", // placeholder
+      },
+    ],
+  },
+  {
+    title: "Holdings Manager Tool",
+    desc: "Engineered fintech tool processing 10M+ assets, automating consolidation of 15+ accounts. Architected interactive dashboards serving 100+ users.",
+    subdesc: "Built with Python, Streamlit, Pandas, SQL",
+    href: "https://github.com/abhay-maheshwari",
+    texture: "/images/project3.png", // placeholder
+    spotlight: "/assets/spotlight3.png",
+    tags: [
+      {
+        id: 1,
+        name: "Python",
+        path: "/images/logos/python.svg",
+      },
+      {
+        id: 2,
+        name: "Pandas",
+        path: "/images/logos/react.png", // placeholder
+      },
+    ],
+  },
+  {
+    title: "Web Game Automation Framework",
+    desc: "Constructed an extensible automation framework tested across multiple web-based games. Refined DOM handling to reduce redundant browser interactions by 200%.",
+    subdesc: "Built with Python, Selenium, OOP",
+    href: "https://github.com/abhay-maheshwari",
+    texture: "/images/project4.png", // placeholder
+    spotlight: "/assets/spotlight4.png",
+    tags: [
+      {
+        id: 1,
+        name: "Python",
+        path: "/images/logos/python.svg",
+      },
+      {
+        id: 2,
+        name: "Selenium",
+        path: "/images/logos/react.png", // placeholder
+      },
+    ],
+  },
 ];
 
 const techStackIcons = [
+  // Technical Skills
   {
-    name: "React Developer",
+    name: "React",
     modelPath: "/models/react_logo-transformed.glb",
     scale: 1,
     rotation: [0, -Math.PI, 0],
+    category: "tech"
   },
   {
-    name: "Python Developer",
+    name: "Python",
     modelPath: "/models/python-transformed.glb",
     scale: 0.8,
     rotation: [0, -Math.PI, 0],
+    category: "tech"
   },
   {
-    name: "Backend Developer",
+    name: "Node.js",
     modelPath: "/models/node-transformed.glb",
     scale: 5,
     rotation: [0, -Math.PI / 2, 0],
+    category: "tech"
   },
   {
-    name: "SAP ABAP Developer",
-    modelPath: "/models/base.glb",
-    scale: 3,
+    name: "Three.js",
+    modelPath: "/models/three.js-transformed.glb",
+    scale: 0.8,
     rotation: [0, 0, 0],
+    category: "tech"
   },
+
+
+  // Roles
   {
     name: "Project Manager",
     modelPath: "/models/git-svg-transformed.glb",
     scale: 0.05,
     rotation: [0, -Math.PI / 4, 0],
+    category: "role"
   },
   {
     name: "Product Manager",
-    modelPath: "/models/react_logo-transformed.glb",
+    modelPath: "/models/react_logo-transformed.glb", // Reusing React model
     scale: 1,
     rotation: [0, 0, 0],
+    category: "role"
   },
   {
     name: "Content Creator",
-    modelPath: "/models/python-transformed.glb",
+    modelPath: "/models/python-transformed.glb", // Reusing Python model
     scale: 0.8,
     rotation: [0, -Math.PI, 0],
-  },
-  {
-    name: "UI/UX Developer",
-    modelPath: "/models/node-transformed.glb",
-    scale: 5,
-    rotation: [0, -Math.PI / 2, 0],
-  },
-  {
-    name: "Cloud Computing",
-    modelPath: "/models/base.glb",
-    scale: 3,
-    rotation: [0, 0, 0],
-  },
-  {
-    name: "GitHub",
-    modelPath: "/models/git-svg-transformed.glb",
-    scale: 0.05,
-    rotation: [0, -Math.PI / 4, 0],
+    category: "role"
   },
 ];
 
 const expCards = [
   {
-    review: "Gained hands-on exposure to SAP ABAP development, learning how multi-table reports, database structures, and the RICEFW framework shape enterprise systems. The experience gave me practical skills in transport management, data migration, and professional consulting practices.",
+    review: "Designed and developed multi-table SAP reports using ABAP programming for seamless data integration. Created custom database tables and maintenance generators. Executed data migration ensuring data integrity and presented RICEFW framework best practices for transport management.",
     imgPath: "/images/protiviti.png",
     logoPath: "/images/logo1.png",
-    title: "SAP ABAP Developer",
+    title: "SAP ABAP Project Intern",
+    company: "Protiviti India Member Firm",
     date: "May 2025 - June 2025",
     responsibilities: [
-      "Built and tested ABAP reports integrating MARA and MAKT data.",
-      "Created custom tables and maintenance generators for user data handling.",
-      "Learned to apply RICEFW framework and transport requests for system rollouts.",
-      "Completed corporate training on data security, POSH, and knowledge management.",
+      "Designed and developed multi-table SAP reports using ABAP programming.",
+      "Created custom database tables and maintenance generators.",
+      "Executed data migration ensuring data integrity.",
+      "Presented RICEFW framework and best practices for transport management.",
     ],
   },
   {
-    review: "Learned the end-to-end process of running a tech venture, from deploying servers and managing clients to overseeing content creation, and product management. This experience taught me how technical delivery, creative strategy, and business decision-making come together to scale real-world solutions.",
+    review: "Directed technical strategy for cloud-based hosting platform, deploying 20+ client servers. Managed end-to-end client communications and service delivery. Spearheaded quality assurance processes including plugin testing, vulnerability analysis, and performance optimization.",
     imgPath: "/images/exp2.png",
     logoPath: "/images/logo2.png",
-    title: "Co-Founder & CTO",
-    date: "Jan 2020 – May 2025",
+    title: "Technical Lead & CoFounder",
+    company: "iCave Enterprises",
+    date: "Jan 2021 - May 2024",
     responsibilities: [
-      " Deployed 20+ client servers across multiple hosting platforms.",
-      "Handled client communications, delivery, and troubleshooting.",
-      "Tested plugins, fixed vulnerabilities, and optimized multiplayer systems.",
-      "Gained experience in marketing through AI-driven content creation.",
+      "Directed technical strategy and infrastructure for cloud-based hosting platform.",
+      "Deployed 20+ client servers and managed client communications.",
+      "Spearheaded quality assurance, plugin testing, and vulnerability analysis.",
+      "Optimized multiplayer systems and performance.",
     ],
   },
   {
-    review: "Being Chairperson taught me that leadership is more than coordination .. it’s about setting direction and creating space for others to grow. Guiding a 30-member team and mentoring juniors through large-scale events pushed me to think like a strategist, balancing technical depth with accessibility and short-term execution with long-term vision. More than anything, the role showed me that real impact comes from empowering people and building a culture where ideas can thrive.",
+    review: "Guiding a 30-member team and mentoring juniors through large-scale events pushed me to think like a strategist, balancing technical depth with accessibility. The role showed me that real impact comes from empowering people and building a culture where ideas can thrive.",
     imgPath: "/images/exp3.png",
     logoPath: "/images/logo3.png",
     title: "Chairperson",
+    company: "Student Chapter",
     date: "April 2024 - April 2025",
     responsibilities: [
       "Led a 30-member team and coordinated 25+ technical events.",
-
-      "Mentored junior members, preparing them for future leadership roles.",
-
+      "Mentored junior members for future leadership roles.",
       "Managed event content — workshops, speaker sessions, and awareness programs.",
-
-      "Oversaw budgeting, logistics, and stakeholder communication",
+      "Oversaw budgeting, logistics, and stakeholder communication.",
     ],
   },
 ];
@@ -326,7 +408,9 @@ export {
   testimonials,
   socialImgs,
   techStackIcons,
-  techStackImgs,
   navLinks,
   owner,
+  educationList,
+  projects,
+  skillsData
 };

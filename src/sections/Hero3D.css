@@ -1,16 +1,20 @@
 /* ========================================
    Hero3D Component Styles
    Reference: Spline-style dark UI
+   
+   NOTE: This component is designed to work as a 
+   fixed overlay layer within the RadialReveal system.
+   The hero is NOT part of normal scroll flow.
    ======================================== */
 
 .hero3d-container {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     overflow: hidden;
     background-color: #08080a;
     background: radial-gradient(circle at 50% 50%, #1a1a20 0%, #08080a 100%);
-    z-index: auto;
+    /* No z-index here - parent RadialReveal handles layering */
 }
 
 /* Canvas */
@@ -139,9 +143,11 @@
 
 /* ========================================
    Header
+   NOTE: Header uses position:absolute within hero overlay.
+   This ensures it's clipped along with the hero during reveal.
    ======================================== */
 .hero3d-header {
-    position: fixed;
+    position: absolute;
     top: 2rem;
     left: 50%;
     transform: translateX(-50%) translateY(-100%);
@@ -155,7 +161,7 @@
     -webkit-backdrop-filter: blur(50px);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 100px;
-    z-index: 9999;
+    z-index: 100;
     opacity: 0;
     animation: headerSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.5s forwards;
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
@@ -668,7 +674,7 @@
     }
 
     .hero3d-nav {
-        position: fixed;
+        position: absolute;
         top: 60px;
         left: 0;
         right: 0;
@@ -682,7 +688,7 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        z-index: 9000;
+        z-index: 200;
         opacity: 0;
         visibility: hidden;
         transform: translateY(-10px);

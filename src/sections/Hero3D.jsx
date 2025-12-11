@@ -7,8 +7,6 @@ const Hero3D = () => {
     const sceneManagerRef = useRef(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-
     useEffect(() => {
         if (!canvasRef.current) return;
 
@@ -31,18 +29,14 @@ const Hero3D = () => {
         };
     }, []);
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
-
     const handleExploreClick = () => {
-        // Scroll to next section
-        const nextSection = document.querySelector('.showcase-section, .projects-section, [class*="showcase"], [class*="projects"]');
-        if (nextSection) {
-            nextSection.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
-        }
+        // Scroll to trigger full radial reveal and reach first content section
+        // Scrolling by 100vh completes the reveal, then a bit more to reach content
+        const scrollTarget = window.innerHeight + 100;
+        window.scrollTo({ 
+            top: scrollTarget, 
+            behavior: 'smooth' 
+        });
     };
 
     return (
@@ -69,42 +63,7 @@ const Hero3D = () => {
 
             {/* UI Overlay */}
             <div className="ui-overlay">
-                {/* Header */}
-                <header className="hero3d-header">
-                    {/* Brand / Logo */}
-                    <div className="brand">
-                        <span className="brand-text">AM</span>
-                    </div>
-
-                    {/* Navigation */}
-                    <nav className={`hero3d-nav ${isMenuOpen ? 'active' : ''}`} id="nav" role="navigation" aria-label="Main navigation">
-                        <a href="#work" className="nav-link" onClick={() => setIsMenuOpen(false)}>WORK</a>
-                        <a href="#experience" className="nav-link" onClick={() => setIsMenuOpen(false)}>EXPERIENCE</a>
-                        <a href="#skills" className="nav-link" onClick={() => setIsMenuOpen(false)}>SKILLS</a>
-                        <a href="#testimonials" className="nav-link" onClick={() => setIsMenuOpen(false)}>CERTIFICATIONS</a>
-                        <a href="#contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>CONTACT</a>
-                    </nav>
-
-                    {/* Mobile Menu Toggle */}
-                    <button
-                        className={`menu-toggle ${isMenuOpen ? 'active' : ''}`}
-                        id="menuToggle"
-                        aria-label="Toggle navigation"
-                        onClick={toggleMenu}
-                    >
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-
-                    {/* Status / Right Element */}
-                    <div className="header-right">
-                        <div className="status-indicator">
-                            <div className="status-dot" />
-                            <span className="status-text">SYSTEM ONLINE</span>
-                        </div>
-                    </div>
-                </header>
+                {/* Note: Header/Nav is now in PersistentNav component (always visible) */}
 
                 {/* Hero Content */}
                 <div className="hero-content">
