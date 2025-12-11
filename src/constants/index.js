@@ -5,7 +5,7 @@ const navLinks = [
     link: "#work",
   },
   {
-    name: "Background",
+    name: "Education",
     link: "#education",
   },
   {
@@ -15,6 +15,10 @@ const navLinks = [
   {
     name: "Skills",
     link: "#skills",
+  },
+  {
+    name: "Contact",
+    link: "#contact",
   },
 ];
 
@@ -309,7 +313,7 @@ const techStackIcons = [
     name: "Three.js",
     modelPath: "/models/three.js-transformed.glb",
     scale: 1.3,
-    rotation: [Math.PI / 2, -Math.PI / 4, 0],
+    rotation: [0, -Math.PI / 4, 0],
     category: "tech"
   },
 

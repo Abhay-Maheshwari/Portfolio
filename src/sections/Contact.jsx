@@ -1,135 +1,127 @@
-import { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
-
-import TitleHeader from "../components/TitleHeader";
-import { owner } from "../constants";
-import ContactExperience from "../components/models/contact/ContactExperience";
+import { useState } from "react";
 
 const Contact = () => {
-  const formRef = useRef(null);
-  const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+    const [formState, setFormState] = useState({
+        name: "",
+        email: "",
+        message: "",
+    });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  };
+    const handleChange = (e) => {
+        setFormState({
+            ...formState,
+            [e.target.name]: e.target.value,
+        });
+    };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true); // Show loading state
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("Form submitted:", formState);
+        // Add email sending logic here later
+    };
 
-    try {
-      await emailjs.sendForm(
-        import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
-        formRef.current,
-        import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
-      );
+    return (
+        <section className="relative w-full min-h-screen bg-[#020202] text-white overflow-hidden flex flex-col pt-20" id="contact">
+            <div className="absolute inset-x-0 top-0 h-px bg-white/10" />
 
-      // Reset form and stop loading
-      setForm({ name: "", email: "", message: "" });
-    } catch (error) {
-      console.error("EmailJS Error:", error); // Optional: show toast
-    } finally {
-      setLoading(false); // Always stop loading, even on error
-    }
-  };
+            <div className="flex-grow grid grid-cols-1 lg:grid-cols-2 relative z-10">
+                {/* Left Column */}
+                <div className="relative border-r border-white/10 p-10 flex flex-col justify-center">
 
-  return (
-    <section id="contact" className="flex-center section-padding">
-      <div className="w-full h-full md:px-10 px-5">
-        <TitleHeader
-          title="Get in Touch – Let’s Connect"
-          sub=""
-        />
-        <div className="mt-4">
-          <p className="text-white-50 md:text-lg">
-            {owner.bio} {" "}
-            <a href={`mailto:${owner.email}`} className="underline">
-              Email: {owner.email}
-            </a>
-          </p>
-          {owner.location && (
-            <p className="text-white-50 md:text-lg mt-2">
-              📍 Based in {owner.location}
-            </p>
-          )}
-        </div>
-        <div className="grid-12-cols mt-16">
-          <div className="xl:col-span-5">
-            <div className="flex-center card-border rounded-xl p-10">
-              <form
-                ref={formRef}
-                onSubmit={handleSubmit}
-                className="w-full flex flex-col gap-7"
-              >
-                <div>
-                  <label htmlFor="name">Your name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    placeholder="What’s your good name?"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="email">Your Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder="What’s your email address?"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="message">Your Message</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={form.message}
-                    onChange={handleChange}
-                    placeholder="How can I help you?"
-                    rows="5"
-                    required
-                  />
-                </div>
-
-                <button type="submit">
-                  <div className="cta-button group">
-                    <div className="bg-circle" />
-                    <p className="text">
-                      {loading ? "Sending..." : "Send Message"}
-                    </p>
-                    <div className="arrow-wrapper">
-                      <img src="/images/arrow-down.svg" alt="arrow" />
+                    <div className="space-y-2 relative z-20">
+                        <h3 className="text-xl md:text-2xl font-serif italic text-white/80 font-[300]" style={{ fontFamily: '"Playfair Display", serif' }}>
+                            Currently available for collaboration.
+                        </h3>
+                        <h1 className="text-6xl md:text-8xl font-[900] uppercase leading-[0.9] tracking-tight font-sans">
+                            LET'S BUILD
+                            <br />
+                            THE FUTURE.
+                        </h1>
                     </div>
-                  </div>
-                </button>
-              </form>
+
+                    {/* Background Watermark/Decor */}
+                    <div className="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none opacity-5">
+                        <h1 className="text-[15vw] font-bold leading-none text-white whitespace-nowrap select-none">
+                            MAHESHWARI
+                        </h1>
+                    </div>
+                </div>
+
+                {/* Right Column - Form */}
+                <div className="p-10 flex flex-col justify-center relative">
+
+                    <div className="w-full max-w-lg mx-auto space-y-12">
+                        <form onSubmit={handleSubmit} className="space-y-8">
+
+                            <div className="group">
+                                <label htmlFor="name" className="block text-xs font-mono text-white/60 mb-2 uppercase tracking-widest">Name</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    id="name"
+                                    value={formState.name}
+                                    onChange={handleChange}
+                                    className="w-full bg-transparent border-b border-white/20 py-2 text-xl focus:outline-none focus:border-green-400 transition-colors duration-300 font-sans"
+                                    autoComplete="off"
+                                />
+                            </div>
+
+                            <div className="group">
+                                <label htmlFor="email" className="block text-xs font-mono text-white/60 mb-2 uppercase tracking-widest">Email</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    value={formState.email}
+                                    onChange={handleChange}
+                                    className="w-full bg-transparent border-b border-white/20 py-2 text-xl focus:outline-none focus:border-green-400 transition-colors duration-300 font-sans"
+                                    autoComplete="off"
+                                />
+                            </div>
+
+                            <div className="group">
+                                <label htmlFor="message" className="block text-xs font-mono text-white/60 mb-2 uppercase tracking-widest">Message</label>
+                                <div className="relative">
+                                    <textarea
+                                        name="message"
+                                        id="message"
+                                        value={formState.message}
+                                        onChange={handleChange}
+                                        rows={4}
+                                        className="w-full bg-[#0a1f0a]/30 border-b border-white/20 py-2 text-xl focus:outline-none focus:border-green-400 transition-colors duration-300 font-sans resize-none pl-4"
+                                    />
+                                    {/* Flashing cursor effect or indicator */}
+                                    <div className="absolute left-0 top-3 w-1.5 h-5 bg-green-500 animate-pulse" style={{ display: formState.message ? 'none' : 'block' }}></div>
+                                </div>
+                            </div>
+
+                            <button
+                                type="submit"
+                                className="w-full py-4 border border-green-500/30 text-green-400 font-mono uppercase tracking-widest text-sm hover:bg-green-500/10 hover:shadow-[0_0_15px_rgba(74,222,128,0.3)] transition-all duration-300 group relative overflow-hidden"
+                            >
+                                <span className="relative z-10">Initiate Transmission</span>
+                                <div className="absolute inset-0 bg-green-500/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+                            </button>
+
+                        </form>
+                    </div>
+
+                </div>
             </div>
-          </div>
-          <div className="xl:col-span-7 min-h-96">
-            <div className="bg-[#cd7c2e] w-full h-full hover:cursor-grab rounded-3xl overflow-hidden">
-              <ContactExperience />
+
+            {/* Footer Bar */}
+            <div className="w-full h-16 border-t border-white/10 flex items-center justify-between px-10 font-mono text-xs text-white/40 uppercase bg-[#050505]">
+                <div>
+                    © {new Date().getFullYear()} [Abhay Maheshwari]. System Ready.
+                </div>
+                <div className="flex gap-6">
+                    <a href="#" className="hover:text-green-400 transition-colors">Twitter</a>
+                    <a href="#" className="hover:text-green-400 transition-colors">LinkedIn</a>
+                    <a href="#" className="hover:text-green-400 transition-colors">Resume</a>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+        </section>
+    );
 };
 
 export default Contact;

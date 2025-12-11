@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { navLinks } from '../constants';
 import './PersistentNav.css';
 
 /**
@@ -37,11 +38,18 @@ const PersistentNav = () => {
                 role="navigation"
                 aria-label="Main navigation"
             >
-                <a href="#work" className="nav-link" onClick={handleNavClick}>WORK</a>
-                <a href="#experience" className="nav-link" onClick={handleNavClick}>EXPERIENCE</a>
-                <a href="#skills" className="nav-link" onClick={handleNavClick}>SKILLS</a>
+                {navLinks.map((item) => (
+                    <a
+                        key={item.name}
+                        href={item.link}
+                        className="nav-link"
+                        onClick={handleNavClick}
+                    >
+                        {item.name.toUpperCase()}
+                    </a>
+                ))}
 
-                <a href="#contact" className="nav-link" onClick={handleNavClick}>CONTACT</a>
+
             </nav>
 
             {/* Mobile Menu Toggle */}
@@ -67,4 +75,5 @@ const PersistentNav = () => {
 };
 
 export default PersistentNav;
+
 

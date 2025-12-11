@@ -14,41 +14,31 @@ const AppShowcase = () => {
   useGSAP(() => {
     const track = trackRef.current;
 
-    // Card dimensions (must match CSS)
-    const cardWidth = window.innerWidth >= 768 ? 800 : window.innerWidth * 0.85;
-    const gap = window.innerWidth >= 768 ? 80 : 40;
-    const titleWidth = window.innerWidth >= 768 ? 600 : window.innerWidth * 0.8;
+    const getScrollValues = () => {
+      const width = window.innerWidth;
+      const isDesktop = width >= 768;
 
-    // The 9 spacer cards offset the INITIAL scroll position when clicking #work
-    // The ACTUAL content we need to scroll through is: title + 8 projects
-    // We want to stop when project 08's left edge is at the screen's left edge
+      const cardWidth = isDesktop ? 800 : width * 0.85;
+      const gap = isDesktop ? 80 : 40;
+      const titleWidth = isDesktop ? 600 : width * 0.8;
 
-    // Calculate the scroll distance for the ACTUAL content only:
-    // = titleWidth + gap + (7 projects * (cardWidth + gap)) + buffer
-    // (7 projects because the 8th one should be at left edge, not scrolled past)
-    const isMobile = window.innerWidth < 768;
-    const buffer = isMobile ? 10 : 260; // 30% of viewport on mobile, 260px on desktop
+      const buffer = isDesktop ? 260 : 10;
 
-    const actualScrollDistance = titleWidth + gap + (8 * (cardWidth + gap)) + buffer;
-
-    const getScrollAmount = () => {
-      return -actualScrollDistance;
-    };
-
-    const getScrollDistance = () => {
-      return actualScrollDistance;
+      // Calculate total scrollable width
+      const totalWidth = titleWidth + gap + (8 * (cardWidth + gap)) + buffer;
+      return totalWidth;
     };
 
     const tween = gsap.to(track, {
-      x: getScrollAmount,
+      x: () => -getScrollValues(), // Dynamic value
       ease: "none",
       scrollTrigger: {
         trigger: sectionRef.current,
         pin: true,
         scrub: 1,
         start: "top top",
-        end: () => `+=${getScrollDistance()}`,
-        invalidateOnRefresh: true,
+        end: () => `+=${getScrollValues()}`, // Dynamic end value
+        invalidateOnRefresh: true, // Recalculate on resize
       }
     });
 

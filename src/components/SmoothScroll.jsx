@@ -28,7 +28,7 @@ const SmoothScroll = ({ children }) => {
     useEffect(() => {
         // Respect user's motion preferences
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        
+
         if (prefersReducedMotion) {
             // Don't initialize smooth scroll for users who prefer reduced motion
             return;
@@ -61,10 +61,38 @@ const SmoothScroll = ({ children }) => {
         // Disable GSAP's default lag smoothing for better sync
         gsap.ticker.lagSmoothing(0);
 
-        // Handle resize events
+        // Configure ScrollTrigger to ignore mobile resize (prevents jump on keyboard show/hide)
+        ScrollTrigger.config({
+            ignoreMobileResize: true,
+        });
+
+        // Debounced resize handler to prevent scroll jumps during resize
+        let resizeTimeout = null;
         const handleResize = () => {
+            // Clear any pending refresh
+            if (resizeTimeout) {
+                clearTimeout(resizeTimeout);
+            }
+
+            // Immediately update Lenis dimensions
             lenisInstance.resize();
-            ScrollTrigger.refresh();
+
+            // Debounce ScrollTrigger refresh to only run after resize ends
+            // This prevents the jarring mid-resize jumps
+            resizeTimeout = setTimeout(() => {
+                // Save current scroll position
+                const scrollY = window.scrollY;
+
+                // Refresh ScrollTrigger
+                ScrollTrigger.refresh();
+
+                // Restore scroll position after refresh
+                // Use requestAnimationFrame to ensure DOM has updated
+                requestAnimationFrame(() => {
+                    window.scrollTo(0, scrollY);
+                    lenisInstance.scrollTo(scrollY, { immediate: true });
+                });
+            }, 250); // Wait 250ms after resize ends
         };
 
         window.addEventListener('resize', handleResize);
@@ -72,6 +100,7 @@ const SmoothScroll = ({ children }) => {
         // Cleanup
         return () => {
             window.removeEventListener('resize', handleResize);
+            if (resizeTimeout) clearTimeout(resizeTimeout);
             gsap.ticker.remove(lenisInstance.raf);
             lenisInstance.destroy();
             lenisRef.current = null;
@@ -86,4 +115,5 @@ const SmoothScroll = ({ children }) => {
 };
 
 export default SmoothScroll;
+
 

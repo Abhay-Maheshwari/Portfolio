@@ -29,17 +29,18 @@ const RadialReveal = ({ heroContent, children }) => {
             rafRef.current = requestAnimationFrame(() => {
                 const scrollY = window.scrollY;
                 const triggerHeight = window.innerHeight;
-                
+
                 const rawProgress = Math.min(Math.max(scrollY / triggerHeight, 0), 1);
                 // Smooth ease-in-out
                 const easedProgress = -(Math.cos(Math.PI * rawProgress) - 1) / 2;
-                
+
                 setCurrentRadius(easedProgress * maxRadiusRef.current);
             });
         };
 
         const handleResize = () => {
             maxRadiusRef.current = calculateMaxRadius();
+            handleScroll(); // Force update mask on resize
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -70,7 +71,7 @@ const RadialReveal = ({ heroContent, children }) => {
     return (
         <div className="radial-reveal-root">
             {/* Hero with CSS radial-gradient mask */}
-            <div 
+            <div
                 className={`hero-overlay-layer ${revealComplete ? 'fully-revealed' : ''}`}
                 style={{
                     maskImage: maskGradient,
@@ -84,7 +85,7 @@ const RadialReveal = ({ heroContent, children }) => {
 
             {/* Glowing border ring - pure CSS */}
             {revealStarted && !revealComplete && (
-                <div 
+                <div
                     className="circle-border-ring"
                     style={{
                         width: borderSize,

@@ -5,6 +5,7 @@ import PersistentNav from "./components/PersistentNav";
 import Hero3D from "./sections/Hero3D";
 import Footer from "./sections/Footer";
 import Contact from "./sections/Contact";
+
 import TechStack from "./sections/TechStack";
 import Experience from "./sections/Experience";
 import Education from "./sections/Education";
@@ -34,7 +35,7 @@ const App = () => (
             <Experience />
             <TechStack />
             <Contact />
-            <Footer />
+            {/* <Footer /> */}
         </RadialReveal>
 
         <Analytics />
