@@ -1,11 +1,20 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import emailjs from "@emailjs/browser";
+
+// EmailJS Configuration - Set these in .env file
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 const Contact = () => {
+    const formRef = useRef(null);
     const [formState, setFormState] = useState({
         name: "",
         email: "",
         message: "",
     });
+    const [isLoading, setIsLoading] = useState(false);
+    const [status, setStatus] = useState({ type: "", message: "" });
 
     const handleChange = (e) => {
         setFormState({
@@ -14,10 +23,33 @@ const Contact = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form submitted:", formState);
-        // Add email sending logic here later
+        setIsLoading(true);
+        setStatus({ type: "", message: "" });
+
+        try {
+            const result = await emailjs.sendForm(
+                EMAILJS_SERVICE_ID,
+                EMAILJS_TEMPLATE_ID,
+                formRef.current,
+                EMAILJS_PUBLIC_KEY
+            );
+
+            if (result.status === 200) {
+                setStatus({ type: "success", message: "Transmission successful! I'll respond soon." });
+                setFormState({ name: "", email: "", message: "" });
+            } else {
+                setStatus({ type: "error", message: "Transmission failed. Please try again." });
+            }
+        } catch (error) {
+            console.error("EmailJS error:", error);
+            setStatus({ type: "error", message: "Transmission failed. Please try again." });
+        } finally {
+            setIsLoading(false);
+            // Clear status after 5 seconds
+            setTimeout(() => setStatus({ type: "", message: "" }), 5000);
+        }
     };
 
     return (
@@ -51,7 +83,7 @@ const Contact = () => {
                 <div className="p-10 flex flex-col justify-center relative">
 
                     <div className="w-full max-w-lg mx-auto space-y-12">
-                        <form onSubmit={handleSubmit} className="space-y-8">
+                        <form ref={formRef} onSubmit={handleSubmit} className="space-y-8">
 
                             <div className="group">
                                 <label htmlFor="name" className="block text-xs font-mono text-white/60 mb-2 uppercase tracking-widest">Name</label>
@@ -97,11 +129,34 @@ const Contact = () => {
 
                             <button
                                 type="submit"
-                                className="w-full py-4 border border-green-500/30 text-green-400 font-mono uppercase tracking-widest text-sm hover:bg-green-500/10 hover:shadow-[0_0_15px_rgba(74,222,128,0.3)] transition-all duration-300 group relative overflow-hidden"
+                                disabled={isLoading}
+                                className={`w-full py-4 border border-green-500/30 text-green-400 font-mono uppercase tracking-widest text-sm hover:bg-green-500/10 hover:shadow-[0_0_15px_rgba(74,222,128,0.3)] transition-all duration-300 group relative overflow-hidden ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
                             >
-                                <span className="relative z-10">Initiate Transmission</span>
+                                <span className="relative z-10 flex items-center justify-center gap-2">
+                                    {isLoading ? (
+                                        <>
+                                            <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                            </svg>
+                                            Transmitting...
+                                        </>
+                                    ) : (
+                                        'Initiate Transmission'
+                                    )}
+                                </span>
                                 <div className="absolute inset-0 bg-green-500/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
                             </button>
+
+                            {/* Status Message */}
+                            {status.message && (
+                                <div className={`text-center font-mono text-sm py-3 px-4 rounded border ${status.type === 'success'
+                                    ? 'text-green-400 border-green-500/30 bg-green-500/10'
+                                    : 'text-red-400 border-red-500/30 bg-red-500/10'
+                                    }`}>
+                                    {status.type === 'success' ? '✓ ' : '✗ '}{status.message}
+                                </div>
+                            )}
 
                         </form>
                     </div>
