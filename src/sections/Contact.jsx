@@ -170,9 +170,8 @@ const Contact = () => {
                     © {new Date().getFullYear()} [Abhay Maheshwari]. System Ready.
                 </div>
                 <div className="flex gap-6">
-                    <a href="#" className="hover:text-green-400 transition-colors">Twitter</a>
-                    <a href="#" className="hover:text-green-400 transition-colors">LinkedIn</a>
-                    <a href="#" className="hover:text-green-400 transition-colors">Resume</a>
+                    <a href="https://www.linkedin.com/in/maheshwari-abhay" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors">LinkedIn</a>
+                    <a href="/Abhay Maheshwari Resume 2025.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors">Resume</a>
                 </div>
             </div>
         </section>

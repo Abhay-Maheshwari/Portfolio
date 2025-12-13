@@ -36,16 +36,7 @@ const owner = {
     "Building interactive experiences and robust products — available for collaboration and freelance.",
 };
 
-const words = [
-  { text: "Ideas", imgPath: "/images/ideas.svg" },
-  { text: "Concepts", imgPath: "/images/concepts.svg" },
-  { text: "Designs", imgPath: "/images/designs.svg" },
-  { text: "Code", imgPath: "/images/code.svg" },
-  { text: "Ideas", imgPath: "/images/ideas.svg" },
-  { text: "Concepts", imgPath: "/images/concepts.svg" },
-  { text: "Designs", imgPath: "/images/designs.svg" },
-  { text: "Code", imgPath: "/images/code.svg" },
-];
+
 
 const counterItems = [
   { value: 4, suffix: "+", label: "Years of Experience" },
@@ -140,26 +131,40 @@ const projects = [
       {
         id: 2,
         name: "FastAPI",
-        path: "/images/logos/react.png",
+        path: "/images/logos/python.svg",
+      },
+      {
+        id: 3,
+        name: "C++",
+        path: "/images/logos/python.svg",
       },
     ],
   },
   {
     title: "Holdings Manager Tool",
     desc: "Engineered fintech tool processing 10M+ assets, automating consolidation of 15+ accounts. Architected interactive dashboards serving 100+ users with pivot generation.",
-    subdesc: "Built with TypeScript, Python, Streamlit, Pandas, SQL",
+    subdesc: "Built with React, TypeScript, Supabase, Vite",
     href: "https://github.com/Abhay-Maheshwari/HoldingManager",
     texture: "/images/project3.png",
-    spotlight: "/assets/spotlight3.png",
     tags: [
       {
         id: 1,
-        name: "TypeScript",
-        path: "/images/logos/python.svg",
+        name: "React",
+        path: "/images/logos/react.png",
       },
       {
         id: 2,
-        name: "Streamlit",
+        name: "TypeScript",
+        path: "/images/logos/react.png",
+      },
+      {
+        id: 3,
+        name: "Supabase",
+        path: "/images/logos/react.png",
+      },
+      {
+        id: 4,
+        name: "Vite",
         path: "/images/logos/react.png",
       },
     ],
@@ -170,7 +175,6 @@ const projects = [
     subdesc: "Built with JavaScript, HTML, CSS",
     href: "https://github.com/Abhay-Maheshwari/hackSimulator",
     texture: "/images/project2.png",
-    spotlight: "/assets/spotlight6.png",
     tags: [
       {
         id: 1,
@@ -179,7 +183,12 @@ const projects = [
       },
       {
         id: 2,
-        name: "Game Dev",
+        name: "HTML5",
+        path: "/images/logos/react.png",
+      },
+      {
+        id: 3,
+        name: "CSS3",
         path: "/images/logos/react.png",
       },
     ],
@@ -187,10 +196,9 @@ const projects = [
   {
     title: "Chat Index Extension",
     desc: "TypeScript-powered browser extension for efficient chat indexing and search. Demonstrates proficiency in TypeScript and browser extension development.",
-    subdesc: "Built with TypeScript, Browser APIs",
+    subdesc: "Built with TypeScript, Vite, Browser APIs",
     href: "https://github.com/Abhay-Maheshwari/Chat-Index-Extension",
     texture: "/images/project3.png",
-    spotlight: "/assets/spotlight7.png",
     tags: [
       {
         id: 1,
@@ -199,7 +207,12 @@ const projects = [
       },
       {
         id: 2,
-        name: "Extension",
+        name: "Vite",
+        path: "/images/logos/react.png",
+      },
+      {
+        id: 3,
+        name: "Browser Ext",
         path: "/images/logos/react.png",
       },
     ],
@@ -210,7 +223,6 @@ const projects = [
     subdesc: "Built with Python, Selenium, OOP",
     href: "https://github.com/Abhay-Maheshwari/Web-Game-Automation",
     texture: "/images/project4.png",
-    spotlight: "/assets/spotlight4.png",
     tags: [
       {
         id: 1,
@@ -220,7 +232,7 @@ const projects = [
       {
         id: 2,
         name: "Selenium",
-        path: "/images/logos/react.png",
+        path: "/images/logos/python.svg",
       },
     ],
   },
@@ -228,9 +240,8 @@ const projects = [
     title: "Autonomous AI Curation Agent",
     desc: "Developed an AI-driven system that autonomously collects, analyzes, and publishes weekly briefings on AI tech trends. 80% reduction in manual research effort.",
     subdesc: "Built using Make.com, Gemini, Webhooks",
-    href: "https://github.com/Abhay-Maheshwari",
+    href: "https://www.linkedin.com/in/the-sunday-algorithm",
     texture: "/images/project4.png",
-    spotlight: "/assets/spotlight8.png",
     tags: [
       {
         id: 1,
@@ -250,16 +261,25 @@ const projects = [
     subdesc: "Built with TypeScript, React, Ollama, Local AI",
     href: "https://github.com/Abhay-Maheshwari/Smart-Task-Planner",
     texture: "/images/project2.png",
-    spotlight: "/assets/spotlight2.png",
     tags: [
       {
         id: 1,
-        name: "TypeScript",
+        name: "React",
         path: "/images/logos/react.png",
       },
       {
         id: 2,
-        name: "React",
+        name: "FastAPI",
+        path: "/images/logos/python.svg",
+      },
+      {
+        id: 3,
+        name: "Ollama",
+        path: "/images/logos/python.svg",
+      },
+      {
+        id: 4,
+        name: "TypeScript",
         path: "/images/logos/react.png",
       },
     ],
@@ -270,7 +290,6 @@ const projects = [
     subdesc: "Built with JavaScript, Browser APIs, Chrome Extension",
     href: "https://github.com/Abhay-Maheshwari/FocusShift",
     texture: "/images/project1.png",
-    spotlight: "/assets/spotlight5.png",
     tags: [
       {
         id: 1,
@@ -279,7 +298,7 @@ const projects = [
       },
       {
         id: 2,
-        name: "Extension",
+        name: "Chrome Ext",
         path: "/images/logos/react.png",
       },
     ],
@@ -394,7 +413,7 @@ const testimonials = [
     review:
       "Demonstrated foundational knowledge of Oracle Cloud Infrastructure services, core concepts, and cloud computing principles.",
     imgPath: "/images/logos/company-logo-2.png",
-    verifyUrl: "#", // TODO: Add Oracle verification URL
+    verifyUrl: "https://catalog-education.oracle.com/pls/certview/sharebadge?id=0CCEAAE647C2189A33A8663AB15C0824B8E8CFFE7266A3FDED8DA0FCB93CFD70",
   },
   {
     name: "Oracle Data Platform",
@@ -402,15 +421,15 @@ const testimonials = [
     review:
       "Certified in Oracle Data Platform fundamentals including data management, analytics, and database services.",
     imgPath: "/images/logos/company-logo-2.png",
-    verifyUrl: "#", // TODO: Add Oracle verification URL
+    verifyUrl: "https://catalog-education.oracle.com/pls/certview/sharebadge?id=C6F5C9E1C822240A2C71F1F16E5E4104932493D545B7BD8F8965BA54E542443C",
   },
   {
-    name: "Oracle Fusion AI",
-    mentions: "2025 Certified Foundations Associate",
+    name: "Oracle Fusion AI Agent Studio",
+    mentions: "Foundations Associate - Rel 1",
     review:
       "Foundational certification in Oracle AI/ML capabilities and Fusion applications architecture.",
     imgPath: "/images/logos/company-logo-2.png",
-    verifyUrl: "#", // TODO: Add Oracle verification URL
+    verifyUrl: "https://catalog-education.oracle.com/pls/certview/sharebadge?id=44368F567B96BE67522E8359DD32A2538AFACB55A2DAB94D5107415DCD53CACF",
   },
   {
     name: "NVIDIA Deep Learning Institute",
@@ -418,7 +437,7 @@ const testimonials = [
     review:
       "Completed hands-on training in deep learning fundamentals, neural networks, and GPU-accelerated computing.",
     imgPath: "/images/logos/company-logo-5.png",
-    verifyUrl: "#", // TODO: Add NVIDIA DLI verification URL
+    verifyUrl: "https://drive.google.com/file/d/1D2orgW9GhdT8-MWHu8bKQSKmbQ_6gTU4/view?usp=sharing",
   },
 ];
 
@@ -434,7 +453,7 @@ const socialImgs = [
 ];
 
 export {
-  words,
+
 
   logoIconsList,
   counterItems,
