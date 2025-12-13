@@ -1,4 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import SmoothScroll from "./components/SmoothScroll";
 import RadialReveal from "./components/RadialReveal";
 import PersistentNav from "./components/PersistentNav";
@@ -41,6 +42,7 @@ const App = () => (
         </RadialReveal>
 
         <Analytics />
+        <SpeedInsights />
     </SmoothScroll>
 );
 
