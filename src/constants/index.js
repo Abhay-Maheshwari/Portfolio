@@ -145,26 +145,6 @@ const projects = [
     ],
   },
   {
-    title: "Smart Task Planner",
-    desc: "AI-powered task planning app using Ollama to break down complex goals into actionable tasks with realistic time estimates and smart dependency management.",
-    subdesc: "Built with TypeScript, React, Ollama, Local AI",
-    href: "https://github.com/Abhay-Maheshwari/Smart-Task-Planner",
-    texture: "/images/project2.png",
-    spotlight: "/assets/spotlight2.png",
-    tags: [
-      {
-        id: 1,
-        name: "TypeScript",
-        path: "/images/logos/react.png",
-      },
-      {
-        id: 2,
-        name: "React",
-        path: "/images/logos/react.png",
-      },
-    ],
-  },
-  {
     title: "Holdings Manager Tool",
     desc: "Engineered fintech tool processing 10M+ assets, automating consolidation of 15+ accounts. Architected interactive dashboards serving 100+ users with pivot generation.",
     subdesc: "Built with TypeScript, Python, Streamlit, Pandas, SQL",
@@ -180,46 +160,6 @@ const projects = [
       {
         id: 2,
         name: "Streamlit",
-        path: "/images/logos/react.png",
-      },
-    ],
-  },
-  {
-    title: "Web Game Automation Framework",
-    desc: "Constructed an extensible automation framework tested across multiple web-based games. Refined DOM handling to reduce redundant browser interactions by 200%.",
-    subdesc: "Built with Python, Selenium, OOP",
-    href: "https://github.com/Abhay-Maheshwari/Web-Game-Automation",
-    texture: "/images/project4.png",
-    spotlight: "/assets/spotlight4.png",
-    tags: [
-      {
-        id: 1,
-        name: "Python",
-        path: "/images/logos/python.svg",
-      },
-      {
-        id: 2,
-        name: "Selenium",
-        path: "/images/logos/react.png",
-      },
-    ],
-  },
-  {
-    title: "FocusShift Browser Extension",
-    desc: "In-development browser extension designed to boost productivity with intelligent focus management and distraction blocking. Modern UI with seamless browser integration.",
-    subdesc: "Built with JavaScript, Browser APIs, Chrome Extension",
-    href: "https://github.com/Abhay-Maheshwari/FocusShift",
-    texture: "/images/project1.png",
-    spotlight: "/assets/spotlight5.png",
-    tags: [
-      {
-        id: 1,
-        name: "JavaScript",
-        path: "/images/logos/react.png",
-      },
-      {
-        id: 2,
-        name: "Extension",
         path: "/images/logos/react.png",
       },
     ],
@@ -265,6 +205,26 @@ const projects = [
     ],
   },
   {
+    title: "Web Game Automation Framework",
+    desc: "Constructed an extensible automation framework tested across multiple web-based games. Refined DOM handling to reduce redundant browser interactions by 200%.",
+    subdesc: "Built with Python, Selenium, OOP",
+    href: "https://github.com/Abhay-Maheshwari/Web-Game-Automation",
+    texture: "/images/project4.png",
+    spotlight: "/assets/spotlight4.png",
+    tags: [
+      {
+        id: 1,
+        name: "Python",
+        path: "/images/logos/python.svg",
+      },
+      {
+        id: 2,
+        name: "Selenium",
+        path: "/images/logos/react.png",
+      },
+    ],
+  },
+  {
     title: "Autonomous AI Curation Agent",
     desc: "Developed an AI-driven system that autonomously collects, analyzes, and publishes weekly briefings on AI tech trends. 80% reduction in manual research effort.",
     subdesc: "Built using Make.com, Gemini, Webhooks",
@@ -280,6 +240,46 @@ const projects = [
       {
         id: 2,
         name: "Gemini",
+        path: "/images/logos/react.png",
+      },
+    ],
+  },
+  {
+    title: "Smart Task Planner",
+    desc: "AI-powered task planning app using Ollama to break down complex goals into actionable tasks with realistic time estimates and smart dependency management.",
+    subdesc: "Built with TypeScript, React, Ollama, Local AI",
+    href: "https://github.com/Abhay-Maheshwari/Smart-Task-Planner",
+    texture: "/images/project2.png",
+    spotlight: "/assets/spotlight2.png",
+    tags: [
+      {
+        id: 1,
+        name: "TypeScript",
+        path: "/images/logos/react.png",
+      },
+      {
+        id: 2,
+        name: "React",
+        path: "/images/logos/react.png",
+      },
+    ],
+  },
+  {
+    title: "FocusShift Browser Extension",
+    desc: "In-development browser extension designed to boost productivity with intelligent focus management and distraction blocking. Modern UI with seamless browser integration.",
+    subdesc: "Built with JavaScript, Browser APIs, Chrome Extension",
+    href: "https://github.com/Abhay-Maheshwari/FocusShift",
+    texture: "/images/project1.png",
+    spotlight: "/assets/spotlight5.png",
+    tags: [
+      {
+        id: 1,
+        name: "JavaScript",
+        path: "/images/logos/react.png",
+      },
+      {
+        id: 2,
+        name: "Extension",
         path: "/images/logos/react.png",
       },
     ],

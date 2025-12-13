@@ -40,15 +40,43 @@
 }
 
 .persistent-header .brand-text {
-    font-family: 'Outfit', -apple-system, sans-serif;
-    font-weight: 600;
-    font-size: 1.1rem;
+    font-family: 'Space Mono', 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 1.4rem;
     letter-spacing: -0.02em;
     color: #ededed;
     transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.persistent-header .brand-symbol {
+    color: #ededed;
+    margin-right: 2px;
+}
+
+.persistent-header .brand-cursor {
+    color: #4ade80;
+    animation: cursorBlink 1s step-end infinite;
+}
+
+@keyframes cursorBlink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
 
 .persistent-header .brand:hover .brand-text {
+    color: #fff;
+}
+
+.persistent-header .brand:hover .brand-symbol {
     color: #fff;
 }
 
@@ -130,10 +158,12 @@
         opacity: 0.5;
         transform: scale(1);
     }
+
     50% {
         opacity: 1;
         transform: scale(1.2);
     }
+
     100% {
         opacity: 0.5;
         transform: scale(1);
@@ -271,5 +301,3 @@
         display: none;
     }
 }
-
-

@@ -7,6 +7,18 @@ import { projects } from "../constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Video mapping for each project (by index)
+const projectVideos = [
+  "/images/SFTP.mp4",        // 0: Scalable LLM Fine-Tuning Platform   // 1: Holdings Manager Tool
+  "/images/Holding Manager.mp4",
+  "/images/HackSimulator.mp4",
+  "/images/ChatIndex.png",            // 4: fallback
+  "/images/Web_Game_automation.mp4",        // 3: Chat Index Extension
+  "/images/AutomatedCuration.mp4",        // 5: fallback
+  "/images/TaskFlow.mp4",            // 6: fallback
+  "/images/FocusShift.png",        // 7: fallback
+];
+
 const AppShowcase = () => {
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
@@ -83,14 +95,13 @@ const AppShowcase = () => {
           <div className="w-[80vw] md:w-[600px] shrink-0 flex flex-col justify-center items-start">
             <h2 className="text-4xl md:text-8xl font-bold font-serif leading-tight text-white mb-6">
               Selected <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Works</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Showcase</span>
             </h2>
             <p className="text-white-50 text-lg md:text-xl max-w-md leading-relaxed">
               A collection of digital products, experiences, and tools built with precision and passion.
             </p>
             <div className="flex gap-4 mt-8">
-              <span className="px-4 py-2 border border-white/20 rounded-full text-sm text-white-50">8 Projects</span>
-              <span className="px-4 py-2 border border-white/20 rounded-full text-sm text-white-50">2024-2025</span>
+
             </div>
           </div>
 
@@ -103,7 +114,7 @@ const AppShowcase = () => {
               {/* Image/Video Container */}
               <div className="absolute inset-0 w-full h-full">
                 <LazyVideo
-                  src={index % 2 === 0 ? "/images/project01.mp4" : "/images/proj2.mp4"}
+                  src={projectVideos[index] || "/images/project011.mp4"}
                   alt={project.title}
                   className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                 />

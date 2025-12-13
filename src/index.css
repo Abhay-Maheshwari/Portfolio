@@ -42,6 +42,19 @@ body {
   font-family: "Mona Sans", sans-serif;
 }
 
+/* Hide system cursor globally */
+*,
+*::before,
+*::after {
+  cursor: none !important;
+}
+
+@media (hover: none) {
+  body {
+    cursor: auto;
+  }
+}
+
 iframe {
   border: none;
   pointer-events: auto;

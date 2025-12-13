@@ -29,7 +29,9 @@ const PersistentNav = () => {
         <header className="persistent-header">
             {/* Brand / Logo */}
             <a href="#" className="brand" onClick={handleLogoClick}>
-                <span className="brand-text">AM</span>
+                <span className="brand-text">
+                    <span className="brand-symbol">&gt;</span>am<span className="brand-cursor">_</span>
+                </span>
             </a>
 
             {/* Navigation */}

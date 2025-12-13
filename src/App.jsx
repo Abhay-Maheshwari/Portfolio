@@ -5,6 +5,7 @@ import PersistentNav from "./components/PersistentNav";
 import Hero3D from "./sections/Hero3D";
 import Footer from "./sections/Footer";
 import Contact from "./sections/Contact";
+import Cursor from "./components/Cursor";
 
 import TechStack from "./sections/TechStack";
 import Experience from "./sections/Experience";
@@ -26,6 +27,7 @@ const App = () => (
     <SmoothScroll>
         {/* Persistent navbar - OUTSIDE RadialReveal so it's never masked */}
         <PersistentNav />
+        <Cursor />
 
         <RadialReveal heroContent={<Hero3D />}>
             {/* Main website content - rendered underneath hero overlay */}

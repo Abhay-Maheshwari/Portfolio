@@ -4,75 +4,129 @@ const LazyVideo = ({
   src,
   className = '',
   poster,
+  thumbnail,
   autoPlay = true,
   loop = true,
   muted = true,
   ...props
 }) => {
+  const containerRef = useRef(null);
   const videoRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  // Generate thumbnail from video filename if not provided
+  const getThumbnail = () => {
+    if (thumbnail) return thumbnail;
+    if (poster) return poster;
+    // Auto-generate thumbnail path from video path
+    // e.g., "/images/video.mp4" -> "/images/video_thumb.jpg"
+    if (src) {
+      return src.replace('.mp4', '_thumb.jpg');
+    }
+    return null;
+  };
 
   useEffect(() => {
-    const currentVideo = videoRef.current;
+    const container = containerRef.current;
+    const video = videoRef.current;
+
+    // Intersection Observer for visibility-based play/pause
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            if (currentVideo) {
-              currentVideo.load();
-              if (autoPlay) {
-                currentVideo.play().catch(err => {
-                  console.warn('Video autoplay failed:', err);
-                });
-              }
+          const isInView = entry.isIntersecting;
+          setIsVisible(isInView);
+
+          if (video && hasLoaded) {
+            if (isInView && autoPlay) {
+              video.play().catch(err => {
+                console.warn('Video autoplay failed:', err);
+              });
+              setIsPlaying(true);
+            } else {
+              video.pause();
+              setIsPlaying(false);
             }
-            observer.unobserve(entry.target);
           }
         });
       },
       {
-        rootMargin: '100px',
-        threshold: 0.1,
+        rootMargin: '50px',
+        threshold: 0.3, // Video must be 30% visible to play
       }
     );
 
-    if (currentVideo) {
-      observer.observe(currentVideo);
+    if (container) {
+      observer.observe(container);
     }
 
     return () => {
-      if (currentVideo) {
-        observer.unobserve(currentVideo);
+      if (container) {
+        observer.unobserve(container);
       }
     };
-  }, [autoPlay]);
+  }, [autoPlay, hasLoaded]);
+
+  // Load video when first becomes visible
+  useEffect(() => {
+    const video = videoRef.current;
+
+    if (isVisible && video && !hasLoaded) {
+      video.load();
+    }
+  }, [isVisible, hasLoaded]);
 
   const handleLoadedData = () => {
-    setIsLoaded(true);
+    setHasLoaded(true);
+    // Auto-play if already visible when loaded
+    if (isVisible && autoPlay && videoRef.current) {
+      videoRef.current.play().catch(err => {
+        console.warn('Video autoplay failed:', err);
+      });
+      setIsPlaying(true);
+    }
   };
 
+  const thumbnailSrc = getThumbnail();
+
   return (
-    <div className="relative">
+    <div ref={containerRef} className="relative w-full h-full">
+      {/* Thumbnail - shown until video loads and starts playing */}
+      {thumbnailSrc && !isPlaying && (
+        <div
+          className={`absolute inset-0 w-full h-full transition-opacity duration-700 ${hasLoaded && isPlaying ? 'opacity-0' : 'opacity-100'}`}
+          style={{
+            backgroundImage: `url(${thumbnailSrc})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+      )}
+
+      {/* Loading placeholder - shown if no thumbnail */}
+      {!thumbnailSrc && !hasLoaded && (
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse flex items-center justify-center">
+          <div className="w-12 h-12 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
+        </div>
+      )}
+
+      {/* Video element */}
       <video
         ref={videoRef}
-        className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
-        poster={poster}
+        className={`${className} ${hasLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}
+        poster={thumbnailSrc}
         autoPlay={false}
         loop={loop}
         muted={muted}
         playsInline
+        preload="none"
         onLoadedData={handleLoadedData}
         {...props}
       >
         {isVisible && <source src={src} type="video/mp4" />}
       </video>
-      {!isLoaded && (
-        <div className="absolute inset-0 bg-gray-800/50 animate-pulse rounded-2xl flex items-center justify-center">
-          <div className="text-white text-sm">Loading video...</div>
-        </div>
-      )}
     </div>
   );
 };
