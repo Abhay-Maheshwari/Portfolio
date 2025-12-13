@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFTP Protocol Animation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        :root {
+            --neon-green: #ccff00;
+            /* Matching the yellow-green from reference */
+            --dark-bg: #050505;
+            --grid-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Grid Background */
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0;
+            /* Starts hidden */
+            animation: fadeInGrid 2s ease-out 3s forwards;
+            z-index: 0;
+        }
+
+        /* Loading / Initializing Sequence */
+        .loader-container {
+            position: absolute;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cube-icon {
+            width: 80px;
+            height: 80px;
+            border: 4px solid var(--neon-green);
+            box-shadow: 0 0 20px var(--neon-green), inset 0 0 10px var(--neon-green);
+            transform: rotate(45deg);
+            position: relative;
+            animation: pulseCube 1s infinite alternate;
+        }
+
+        .cube-inner {
+            width: 40px;
+            height: 40px;
+            background: var(--neon-green);
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            opacity: 0.5;
+        }
+
+        .loading-text {
+            margin-top: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--neon-green);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Main UI Container */
+        .main-ui {
+            width: 90%;
+            max-width: 1400px;
+            height: 80vh;
+            position: relative;
+            z-index: 5;
+            opacity: 0;
+            transform: scale(0.8);
+            filter: blur(10px);
+            /* Hidden initially */
+        }
+
+        /* Animations */
+        @keyframes pulseCube {
+            from {
+                box-shadow: 0 0 10px var(--neon-green);
+            }
+
+            to {
+                box-shadow: 0 0 30px var(--neon-green), 0 0 10px var(--neon-green);
+            }
+        }
+
+        @keyframes glitchExplosion {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.5);
+                opacity: 0;
+                filter: hue-rotate(90deg);
+            }
+
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes revealUI {
+            0% {
+                opacity: 0;
+                transform: scale(0.95);
+                filter: blur(10px);
+            }
+
+            20% {
+                opacity: 1;
+                transform: scale(1.02);
+                filter: blur(0px);
+            }
+
+            50% {
+                transform: scale(0.99);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0px);
+            }
+        }
+
+        /* UI Elements Styling matching Reference */
+        .nav-bar {
+            display: flex;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 80px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            color: var(--neon-green);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-right: 40px;
+        }
+
+        .nav-item {
+            margin-right: 30px;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            color: white;
+        }
+
+        .content-area {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .small-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 20px;
+            display: block;
+            border-left: 2px solid #333;
+            padding-left: 10px;
+        }
+
+        h1 {
+            font-size: 5rem;
+            line-height: 1;
+            font-weight: 700;
+            margin: 0 0 30px 0;
+            letter-spacing: -2px;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.description {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #888;
+            max-width: 600px;
+            margin-bottom: 50px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--neon-green);
+            color: black;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid #333;
+            color: white;
+        }
+
+        /* Abstract Graphic on Right */
+        .graphic-right {
+            width: 100%;
+            height: 400px;
+            border: 1px dashed #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .dots-grid {
+            width: 60%;
+            height: 60%;
+            background-image: radial-gradient(#444 1px, transparent 1px);
+            background-size: 20px 20px;
+            transform: rotate(45deg);
+        }
+
+        .system-status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--neon-green);
+            font-size: 0.8rem;
+        }
+
+        /* Animation Classes */
+        .hidden {
+            display: none;
+        }
+
+        .fade-out {
+            animation: glitchExplosion 0.5s forwards;
+        }
+
+        .show-ui {
+            animation: revealUI 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        /* Typewriter effect classes */
+        .typewriter h1,
+        .typewriter p {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 2s steps(40, end);
+        }
+
+        /* Glitch effect overlay */
+        .glitch-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 255, 0, 0.02);
+            pointer-events: none;
+            z-index: 100;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grid-bg"></div>
+
+    <div class="loader-container" id="loader">
+        <div class="cube-icon">
+            <div class="cube-inner"></div>
+        </div>
+        <div class="loading-text" id="loadText">INITIALIZING LAYER-0...</div>
+    </div>
+
+    <div class="main-ui" id="mainUI">
+        <div class="glitch-overlay" id="glitch"></div>
+
+        <div class="system-status">ALL SYSTEMS OPERATIONAL</div>
+
+        <nav class="nav-bar">
+            <div class="logo">SFTP</div>
+            <div class="nav-item">/ PROTOCOL</div>
+            <div class="nav-item">/ DEVELOPERS</div>
+            <div class="nav-item">/ TELEMETRY</div>
+        </nav>
+
+        <div class="content-area">
+            <div class="text-content">
+                <span class="small-tag">Layer-0 connectivity _</span>
+                <h1>The<br>Coordination<br>Layer for All<br>Chains</h1>
+                <p class="description">
+                    Fast, verifiable, and trust-minimized interoperability. Bridge assets, route intents, and confirm
+                    proofs — without trusted relayers.
+                </p>
+                <div class="buttons">
+                    <button class="btn btn-secondary">Read Docs</button>
+                    <button class="btn btn-primary">Launch Demo</button>
+                </div>
+            </div>
+
+            <div class="graphic-right">
+                <div class="dots-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sequence Script
+        const loader = document.getElementById('loader');
+        const mainUI = document.getElementById('mainUI');
+        const loadText = document.getElementById('loadText');
+        const glitch = document.getElementById('glitch');
+
+        // Step 1: Loading
+        setTimeout(() => {
+            loadText.innerText = "LINKING NODES...";
+        }, 1000);
+
+        setTimeout(() => {
+            loadText.innerText = "ESTABLISHING TRUST...";
+            loadText.style.color = "white";
+        }, 2000);
+
+        // Step 2: Explosion/Transition
+        setTimeout(() => {
+            loader.classList.add('fade-out');
+
+            // Flash green
+            document.body.style.backgroundColor = '#1a1a1a';
+            setTimeout(() => { document.body.style.backgroundColor = '#050505'; }, 100);
+        }, 3000);
+
+        // Step 3: Reveal UI
+        setTimeout(() => {
+            loader.classList.add('hidden');
+            mainUI.classList.remove('hidden');
+            mainUI.classList.add('show-ui');
+
+            // Add slight glitch flicker
+            glitch.style.display = 'block';
+            setTimeout(() => { glitch.style.display = 'none'; }, 200);
+
+        }, 3400);
+
+    </script>
+</body>
+
+</html>
