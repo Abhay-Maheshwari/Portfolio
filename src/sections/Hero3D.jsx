@@ -108,7 +108,7 @@ const Hero3D = () => {
                         <button className="cta-btn" id="exploreBtn" onClick={handleExploreClick}>
                             <span className="cta-text">EXPLORE NOW</span>
                         </button>
-                        <a href="/Abhay Maheshwari Resume 2025.pdf" download className="cta-btn resume-btn" style={{ marginLeft: '1rem' }}>
+                        <a href="/Abhay Maheshwari Resume 2025.pdf" download className="cta-btn resume-btn">
                             <span className="cta-text">DOWNLOAD RESUME</span>
                         </a>
                     </div>

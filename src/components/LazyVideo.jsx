@@ -19,6 +19,10 @@ const LazyVideo = ({
   // Detect if source is an image or video
   const isImage = src && /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(src);
 
+  // Detect mobile/touch devices for performance optimization
+  const isTouchDevice = typeof window !== 'undefined' &&
+    ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+
   // Get thumbnail from explicit props only
   const getThumbnail = () => {
     if (thumbnail) return thumbnail;
@@ -121,7 +125,7 @@ const LazyVideo = ({
         loop={loop}
         muted={muted}
         playsInline
-        preload="auto"
+        preload={isTouchDevice ? "metadata" : "auto"}
         {...props}
       />
     </div>

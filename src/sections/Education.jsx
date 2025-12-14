@@ -14,7 +14,7 @@ const Education = () => {
                     {educationList.map((edu) => (
                         <div
                             key={edu.id}
-                            className="flex flex-col md:flex-row gap-6 p-6 rounded-2xl border border-black-50 bg-black-100 hover:border-white/20 transition-all duration-300"
+                            className="flex flex-col md:flex-row gap-4 md:gap-6 p-4 md:p-6 rounded-2xl border border-black-50 bg-black-100 hover:border-white/20 transition-all duration-300"
                         >
                             {/* Icon/Logo Placeholder */}
                             <div className="md:w-24 md:h-24 w-16 h-16 flex-shrink-0 rounded-xl bg-white-10 p-4 flex-center border border-white/10">

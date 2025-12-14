@@ -58,13 +58,13 @@ const Contact = () => {
 
             <div className="flex-grow grid grid-cols-1 lg:grid-cols-2 relative z-10">
                 {/* Left Column */}
-                <div className="relative border-r border-white/10 p-10 flex flex-col justify-center">
+                <div className="relative border-r border-white/10 lg:border-r-0 p-6 md:p-10 flex flex-col justify-center">
 
                     <div className="space-y-2 relative z-20">
                         <h3 className="text-xl md:text-2xl font-serif italic text-white/80 font-[300]" style={{ fontFamily: '"Playfair Display", serif' }}>
                             Currently available for collaboration.
                         </h3>
-                        <h1 className="text-6xl md:text-8xl font-[900] uppercase leading-[0.9] tracking-tight font-sans">
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-[900] uppercase leading-[0.9] tracking-tight font-sans">
                             LET'S BUILD
                             <br />
                             THE FUTURE.
@@ -80,7 +80,7 @@ const Contact = () => {
                 </div>
 
                 {/* Right Column - Form */}
-                <div className="p-10 flex flex-col justify-center relative">
+                <div className="p-6 md:p-10 flex flex-col justify-center relative">
 
                     <div className="w-full max-w-lg mx-auto space-y-12">
                         <form ref={formRef} onSubmit={handleSubmit} className="space-y-8">
@@ -165,7 +165,7 @@ const Contact = () => {
             </div>
 
             {/* Footer Bar */}
-            <div className="w-full h-16 border-t border-white/10 flex items-center justify-between px-10 font-mono text-xs text-white/40 uppercase bg-[#050505]">
+            <div className="w-full min-h-16 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 px-4 md:px-10 py-4 font-mono text-xs text-white/40 uppercase bg-[#050505]">
                 <div>
                     © {new Date().getFullYear()} [Abhay Maheshwari]. System Ready.
                 </div>

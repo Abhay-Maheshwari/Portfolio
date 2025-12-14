@@ -69,7 +69,7 @@ const Experience = () => {
         />
 
         <div className="relative max-w-5xl mx-auto">
-          {/* Vertical Timeline Line */}
+          {/* Vertical Timeline Line - Adjusted for mobile */}
           <div className="absolute left-[30px] md:left-[40px] top-0 bottom-0 w-[2px] h-full bg-gradient-to-b from-transparent via-white/20 to-transparent timeline-line" />
 
           <div className="space-y-24">
@@ -78,16 +78,16 @@ const Experience = () => {
                 key={index}
                 className="experience-card relative flex gap-8 md:gap-12"
               >
-                {/* Timeline Node */}
+                {/* Timeline Node - Better mobile positioning */}
                 <div className="absolute left-[30px] md:left-[40px] w-4 h-4 rounded-full bg-white border-4 border-black-200 shadow-[0_0_20px_rgba(255,255,255,0.5)] z-20 transform -translate-x-1/2 mt-10 transition-transform duration-300 hover:scale-150" />
 
-                {/* Content Side */}
+                {/* Content Side - Improved mobile spacing */}
                 <div className="w-full pl-16 md:pl-24">
                   <div className="group relative rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md overflow-hidden hover:bg-white/10 transition-colors duration-300">
                     {/* Hover Glow Effect */}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                    {/* Top: Rectangular Logo Section - Left Aligned */}
+                    {/* Top: Responsive Logo Section */}
                     <div className="h-40 w-full bg-black/40 border-b border-white/5 flex items-center justify-start relative overflow-hidden group-hover:bg-black/50 transition-colors duration-500">
                       {/* Subtle background glow behind logo */}
                       <div className="absolute left-10 bg-blue-500/20 w-56 h-56 blur-[100px] rounded-full" />
@@ -101,8 +101,8 @@ const Experience = () => {
                       </div>
                     </div>
 
-                    {/* Bottom: Details Section */}
-                    <div className="p-8 relative z-10">
+                    {/* Bottom: Details Section - Better mobile padding */}
+                    <div className="p-5 md:p-8 relative z-10">
 
                       <h3 className="text-2xl font-bold text-white leading-tight mb-1">{card.title}</h3>
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4">

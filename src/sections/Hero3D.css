@@ -463,6 +463,8 @@
     padding-bottom: 0;
     margin-top: 0;
     position: relative;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 /* Gradient glow behind buttons */
@@ -745,8 +747,12 @@
 
 @media (max-width: 768px) {
     .hero-content {
-        top: 30%;
+        top: 48%;
         padding: 0 1rem;
+    }
+
+    .bottom-section {
+        padding-bottom: 5rem;
     }
 
     .hero-name {
@@ -782,7 +788,7 @@
 
 @media (max-width: 480px) {
     .hero-content {
-        top: 35%;
+        top: 48%;
     }
 
     .hero-name {
@@ -790,14 +796,43 @@
     }
 
     .bottom-section {
-        padding: 1rem 0.5rem 2rem;
+        padding: 1rem 0.5rem 4rem;
     }
 
     .info-panel-right {
         display: none;
     }
 
+    .cta-container {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.75rem;
+    }
+
     .cta-btn {
         padding: 0.9rem 2rem;
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+    .hero-name {
+        font-size: clamp(1.3rem, 7vw, 2rem);
+    }
+
+    .hero-title {
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+    }
+
+    .hero-specialization {
+        font-size: 0.55rem;
+    }
+
+    .cta-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.65rem;
     }
 }

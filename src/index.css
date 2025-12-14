@@ -49,9 +49,13 @@ body {
   cursor: none !important;
 }
 
-@media (hover: none) {
-  body {
-    cursor: auto;
+@media (hover: none),
+(pointer: coarse) {
+
+  *,
+  *::before,
+  *::after {
+    cursor: auto !important;
   }
 }
 
