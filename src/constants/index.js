@@ -412,7 +412,7 @@ const testimonials = [
     mentions: "2025 Certified Foundations Associate",
     review:
       "Demonstrated foundational knowledge of Oracle Cloud Infrastructure services, core concepts, and cloud computing principles.",
-    imgPath: "/images/logos/company-logo-2.png",
+    imgPath: "/images/logos/oracle.svg",
     verifyUrl: "https://catalog-education.oracle.com/pls/certview/sharebadge?id=0CCEAAE647C2189A33A8663AB15C0824B8E8CFFE7266A3FDED8DA0FCB93CFD70",
   },
   {
@@ -420,7 +420,7 @@ const testimonials = [
     mentions: "2025 Certified Foundations Associate",
     review:
       "Certified in Oracle Data Platform fundamentals including data management, analytics, and database services.",
-    imgPath: "/images/logos/company-logo-2.png",
+    imgPath: "/images/logos/oracle.svg",
     verifyUrl: "https://catalog-education.oracle.com/pls/certview/sharebadge?id=C6F5C9E1C822240A2C71F1F16E5E4104932493D545B7BD8F8965BA54E542443C",
   },
   {
@@ -428,7 +428,7 @@ const testimonials = [
     mentions: "Foundations Associate - Rel 1",
     review:
       "Foundational certification in Oracle AI/ML capabilities and Fusion applications architecture.",
-    imgPath: "/images/logos/company-logo-2.png",
+    imgPath: "/images/logos/oracle.svg",
     verifyUrl: "https://catalog-education.oracle.com/pls/certview/sharebadge?id=44368F567B96BE67522E8359DD32A2538AFACB55A2DAB94D5107415DCD53CACF",
   },
   {
@@ -436,7 +436,7 @@ const testimonials = [
     mentions: "DLI Certificate in Deep Learning",
     review:
       "Completed hands-on training in deep learning fundamentals, neural networks, and GPU-accelerated computing.",
-    imgPath: "/images/logos/company-logo-5.png",
+    imgPath: "/images/logos/nvidia.png",
     verifyUrl: "https://drive.google.com/file/d/1D2orgW9GhdT8-MWHu8bKQSKmbQ_6gTU4/view?usp=sharing",
   },
 ];

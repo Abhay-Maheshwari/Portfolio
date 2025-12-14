@@ -54,9 +54,10 @@ const SmoothScroll = ({ children }) => {
         lenisInstance.on('scroll', ScrollTrigger.update);
 
         // Add Lenis to GSAP ticker for smooth animation loop
-        gsap.ticker.add((time) => {
+        const rafCallback = (time) => {
             lenisInstance.raf(time * 1000);
-        });
+        };
+        gsap.ticker.add(rafCallback);
 
         // Disable GSAP's default lag smoothing for better sync
         gsap.ticker.lagSmoothing(0);
@@ -101,7 +102,7 @@ const SmoothScroll = ({ children }) => {
         return () => {
             window.removeEventListener('resize', handleResize);
             if (resizeTimeout) clearTimeout(resizeTimeout);
-            gsap.ticker.remove(lenisInstance.raf);
+            gsap.ticker.remove(rafCallback);
             lenisInstance.destroy();
             lenisRef.current = null;
         };

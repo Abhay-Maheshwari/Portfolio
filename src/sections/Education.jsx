@@ -1,13 +1,12 @@
 import { educationList, testimonials } from "../constants";
-import TitleHeader from "../components/TitleHeader";
+import MaskRevealTitle from "../components/MaskRevealTitle";
 
 const Education = () => {
     return (
         <section id="education" className="flex-center section-padding">
             <div className="w-full h-full md:px-10 px-5">
-                <TitleHeader
+                <MaskRevealTitle
                     title="Background"
-                    sub=""
                 />
 
                 {/* Education Card */}
@@ -71,7 +70,7 @@ const Education = () => {
                            hover:shadow-lg hover:shadow-white/5"
                             >
                                 {/* Icon/Image */}
-                                <div className="mb-3 h-10 w-10 flex items-center justify-center bg-white-10 rounded-lg p-2">
+                                <div className="mb-5 h-24 w-24 flex items-center justify-center bg-white/5 border border-white/10 rounded-xl p-4">
                                     <img
                                         src={cert.imgPath}
                                         alt={cert.name}

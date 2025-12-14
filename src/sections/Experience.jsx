@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
 
 import { expCards } from "../constants";
-import TitleHeader from "../components/TitleHeader";
+import MaskRevealTitle from "../components/MaskRevealTitle";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -63,10 +63,9 @@ const Experience = () => {
       <div className="absolute bottom-0 left-0 -z-10 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[100px] opacity-30" />
 
       <div className="container mx-auto px-5">
-        <TitleHeader
+        <MaskRevealTitle
           title="Work Experience"
-          sub=""
-          containerClass="mb-20 text-center"
+          className="mb-20"
         />
 
         <div className="relative max-w-5xl mx-auto">
@@ -91,7 +90,7 @@ const Experience = () => {
                     {/* Top: Rectangular Logo Section - Left Aligned */}
                     <div className="h-40 w-full bg-black/40 border-b border-white/5 flex items-center justify-start relative overflow-hidden group-hover:bg-black/50 transition-colors duration-500">
                       {/* Subtle background glow behind logo */}
-                      <div className="absolute left-12 bg-blue-500/20 w-20 h-20 blur-2xl rounded-full" />
+                      <div className="absolute left-10 bg-blue-500/20 w-56 h-56 blur-[100px] rounded-full" />
 
                       <div className="relative z-10 p-4 h-full flex items-center justify-start pl-8">
                         <img

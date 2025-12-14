@@ -6,18 +6,27 @@ const Cursor = () => {
     const isHovering = useRef(false);
     const isTextHover = useRef(false);
     const isClicking = useRef(false);
-    const isHidden = useRef(false);
+    const isHidden = useRef(true);
     const magnetTarget = useRef(null);
-    const mousePos = useRef({ x: 0, y: 0 });
+    const mousePos = useRef({ x: -100, y: -100 });
+    const cursorPos = useRef({ x: -100, y: -100 });
+    const rafId = useRef(null);
+    const hasMovedOnce = useRef(false);
+
+    // Lerp function for smooth interpolation
+    const lerp = (start, end, factor) => start + (end - start) * factor;
 
     useEffect(() => {
         const cursor = cursorRef.current;
         const inner = innerRef.current;
         if (!cursor || !inner) return;
 
-        const updateCursor = () => {
-            let x = mousePos.current.x;
-            let y = mousePos.current.y;
+        const SMOOTH_FACTOR = 0.35; // Higher = more responsive
+
+        const animate = () => {
+            // Calculate target position (with magnetic effect if applicable)
+            let targetX = mousePos.current.x;
+            let targetY = mousePos.current.y;
 
             // Magnetic effect
             if (magnetTarget.current && isHovering.current) {
@@ -25,81 +34,96 @@ const Cursor = () => {
                 const centerX = rect.left + rect.width / 2;
                 const centerY = rect.top + rect.height / 2;
 
-                const distX = x - centerX;
-                const distY = y - centerY;
+                const distX = targetX - centerX;
+                const distY = targetY - centerY;
                 const distance = Math.sqrt(distX * distX + distY * distY);
 
                 const maxDistance = 60;
                 if (distance < maxDistance) {
                     const pull = (1 - distance / maxDistance) * 0.4;
-                    x = x - distX * pull;
-                    y = y - distY * pull;
+                    targetX = targetX - distX * pull;
+                    targetY = targetY - distY * pull;
                 }
             }
 
-            cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+            // Smooth interpolation with snap-to-target when very close
+            const dx = targetX - cursorPos.current.x;
+            const dy = targetY - cursorPos.current.y;
+            const distanceToTarget = Math.sqrt(dx * dx + dy * dy);
 
+            if (distanceToTarget < 0.5) {
+                // Snap to target when very close
+                cursorPos.current.x = targetX;
+                cursorPos.current.y = targetY;
+            } else {
+                // Smooth interpolation
+                cursorPos.current.x = lerp(cursorPos.current.x, targetX, SMOOTH_FACTOR);
+                cursorPos.current.y = lerp(cursorPos.current.y, targetY, SMOOTH_FACTOR);
+            }
+
+            // Apply position
+            cursor.style.transform = `translate3d(${cursorPos.current.x}px, ${cursorPos.current.y}px, 0)`;
+
+            // Scale states
             let scale = 1;
             if (isClicking.current) {
                 scale = 0.7;
             } else if (isHovering.current) {
                 scale = 2.5;
             } else if (isTextHover.current) {
-                scale = 1.6; // Scale up for text
+                scale = 1.6;
             }
 
             inner.style.transform = `translate(-50%, -50%) scale(${scale})`;
-
             cursor.style.opacity = isHidden.current ? '0' : '1';
 
             // Interaction States
             if (isHovering.current) {
-                // Clickable State (Ring)
                 inner.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
                 inner.style.borderColor = 'rgba(255, 255, 255, 0.8)';
             } else if (isTextHover.current) {
-                // Text State (Transparent Overlay)
-                inner.style.backgroundColor = 'rgba(255, 255, 255, 0.5)'; // 50% opacity white
+                inner.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
                 inner.style.borderColor = 'transparent';
                 inner.style.mixBlendMode = 'difference';
             } else {
-                // Default State (Solid Dot)
                 inner.style.backgroundColor = '#fff';
                 inner.style.borderColor = 'transparent';
                 inner.style.mixBlendMode = 'difference';
             }
+
+            // Continue animation loop
+            rafId.current = requestAnimationFrame(animate);
         };
 
         const onMouseMove = (e) => {
             mousePos.current.x = e.clientX;
             mousePos.current.y = e.clientY;
-            updateCursor();
+
+            // Show cursor and start animation on first mouse move
+            if (!hasMovedOnce.current) {
+                hasMovedOnce.current = true;
+                isHidden.current = false;
+                // Initialize cursor position to mouse position on first move
+                cursorPos.current.x = e.clientX;
+                cursorPos.current.y = e.clientY;
+            }
         };
 
         const onMouseOver = (e) => {
             const target = e.target;
-
-            // PRIORITY 1: Clickable elements (Links, Buttons)
             const clickable = target.closest('a, button, [role="button"], .cursor-pointer, input[type="submit"], .magnetic');
-
-            // PRIORITY 2: Text elements
-            // We check the tag name directly since CSS cursor:none hides the default cursor type
             const textTags = ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'SPAN', 'LI', 'BLOCKQUOTE', 'TD', 'TH', 'LABEL', 'STRONG', 'EM', 'B', 'I'];
             const isTextTag = textTags.includes(target.tagName) || target.closest(textTags.join(','));
 
             isHovering.current = !!clickable;
-
-            // Only consider it text hover if it's NOT clickable
             isTextHover.current = !clickable && !!isTextTag;
-
             magnetTarget.current = clickable || null;
-            updateCursor();
         };
 
-        const onMouseDown = () => { isClicking.current = true; updateCursor(); };
-        const onMouseUp = () => { isClicking.current = false; updateCursor(); };
-        const onMouseLeave = () => { isHidden.current = true; updateCursor(); };
-        const onMouseEnter = () => { isHidden.current = false; updateCursor(); };
+        const onMouseDown = () => { isClicking.current = true; };
+        const onMouseUp = () => { isClicking.current = false; };
+        const onMouseLeave = () => { isHidden.current = true; };
+        const onMouseEnter = () => { isHidden.current = false; };
 
         window.addEventListener('mousemove', onMouseMove, { passive: true });
         window.addEventListener('mouseover', onMouseOver, { passive: true });
@@ -108,10 +132,11 @@ const Cursor = () => {
         document.body.addEventListener('mouseleave', onMouseLeave);
         document.body.addEventListener('mouseenter', onMouseEnter);
 
-        // Initial update
-        updateCursor();
+        // Start the animation loop
+        rafId.current = requestAnimationFrame(animate);
 
         return () => {
+            if (rafId.current) cancelAnimationFrame(rafId.current);
             window.removeEventListener('mousemove', onMouseMove);
             window.removeEventListener('mouseover', onMouseOver);
             window.removeEventListener('mousedown', onMouseDown);
@@ -151,3 +176,4 @@ const Cursor = () => {
 };
 
 export default Cursor;
+
