@@ -16,15 +16,12 @@ const LazyVideo = ({
   const [hasLoaded, setHasLoaded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Generate thumbnail from video filename if not provided
+  // Get thumbnail from explicit props only (don't auto-generate to avoid 404s)
   const getThumbnail = () => {
     if (thumbnail) return thumbnail;
     if (poster) return poster;
-    // Auto-generate thumbnail path from video path
-    // e.g., "/images/video.mp4" -> "/images/video_thumb.jpg"
-    if (src) {
-      return src.replace('.mp4', '_thumb.jpg');
-    }
+    // Don't auto-generate thumbnail paths - they don't exist and cause 404 errors
+    // The component will use a gradient placeholder instead
     return null;
   };
 
