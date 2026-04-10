@@ -129,7 +129,7 @@ const Hero3D = () => {
                         </div>
                         <div className="info-line">
                             <span className="info-label">YEAR:</span>
-                            <span className="info-value">2025</span>
+                            <span className="info-value">2026</span>
                         </div>
                     </div>
                 </footer>
