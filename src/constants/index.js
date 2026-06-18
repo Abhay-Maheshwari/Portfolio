@@ -102,11 +102,15 @@ const educationList = [
 const skillsData = [
   {
     category: "Programming Languages",
-    skills: ["Python", "Java", "SQL", "C++", "JavaScript", "HTML", "CSS", "SAP ABAP"]
+    skills: ["Python", "Java 17", "SQL", "C++", "JavaScript", "TypeScript", "HTML", "CSS", "SAP ABAP"]
   },
   {
     category: "Frameworks & Technologies",
-    skills: ["ASP.NET", "React.js", "FastAPI", "Streamlit", "Pandas", "Selenium", "MySQL", "Git", "AWS"]
+    skills: ["Angular 19", "Spring Boot", "React.js", "FastAPI", "Streamlit", "MySQL", "Redis", "Kubernetes", "Istio", "AWS S3", "Git"]
+  },
+  {
+    category: "DevOps & Security",
+    skills: ["CI/CD", "Azure Pipelines", "SonarQube", "HP Fortify", "BlackDuck", "AES-256 Encryption", "RBAC", "Docker"]
   },
   {
     category: "Data & Automation",
@@ -115,6 +119,61 @@ const skillsData = [
 ];
 
 const projects = [
+  {
+    title: "Visitor Management System (VMS)",
+    desc: "Enterprise-scale visitor management system for Reliance Industries Petchem warehouses. Role-based access control (5 roles), OTP verification (SMS+Email), AES-256 PII encryption, AD integration, Kubernetes deployment, and comprehensive security audits.",
+    subdesc: "Angular 19 · Spring Boot · MySQL · Redis · Kubernetes · Istio",
+    href: "#",
+    texture: "/images/VMS Visitor Req.png",
+    spotlight: "/images/VMS Visitor Req.png",
+    tags: [
+      {
+        id: 1,
+        name: "Angular",
+        path: "/images/logos/react.png",
+      },
+      {
+        id: 2,
+        name: "Spring Boot",
+        path: "/images/logos/python.svg",
+      },
+      {
+        id: 3,
+        name: "Kubernetes",
+        path: "/images/logos/react.png",
+      },
+      {
+        id: 4,
+        name: "Security",
+        path: "/images/logos/react.png",
+      },
+    ],
+  },
+  {
+    title: "R|Elan CMS Platform",
+    desc: "Dynamic CMS-driven website for Reliance's R|Elan brand. Non-technical admins can edit content, images, and sections. Features AWS S3 media storage, image compression, lazy loading, and multi-environment QA/prod infrastructure.",
+    subdesc: "Angular · CMS · AWS S3 · Image Optimization",
+    href: "#",
+    texture: "/images/CMS LFW.png",
+    spotlight: "/images/CMS LFW.png",
+    tags: [
+      {
+        id: 1,
+        name: "Angular",
+        path: "/images/logos/react.png",
+      },
+      {
+        id: 2,
+        name: "AWS S3",
+        path: "/images/logos/python.svg",
+      },
+      {
+        id: 3,
+        name: "CMS",
+        path: "/images/logos/react.png",
+      },
+    ],
+  },
   {
     title: "Scalable LLM Fine-Tuning Platform",
     desc: "Built full-stack platform for local LLM fine-tuning with automated evaluation (10+ metrics), cutting testing time by 70%. Developed FastAPI backend with 45+ REST endpoints.",
@@ -302,7 +361,7 @@ const projects = [
         path: "/images/logos/react.png",
       },
     ],
-  },
+  }
 ];
 
 const techStackIcons = [
@@ -362,6 +421,15 @@ const techStackIcons = [
 ];
 
 const expCards = [
+  {
+    review: "Led development of two enterprise applications: Visitor Management System (VMS) and R|Elan CMS. Delivered 160+ tasks for VMS including full-stack features, security hardening (AES-256 encryption, HP Fortify remediation), Kubernetes deployment, and CI/CD pipelines. Built 55+ CMS features for dynamic content management with AWS S3 media storage. Resolved 32+ vulnerabilities, achieved SonarQube & BlackDuck compliance, and established multi-environment infrastructure.",
+    imgPath: "/images/reliance.png",
+    logoPath: "/images/protiviti.png",
+    title: "Software Development Intern",
+    company: "Reliance Industries Limited (RIL)",
+    date: "Jan 2026 - May 2026",
+    technologies: ["Angular 19", "Spring Boot", "Kubernetes", "Istio", "AWS S3", "MySQL", "Redis", "Java 17"],
+  },
   {
     review: "Designed and developed multi-table SAP reports using ABAP programming for seamless data integration. Created custom database tables and maintenance generators. Executed data migration ensuring data integrity and presented RICEFW framework best practices for transport management.",
     imgPath: "/images/protiviti.png",

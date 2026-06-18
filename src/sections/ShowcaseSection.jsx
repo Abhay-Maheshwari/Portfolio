@@ -9,6 +9,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Video mapping for each project (by index)
 const projectVideos = [
+  "/images/vms.mp4",
+  "/images/r-elan.webm",
   "/images/SFTP.mp4",        // 0: Scalable LLM Fine-Tuning Platform   // 1: Holdings Manager Tool
   "/images/Holding Manager.mp4",
   "/images/HackSimulator.mp4",
