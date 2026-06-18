@@ -15,6 +15,8 @@ const LazyVideo = ({
   const videoRef = useRef(null);
   const [hasLoaded, setHasLoaded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isNearViewport, setIsNearViewport] = useState(false);
+  const [isInViewport, setIsInViewport] = useState(false);
 
   // Detect if source is an image or video
   const isImage = src && /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(src);
@@ -30,22 +32,50 @@ const LazyVideo = ({
     return null;
   };
 
-  // Auto-play video when it's ready
+  // Setup IntersectionObservers
   useEffect(() => {
     if (isImage) return;
+
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Load the video when it gets close to the viewport (e.g. 400px margin)
+    const loadObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsNearViewport(true);
+          loadObserver.unobserve(container);
+        }
+      },
+      { rootMargin: '400px' }
+    );
+
+    // Play/Pause when entering/leaving viewport
+    const playObserver = new IntersectionObserver(
+      ([entry]) => {
+        setIsInViewport(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    loadObserver.observe(container);
+    playObserver.observe(container);
+
+    return () => {
+      loadObserver.disconnect();
+      playObserver.disconnect();
+    };
+  }, [isImage]);
+
+  // Set up video load/play/pause listeners
+  useEffect(() => {
+    if (isImage || !isNearViewport) return;
 
     const video = videoRef.current;
     if (!video) return;
 
     const handleCanPlay = () => {
       setHasLoaded(true);
-      if (autoPlay && muted) {
-        video.play()
-          .then(() => setIsPlaying(true))
-          .catch(err => {
-            console.warn('Video autoplay failed:', err);
-          });
-      }
     };
 
     const handlePlay = () => setIsPlaying(true);
@@ -55,7 +85,6 @@ const LazyVideo = ({
     video.addEventListener('play', handlePlay);
     video.addEventListener('pause', handlePause);
 
-    // If already ready, trigger play
     if (video.readyState >= 3) {
       handleCanPlay();
     }
@@ -65,7 +94,28 @@ const LazyVideo = ({
       video.removeEventListener('play', handlePlay);
       video.removeEventListener('pause', handlePause);
     };
-  }, [isImage, autoPlay, muted, src]);
+  }, [isImage, isNearViewport, src]);
+
+  // Play/pause the video element based on viewport intersection
+  useEffect(() => {
+    if (isImage || !isNearViewport) return;
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isInViewport && hasLoaded) {
+      if (autoPlay && muted) {
+        video.play()
+          .then(() => setIsPlaying(true))
+          .catch(err => {
+            console.warn('Video playback failed:', err);
+          });
+      }
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  }, [isImage, isInViewport, isNearViewport, hasLoaded, autoPlay, muted]);
 
   const handleImageLoad = () => {
     setHasLoaded(true);
@@ -115,10 +165,10 @@ const LazyVideo = ({
         </div>
       )}
 
-      {/* Video element - always load src directly */}
+      {/* Video element - only load src once it's near the viewport */}
       <video
         ref={videoRef}
-        src={src}
+        src={isNearViewport ? src : undefined}
         className={`${className} ${hasLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}
         poster={thumbnailSrc}
         autoPlay={autoPlay}
