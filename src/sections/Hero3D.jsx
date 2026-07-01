@@ -51,10 +51,8 @@ const Hero3D = () => {
                 currentTimeVal = targetTime;
             }
 
-            if (video.readyState >= 2 && !video.seeking) {
-                if (Math.abs(video.currentTime - currentTimeVal) > 0.02) {
-                    video.currentTime = currentTimeVal;
-                }
+            if (video.readyState >= 1) {
+                video.currentTime = currentTimeVal;
             }
 
             let needsContinuousUpdate = false;
@@ -189,8 +187,8 @@ const Hero3D = () => {
                 preload="auto"
                 aria-hidden="true"
             >
-                <source src="/images/i_wish_to_make_this_in_a_portr_smooth.webm" media="(max-width: 768px)" type="video/webm" />
-                <source src="/images/hero-video-smooth-v4.webm" type="video/webm" />
+                <source src="/images/hero-kf-mob.webm" media="(max-width: 768px)" type="video/webm" />
+                <source src="/images/hero-kf-desk.webm" type="video/webm" />
             </video>
 
             {/* Darkening overlay for readability */}
