@@ -51,8 +51,10 @@ const Hero3D = () => {
                 currentTimeVal = targetTime;
             }
 
-            if (video.readyState >= 1) {
-                video.currentTime = currentTimeVal;
+            if (video.readyState >= 2 && !video.seeking) {
+                if (Math.abs(video.currentTime - currentTimeVal) > 0.02) {
+                    video.currentTime = currentTimeVal;
+                }
             }
 
             let needsContinuousUpdate = false;
@@ -70,7 +72,7 @@ const Hero3D = () => {
 
                 if (op > 0.1) {
                     needsContinuousUpdate = true; // Keep looping to flicker
-                    if (time - lastFlickerTime > 100) { // Update every 400ms
+                    if (time - lastFlickerTime > 100) { // Update every 100ms
                         flickerIndex = (flickerIndex + 1) % FLICKER_ITEMS.length;
                         const children = abhayTextRef.current.children;
                         if (children.length >= 2) {
