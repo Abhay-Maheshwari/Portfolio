@@ -16,12 +16,12 @@
 
 /* ========================================
    SCROLL TRIGGER ZONE
-   100vh scroll = full circle reveal
+   200vh video scrub + 100vh radial reveal = 300vh total
    ======================================== */
 .scroll-trigger-zone {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: 300vh;
     pointer-events: none;
     background: transparent;
 }
@@ -34,7 +34,7 @@
     position: relative;
     width: 100%;
     z-index: 1;
-    background-color: #020202;
+    background-color: #0c0a09;
 }
 
 /* ========================================
@@ -141,10 +141,6 @@ html {
    MOBILE OPTIMIZATIONS
    ======================================== */
 @media (max-width: 768px) {
-    .scroll-trigger-zone {
-        height: 80vh;
-    }
-    
     .hero-overlay-layer {
         contain: layout paint;
     }

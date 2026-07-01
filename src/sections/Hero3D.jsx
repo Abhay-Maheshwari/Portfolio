@@ -1,138 +1,225 @@
 import { useEffect, useRef, useState } from 'react';
-import { SceneManager } from '../three/SceneManager.js';
 import './Hero3D.css';
 
+const FLICKER_ITEMS = [
+    { l1: "SOFTWARE", l2: "ENGINEER" },
+    { l1: "FULL-STACK", l2: "DEVELOPER" },
+    { l1: "PROBLEM", l2: "SOLVER" },
+    { l1: "CREATIVE", l2: "THINKER" },
+    { l1: "AVID", l2: "READER" },
+    { l1: "TECH", l2: "ENTHUSIAST" },
+    { l1: "PHOTOGRAPHY", l2: "LOVER" },
+    { l1: "JACK OF", l2: "ALL TRADES" }
+];
+
 const Hero3D = () => {
-    const canvasRef = useRef(null);
-    const sceneManagerRef = useRef(null);
+    const videoRef = useRef(null);
+    const rafRef = useRef(null);
+    const abhayTextRef = useRef(null);
+    const jackTextRef = useRef(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-        if (!canvasRef.current) return;
+        const video = videoRef.current;
+        if (!video) return;
 
-        // Initialize the scene
-        const sceneManager = new SceneManager(canvasRef.current);
-        sceneManager.init();
-        sceneManagerRef.current = sceneManager;
+        let isVideoReady = false;
+        let fontsReady = false;
+        let isFullyLoaded = false;
 
-        // Hide loader after scene is ready
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 1000);
-
-        // Cleanup on unmount
-        return () => {
-            clearTimeout(timer);
-            if (sceneManagerRef.current) {
-                sceneManagerRef.current.dispose();
+        const checkCompletion = () => {
+            if (isVideoReady && fontsReady) {
+                isFullyLoaded = true;
             }
+        };
+
+        // Scroll-driven video: map scroll position → video currentTime
+        // Scroll range matches RadialReveal trigger zone (1× viewport height)
+        let targetTime = 0;
+        let currentTimeVal = 0;
+        let animating = false;
+        let lastFlickerTime = 0;
+        let flickerIndex = 0;
+
+        const smoothSeek = (time) => {
+            // Lerp for smooth scrubbing
+            currentTimeVal += (targetTime - currentTimeVal) * 0.15;
+
+            // Snap when close enough
+            if (Math.abs(targetTime - currentTimeVal) < 0.01) {
+                currentTimeVal = targetTime;
+            }
+
+            if (video.readyState >= 1) {
+                video.currentTime = currentTimeVal;
+            }
+
+            let needsContinuousUpdate = false;
+
+            // Sync text overlays to video time
+            if (abhayTextRef.current) {
+                let op = 0;
+                if (currentTimeVal > 2.0 && currentTimeVal < 3.0) op = (currentTimeVal - 2.0);
+                else if (currentTimeVal >= 3.0 && currentTimeVal <= 5.8) op = 1;
+                else if (currentTimeVal > 5.8 && currentTimeVal < 6.8) op = 1 - (currentTimeVal - 5.8);
+
+                abhayTextRef.current.style.opacity = op;
+                abhayTextRef.current.style.transform = `translate(-50%, -50%) scale(${0.95 + op * 0.05}) translateY(${20 - op * 20}px)`;
+                abhayTextRef.current.style.pointerEvents = op > 0.1 ? 'auto' : 'none';
+
+                if (op > 0.1) {
+                    needsContinuousUpdate = true; // Keep looping to flicker
+                    if (time - lastFlickerTime > 100) { // Update every 400ms
+                        flickerIndex = (flickerIndex + 1) % FLICKER_ITEMS.length;
+                        const children = abhayTextRef.current.children;
+                        if (children.length >= 2) {
+                            children[0].innerText = FLICKER_ITEMS[flickerIndex].l1;
+                            children[1].innerText = FLICKER_ITEMS[flickerIndex].l2;
+                        }
+                        lastFlickerTime = time;
+                    }
+                }
+            }
+
+            if (jackTextRef.current) {
+                let op = 0;
+                if (currentTimeVal > 7.0 && currentTimeVal < 8.0) op = (currentTimeVal - 7.0);
+                else if (currentTimeVal >= 8.0) op = 1;
+
+                jackTextRef.current.style.opacity = op;
+                jackTextRef.current.style.transform = `translate(-50%, -50%) scale(${0.95 + op * 0.05})`;
+                jackTextRef.current.style.pointerEvents = op > 0.1 ? 'auto' : 'none';
+            }
+
+            if (Math.abs(targetTime - currentTimeVal) > 0.001 || needsContinuousUpdate) {
+                rafRef.current = requestAnimationFrame(smoothSeek);
+            } else {
+                animating = false;
+            }
+        };
+
+        const updateVideoTime = () => {
+            if (!video || !video.duration || !isFinite(video.duration)) return;
+
+            // Video scrubs through first 2× viewport height of scroll
+            const scrollHeight = window.innerHeight * 2;
+            const scrollProgress = Math.min(Math.max(window.scrollY / scrollHeight, 0), 1);
+            targetTime = scrollProgress * video.duration;
+
+            if (!animating) {
+                animating = true;
+                rafRef.current = requestAnimationFrame(smoothSeek);
+            }
+        };
+
+        const handleScroll = () => {
+            updateVideoTime();
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        // Font load check
+        document.fonts.ready.then(() => {
+            fontsReady = true;
+            checkCompletion();
+        }).catch(() => {
+            fontsReady = true;
+            checkCompletion();
+        });
+
+        // Video ready check
+        const handleCanPlay = () => {
+            isVideoReady = true;
+            checkCompletion();
+            // Pause immediately — scroll controls playback
+            video.pause();
+            // Set initial frame based on current scroll
+            updateVideoTime();
+        };
+
+        if (video.readyState >= 3) {
+            handleCanPlay();
+        } else {
+            video.addEventListener('canplaythrough', handleCanPlay, { once: true });
+        }
+
+        // Progress bar simulation loop
+        let currentProgress = 0;
+        const progressInterval = setInterval(() => {
+            if (!isFullyLoaded) {
+                if (currentProgress < 90) {
+                    currentProgress += Math.random() * 3 + 1;
+                    if (currentProgress > 90) currentProgress = 90;
+                    setProgress(currentProgress);
+                }
+            } else {
+                if (currentProgress < 100) {
+                    currentProgress += Math.random() * 8 + 4;
+                    if (currentProgress >= 100) {
+                        currentProgress = 100;
+                        clearInterval(progressInterval);
+                        setTimeout(() => {
+                            setIsLoading(false);
+                        }, 200);
+                    }
+                    setProgress(currentProgress);
+                }
+            }
+        }, 30);
+
+        return () => {
+            clearInterval(progressInterval);
+            window.removeEventListener('scroll', handleScroll);
+            if (rafRef.current) cancelAnimationFrame(rafRef.current);
+            video.removeEventListener('canplaythrough', handleCanPlay);
         };
     }, []);
 
-    const handleExploreClick = () => {
-        // Scroll to trigger full radial reveal and reach first content section
-        // Scrolling by 100vh completes the reveal, then a bit more to reach content
-        const scrollTarget = window.innerHeight + 100;
-        window.scrollTo({
-            top: scrollTarget,
-            behavior: 'smooth'
-        });
-    };
-
     return (
         <div className="hero3d-container">
-            {/* 3D Canvas */}
-            <canvas ref={canvasRef} id="three-canvas" className="hero3d-canvas" role="img" aria-label="3D animated laptop scene" />
+            {/* Video Background — scroll-driven playback */}
+            <video
+                ref={videoRef}
+                className="hero-video-bg"
+                muted
+                playsInline
+                preload="auto"
+                aria-hidden="true"
+            >
+                <source src="/images/i_wish_to_make_this_in_a_portr_smooth.webm" media="(max-width: 768px)" type="video/webm" />
+                <source src="/images/hero-video-smooth-v4.webm" type="video/webm" />
+            </video>
+
+            {/* Darkening overlay for readability */}
+            <div className="hero-video-overlay" />
 
             {/* Noise Overlay */}
             <div className="grain-overlay" />
 
-            {/* Loading Screen */}
-            {isLoading && (
-                <div className="hero3d-loader">
-                    <div className="loader-ring" />
-                    <span className="loader-text">Loading Experience</span>
-                </div>
-            )}
-
-            {/* Background Name */}
-            <div className="bg-name" aria-hidden="true">
-                <span>ABHAY</span>
-                <span>MAHESHWARI</span>
+            {/* Video Text Overlays */}
+            <div className="video-text-overlay" ref={abhayTextRef}>
+                <div className="video-text-line">SOFTWARE</div>
+                <div className="video-text-line">ENGINEER</div>
             </div>
 
-            {/* UI Overlay */}
-            <div className="ui-overlay">
-                {/* Note: Header/Nav is now in PersistentNav component (always visible) */}
+            <div className="video-text-overlay" ref={jackTextRef}>
+                <div className="video-text-line"></div>
+                <div className="video-text-line"></div>
+            </div>
 
-                {/* Hero Content */}
-                <div className="hero-content">
-                    <h1 className="hero-name">
-                        <span className="reveal-wrapper">
-                            <span className="reveal-text">ABHAY MAHESHWARI</span>
-                        </span>
-                    </h1>
-                    <p className="hero-title">
-                        <span className="reveal-wrapper">
-                            <span className="reveal-text">Software Engineer</span>
-                        </span>
-                    </p>
-                    <p className="hero-specialization">
-                        <span className="reveal-wrapper">
-                            <span className="reveal-text">Full-Stack · AI/ML · Cloud</span>
-                        </span>
-                    </p>
+            {/* Loading Screen */}
+            <div className={`hero3d-loader ${isLoading ? '' : 'loaded'}`} aria-live="polite" aria-busy={isLoading}>
+                <div className="loader-content">
+                    <h2 className="loader-title">ABHAY MAHESHWARI</h2>
+                    <div className="loader-progress-track">
+                        <div className="loader-progress-bar" style={{ width: `${progress}%` }} />
+                    </div>
+                    <div className="loader-status">
+                        <span className="loader-text">Initializing Experience</span>
+                        <span className="loader-percentage">{Math.round(progress)}%</span>
+                    </div>
                 </div>
-
-                {/* Bottom Section */}
-                <footer className="bottom-section">
-                    {/* Left Info Panel */}
-                    <div className="info-panel info-panel-left">
-                        <div className="info-line">
-                            <span className="info-label">STATUS:</span>
-                            <span className="info-value status-active">AVAILABLE FOR WORK</span>
-                        </div>
-                        <div className="info-line">
-                            <span className="info-label">LOCATION:</span>
-                            <span className="info-value">INDIA</span>
-                        </div>
-                        <div className="info-line">
-                            <span className="info-label">FOCUS:</span>
-                            <span className="info-value">FULL-STACK & AI APPLICATIONS</span>
-                        </div>
-                    </div>
-
-                    {/* CTA Button */}
-                    <div className="cta-container">
-                        <div className="cta-glow" aria-hidden="true" />
-                        <button className="cta-btn" id="exploreBtn" onClick={handleExploreClick}>
-                            <span className="cta-text">EXPLORE NOW</span>
-                        </button>
-                        <a href="/Abhay Maheshwari Resume 2025.pdf" download className="cta-btn resume-btn">
-                            <span className="cta-text">DOWNLOAD RESUME</span>
-                        </a>
-                    </div>
-
-                    {/* Right Info Panel */}
-                    <div className="info-panel info-panel-right">
-                        <div className="info-line">
-                            <span className="info-label">MODE:</span>
-                            <span className="info-value">ONLINE</span>
-                        </div>
-                        <div className="info-line">
-                            <span className="info-label">PORTFOLIO:</span>
-                            <span className="info-value status-active">ACTIVE</span>
-                        </div>
-                        <div className="info-line">
-                            <span className="info-label">STATUS:</span>
-                            <span className="info-value">CONNECTED</span>
-                        </div>
-                        <div className="info-line">
-                            <span className="info-label">YEAR:</span>
-                            <span className="info-value">2026</span>
-                        </div>
-                    </div>
-                </footer>
             </div>
         </div>
     );

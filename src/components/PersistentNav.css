@@ -1,303 +1,210 @@
 /* ========================================
-   PersistentNav Component Styles
-   Hero-style navbar that persists site-wide
+   Circle Nav — Collapsible circle → horizontal bar
    ======================================== */
 
-.persistent-header {
+.circle-nav {
     position: fixed;
     top: 2rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(-100%);
-    width: min(90%, 1400px);
+    left: 2rem;
+    z-index: 1000000;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-    background: rgba(10, 10, 10, 0.4);
-    backdrop-filter: blur(50px);
-    -webkit-backdrop-filter: blur(50px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 100px;
-    /* Above everything including hero overlay */
-    z-index: 9999;
+    /* Entry animation */
     opacity: 0;
-    animation: headerSlideIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.5s forwards;
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    transform: scale(0.5);
+    animation: circleNavIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.5s forwards;
 }
 
-@keyframes headerSlideIn {
+@keyframes circleNavIn {
     to {
         opacity: 1;
-        transform: translateX(-50%) translateY(0);
+        transform: scale(1);
     }
 }
 
-/* Brand */
-.persistent-header .brand {
-    flex: 0 0 auto;
-    text-decoration: none;
+/* ========================================
+   Toggle Button (The Circle)
+   ======================================== */
+.circle-nav-toggle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(10, 10, 10, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     cursor: pointer;
-}
-
-.persistent-header .brand-text {
-    font-family: 'Space Mono', 'Courier New', monospace;
-    font-weight: 700;
-    font-size: 1.4rem;
-    letter-spacing: -0.02em;
-    color: #ededed;
-    transition: color 0.3s ease;
     display: flex;
     align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.4),
+        0 0 0 0 rgba(255, 255, 255, 0);
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
 }
 
-.persistent-header .brand-symbol {
+.circle-nav-toggle:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(20, 20, 20, 0.6);
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.5),
+        0 0 0 4px rgba(255, 255, 255, 0.05);
+    transform: scale(1.08);
+}
+
+.circle-nav.open .circle-nav-toggle {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(15, 15, 15, 0.6);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+}
+
+/* ========================================
+   Brand Icon (Logo in Circle)
+   ======================================== */
+.circle-nav-brand-icon {
+    font-family: 'Space Mono', 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 1.05rem;
     color: #ededed;
-    margin-right: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(1px);
+    transition: color 0.3s ease;
 }
 
-.persistent-header .brand-cursor {
+.circle-nav-brand-icon .brand-symbol {
+    color: #ededed;
+    margin-right: 1px;
+}
+
+.circle-nav-brand-icon .brand-cursor {
     color: #4ade80;
     animation: cursorBlink 1s step-end infinite;
 }
 
 @keyframes cursorBlink {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0;
-    }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
-.persistent-header .brand:hover .brand-text {
-    color: #fff;
-}
-
-.persistent-header .brand:hover .brand-symbol {
-    color: #fff;
-}
-
-/* Navigation */
-.persistent-nav {
+/* ========================================
+   Horizontal Bar (expands to the right)
+   ======================================== */
+.circle-nav-bar {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 2.5rem;
-    flex-wrap: wrap;
-    flex: 1;
-    max-width: 70%;
+    gap: 1.5rem;
+    padding: 0;
+    height: 56px;
+    background: rgba(10, 10, 10, 0.5);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-left: none;
+    border-radius: 0 100px 100px 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    white-space: nowrap;
+
+    /* Hidden state — collapsed to zero width */
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition:
+        max-width 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+        opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+        padding 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.persistent-header .nav-link {
-    position: relative;
+.circle-nav.open .circle-nav-bar {
+    max-width: 500px;
+    opacity: 1;
+    padding: 0 1.5rem 0 1rem;
+}
+
+/* ========================================
+   Nav Links (horizontal single line)
+   ======================================== */
+.circle-nav-link {
     font-family: 'Space Mono', monospace;
     font-size: 0.7rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: rgba(237, 237, 237, 0.6);
     text-decoration: none;
-    padding: 0.5rem 0.8rem;
-    transition: color 0.3s ease, background 0.3s ease;
+    padding: 0.4rem 0.6rem;
     border-radius: 4px;
+    transition: color 0.3s ease, background 0.3s ease;
+    flex-shrink: 0;
 }
 
-.persistent-header .nav-link:hover {
+.circle-nav-link:hover {
     color: #ededed;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.06);
 }
 
-.persistent-header .nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 2px;
-    left: 50%;
-    width: 0;
-    height: 1px;
-    background: #ededed;
-    transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1), left 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-.persistent-header .nav-link:hover::after {
-    width: 100%;
-    left: 0;
-}
-
-/* Header Right */
-.persistent-header .header-right {
-    flex: 0 0 auto;
-}
-
-.persistent-header .status-indicator {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    color: rgba(237, 237, 237, 0.4);
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.35rem 0.8rem;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.persistent-header .status-dot {
-    width: 6px;
-    height: 6px;
-    background: #4ade80;
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
-    animation: pulseStatus 2s infinite;
-}
-
-@keyframes pulseStatus {
-    0% {
-        opacity: 0.5;
-        transform: scale(1);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scale(1.2);
-    }
-
-    100% {
-        opacity: 0.5;
-        transform: scale(1);
-    }
+.circle-nav-link.active {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 /* ========================================
-   Mobile Menu Toggle
+   Mobile adjustments
    ======================================== */
-.persistent-header .menu-toggle {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    width: 32px;
-    height: 32px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
-    z-index: 9000;
-}
-
-.persistent-header .menu-toggle span {
-    display: block;
-    width: 20px;
-    height: 2px;
-    background: #ededed;
-    border-radius: 2px;
-    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-    transform-origin: center;
-}
-
-.persistent-header .menu-toggle.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-}
-
-.persistent-header .menu-toggle.active span:nth-child(2) {
-    opacity: 0;
-    transform: scaleX(0);
-}
-
-.persistent-header .menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
-}
-
-/* ========================================
-   Responsive
-   ======================================== */
-
-@media (max-width: 1200px) {
-    .persistent-header {
-        width: 95%;
-        padding: 1rem 1.5rem;
+@media (max-width: 768px) {
+    .circle-nav {
+        top: 1.25rem;
+        left: 1.25rem;
     }
 
-    .persistent-nav {
-        gap: 1.5rem;
+    .circle-nav-toggle {
+        width: 42px;
+        height: 42px;
     }
 
-    .persistent-header .nav-link {
+    .circle-nav-bar {
+        height: 42px;
+        gap: 1rem;
+    }
+
+    .circle-nav.open .circle-nav-bar {
+        padding: 0 1rem 0 0.8rem;
+    }
+
+    .circle-nav-link {
         font-size: 0.6rem;
+        letter-spacing: 0.08em;
+        padding: 0.3rem 0.5rem;
     }
 }
 
-@media (max-width: 1024px) {
-    .persistent-header {
-        top: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        transform: translateX(0) translateY(-100%);
-        border-radius: 0;
-        border: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 1rem 1.5rem;
-        justify-content: space-between;
+@media (max-width: 480px) {
+    .circle-nav {
+        top: 1rem;
+        left: 1rem;
     }
 
-    @keyframes headerSlideIn {
-        to {
-            opacity: 1;
-            transform: translateX(0) translateY(0);
-        }
+    .circle-nav-toggle {
+        width: 42px;
+        height: 42px;
     }
 
-    .persistent-header .menu-toggle {
-        display: flex;
+    .circle-nav-bar {
+        height: 42px;
+        gap: 0.6rem;
     }
 
-    .persistent-nav {
-        position: fixed;
-        top: 60px;
-        left: 0;
-        right: 0;
-        max-height: calc(100vh - 60px);
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        background: rgba(5, 5, 5, 0.98);
-        backdrop-filter: blur(30px);
-        -webkit-backdrop-filter: blur(30px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        z-index: 9000;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
-        max-width: 100%;
+    .circle-nav.open .circle-nav-bar {
+        max-width: calc(100vw - 3.5rem);
+        padding: 0 0.8rem 0 0.5rem;
     }
 
-    .persistent-nav.active {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-
-    .persistent-header .nav-link {
-        font-size: 1rem;
-        letter-spacing: 0.15em;
-        padding: 1.4rem 1.5rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        text-align: left;
-        border-radius: 0;
-    }
-
-    .persistent-header .nav-link:last-child {
-        border-bottom: none;
-    }
-
-    .persistent-header .header-right {
-        display: none;
+    .circle-nav-brand-icon {
+        font-size: 0.8rem;
     }
 }

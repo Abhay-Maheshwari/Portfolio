@@ -38,9 +38,14 @@ const Model3D = ({ model }) => {
 
 const TechIconCardExperience = ({ model }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const canvasRef = useRef(null);
 
   useEffect(() => {
+    const mobile = window.innerWidth < 768 || navigator.maxTouchPoints > 0;
+    setIsMobile(mobile);
+    if (mobile) return;
+
     const currentCanvas = canvasRef.current;
     const observer = new IntersectionObserver(
       (entries) => {
@@ -66,6 +71,36 @@ const TechIconCardExperience = ({ model }) => {
       }
     };
   }, []);
+
+  if (isMobile) {
+    const initials = model.name === "Three.js" ? "3D" : model.name.substring(0, 2).toUpperCase();
+    const glowColor = model.name === "React" ? "rgba(34, 211, 238, 0.25)" : 
+                      model.name === "Python" ? "rgba(251, 191, 36, 0.25)" :
+                      model.name === "Node.js" ? "rgba(74, 222, 128, 0.25)" : 
+                      "rgba(139, 92, 246, 0.25)";
+    const borderGlow = model.name === "React" ? "border-cyan-500/30 hover:border-cyan-400" : 
+                       model.name === "Python" ? "border-amber-500/30 hover:border-amber-400" :
+                       model.name === "Node.js" ? "border-green-500/30 hover:border-green-400" : 
+                       "border-purple-500/30 hover:border-purple-400";
+    const textGlow = model.name === "React" ? "text-cyan-400 text-shadow-[0_0_15px_rgba(34,211,238,0.6)]" : 
+                     model.name === "Python" ? "text-amber-400 text-shadow-[0_0_15px_rgba(251,191,36,0.6)]" :
+                     model.name === "Node.js" ? "text-green-400 text-shadow-[0_0_15px_rgba(74,222,128,0.6)]" : 
+                     "text-purple-400 text-shadow-[0_0_15px_rgba(139,92,246,0.6)]";
+    
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <div 
+          className={`size-24 rounded-full border ${borderGlow} flex items-center justify-center transition-all duration-500 transform group-hover:scale-110`}
+          style={{ 
+            background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`,
+            boxShadow: `0 0 35px -5px ${glowColor}`
+          }}
+        >
+          <span className={`text-2xl font-bold tracking-wider ${textGlow}`}>{initials}</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div ref={canvasRef} style={{ width: '100%', height: '100%' }}>

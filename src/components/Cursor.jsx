@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const Cursor = () => {
     const cursorRef = useRef(null);
@@ -13,8 +13,21 @@ const Cursor = () => {
     const rafId = useRef(null);
     const hasMovedOnce = useRef(false);
 
+    const [isTouchDevice, setIsTouchDevice] = useState(false);
+
     // Lerp function for smooth interpolation
     const lerp = (start, end, factor) => start + (end - start) * factor;
+
+    useEffect(() => {
+        // Check if it's a touch device
+        const checkTouch = () => {
+            setIsTouchDevice(window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window);
+        };
+        
+        checkTouch();
+        window.addEventListener('resize', checkTouch);
+        return () => window.removeEventListener('resize', checkTouch);
+    }, []);
 
     useEffect(() => {
         const cursor = cursorRef.current;
@@ -75,7 +88,8 @@ const Cursor = () => {
             }
 
             inner.style.transform = `translate(-50%, -50%) scale(${scale})`;
-            cursor.style.opacity = isHidden.current ? '0' : '1';
+            const shouldHideGlobal = typeof document !== 'undefined' && document.body.classList.contains('hide-global-cursor');
+            cursor.style.opacity = (isHidden.current || shouldHideGlobal) ? '0' : '1';
 
             // Interaction States
             if (isHovering.current) {
@@ -146,10 +160,12 @@ const Cursor = () => {
         };
     }, []);
 
+    if (isTouchDevice) return null;
+
     return (
         <div
             ref={cursorRef}
-            className="fixed top-0 left-0 pointer-events-none z-[10001]"
+            className="fixed top-0 left-0 pointer-events-none z-[9999999]"
             style={{
                 willChange: 'transform',
                 transition: 'opacity 0.15s ease'

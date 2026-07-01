@@ -1,81 +1,74 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { NavLink, Link } from 'react-router-dom';
 import { navLinks } from '../constants';
 import './PersistentNav.css';
 
 /**
  * PersistentNav Component
  * 
- * The hero-style navbar that persists throughout the entire site.
- * Positioned above the RadialReveal system so it's never masked.
+ * Collapsible circle that expands into a horizontal pill-shaped nav bar.
  */
 const PersistentNav = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const navRef = useRef(null);
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
+    const toggleNav = () => {
+        setIsOpen(prev => !prev);
     };
 
     const handleNavClick = () => {
-        setIsMenuOpen(false);
+        setIsOpen(false);
     };
 
-    const handleLogoClick = (e) => {
-        e.preventDefault();
-        setIsMenuOpen(false);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+    // Close on outside click
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (isOpen && navRef.current && !navRef.current.contains(e.target)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isOpen]);
+
+    // Close on Escape
+    useEffect(() => {
+        const handleEscape = (e) => {
+            if (e.key === 'Escape' && isOpen) setIsOpen(false);
+        };
+        document.addEventListener('keydown', handleEscape);
+        return () => document.removeEventListener('keydown', handleEscape);
+    }, [isOpen]);
 
     return (
-        <header className="persistent-header">
-            {/* Brand / Logo */}
-            <a href="#" className="brand" onClick={handleLogoClick}>
-                <span className="brand-text">
+        <div ref={navRef} className={`circle-nav ${isOpen ? 'open' : ''}`}>
+            {/* Toggle Button — the circle */}
+            <button
+                className="circle-nav-toggle"
+                onClick={toggleNav}
+                aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
+                aria-expanded={isOpen}
+            >
+                <span className="circle-nav-brand-icon" role="img" aria-hidden="true">
                     <span className="brand-symbol">&gt;</span>am<span className="brand-cursor">_</span>
                 </span>
-            </a>
+            </button>
 
-            {/* Navigation */}
-            <nav
-                className={`persistent-nav ${isMenuOpen ? 'active' : ''}`}
-                role="navigation"
-                aria-label="Main navigation"
-            >
+            {/* Expanded Horizontal Bar */}
+            <nav className="circle-nav-bar" role="navigation" aria-label="Main navigation">
                 {navLinks.map((item) => (
-                    <a
+                    <NavLink
                         key={item.name}
-                        href={item.link}
-                        className="nav-link"
+                        to={item.link}
+                        className={({ isActive }) => isActive ? "circle-nav-link active" : "circle-nav-link"}
                         onClick={handleNavClick}
                     >
                         {item.name.toUpperCase()}
-                    </a>
+                    </NavLink>
                 ))}
-
-
             </nav>
-
-            {/* Mobile Menu Toggle */}
-            <button
-                className={`menu-toggle ${isMenuOpen ? 'active' : ''}`}
-                aria-label="Toggle navigation"
-                onClick={toggleMenu}
-            >
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
-            {/* Status / Right Element */}
-            <div className="header-right">
-                <div className="status-indicator">
-                    <div className="status-dot" />
-                    <span className="status-text">SYSTEM ONLINE</span>
-                </div>
-            </div>
-        </header>
+        </div>
     );
 };
 
 export default PersistentNav;
-
-

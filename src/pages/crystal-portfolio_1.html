@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>studio. — work</title>
+<style>
+  :root{
+    --bg-top:#0b0e1a;
+    --bg-bot:#05060d;
+    --ink:#f4f3ee;
+    --ink-dim:rgba(244,243,238,.55);
+    --line:rgba(244,243,238,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{
+    width:100%;height:100%;
+    background:
+      radial-gradient(ellipse 70% 50% at 20% 10%, #0c0c0c 0%, transparent 60%),
+      radial-gradient(ellipse 60% 45% at 90% 80%, #0a0a0a 0%, transparent 55%),
+      #020202;
+    overflow:hidden;
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    color:var(--ink);
+    cursor:none;
+  }
+  canvas{display:block;position:fixed;inset:0;}
+
+  .vignette{
+    position:fixed;inset:0;pointer-events:none;z-index:5;
+    background:radial-gradient(ellipse 90% 90% at 50% 50%, transparent 45%, rgba(0,0,0,.55) 100%);
+  }
+  .grain{
+    position:fixed;inset:-50px;pointer-events:none;z-index:6;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:20;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:34px 48px;
+  }
+  .logo{display:flex;align-items:baseline;gap:8px;}
+  .logo .mark{font-size:20px;font-weight:600;letter-spacing:.5px;}
+  .logo .tag{font-family:'Brush Script MT','Segoe Script',cursive;font-size:20px;color:var(--ink-dim);font-style:italic;}
+  .navlinks{display:flex;gap:34px;}
+  .navlinks a{
+    color:var(--ink);text-decoration:none;font-size:13px;letter-spacing:.06em;
+    opacity:.85;transition:opacity .25s;
+  }
+  .navlinks a:hover{opacity:1;}
+
+  .corner-icon{
+    position:fixed;bottom:34px;left:40px;z-index:20;
+    width:46px;height:46px;border-radius:50%;
+    background:rgba(255,255,255,.06);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;gap:2px;
+    backdrop-filter:blur(4px);
+  }
+  .corner-icon span{width:2px;background:var(--ink-dim);border-radius:2px;animation:bar 1.6s ease-in-out infinite;}
+  .corner-icon span:nth-child(1){height:8px;animation-delay:0s;}
+  .corner-icon span:nth-child(2){height:14px;animation-delay:.2s;}
+  .corner-icon span:nth-child(3){height:6px;animation-delay:.4s;}
+  @keyframes bar{0%,100%{transform:scaleY(.5);}50%{transform:scaleY(1.3);}}
+
+  .scrollhint{
+    position:fixed;right:28px;top:50%;transform:translateY(-50%) rotate(180deg);
+    writing-mode:vertical-rl;z-index:20;font-size:11px;letter-spacing:.2em;
+    color:var(--ink-dim);display:flex;align-items:center;gap:10px;
+    transition:opacity .6s;
+  }
+  .scrollhint::after{content:'';width:1px;height:60px;background:var(--line);display:block;}
+  .scrollhint.hidden{opacity:0;}
+
+  .titleblock{
+    position:fixed;left:46px;bottom:64px;z-index:20;
+    max-width:60vw;
+  }
+  .titleblock h2{
+    font-family:Georgia,'Times New Roman',serif;
+    font-weight:400;font-size:clamp(28px,4vw,52px);
+    letter-spacing:.005em;
+    opacity:0;transform:translateY(14px);
+    transition:opacity .55s ease, transform .55s ease;
+  }
+  .titleblock p{
+    margin-top:6px;font-size:14px;color:var(--ink-dim);letter-spacing:.04em;
+    opacity:0;transform:translateY(10px);
+    transition:opacity .55s ease .06s, transform .55s ease .06s;
+  }
+  .titleblock.show h2,.titleblock.show p{opacity:1;transform:translateY(0);}
+
+  .cursor{
+    position:fixed;top:0;left:0;width:36px;height:36px;
+    border:1px solid rgba(244,243,238,.55);border-radius:50%;
+    pointer-events:none;z-index:50;
+    transform:translate(-50%,-50%);
+    transition:width .25s ease,height .25s ease,background .25s ease,border-color .25s ease;
+    mix-blend-mode:difference;
+    display:flex;align-items:center;justify-content:center;
+    font-size:9px;letter-spacing:.05em;color:var(--ink);
+  }
+  .cursor.active{width:64px;height:64px;background:rgba(244,243,238,.1);}
+  .cursor.active::after{content:'view';}
+
+  @media(max-width:760px){
+    nav{padding:22px 22px;}
+    .navlinks{display:none;}
+    .titleblock{left:24px;bottom:46px;max-width:80vw;}
+    .scrollhint{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="gl"></canvas>
+<div class="vignette"></div>
+<div class="grain" id="grain"></div>
+
+<nav>
+  <div class="logo"><span class="mark">studio.</span><span class="tag">stories</span></div>
+  <div class="navlinks">
+    <a href="#">Studio</a>
+    <a href="#">Work</a>
+    <a href="#">Contact</a>
+  </div>
+</nav>
+
+<div class="corner-icon"><span></span><span></span><span></span></div>
+<div class="scrollhint" id="scrollhint">Scroll</div>
+
+<div class="titleblock" id="titleblock">
+  <h2 id="t-name">Halcyon</h2>
+  <p id="t-sub">Brand activation</p>
+</div>
+
+<div class="cursor" id="cursor"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+
+// ---------- content ----------
+const PROJECTS = [
+  { name:"Halcyon",      sub:"Brand activation",        hue:0.02 },
+  { name:"Continuum",    sub:"Web platform",             hue:0.60 },
+  { name:"Monolith",     sub:"Editorial website",        hue:0.0  },
+  { name:"Vertex Labs",  sub:"Interactive launch",       hue:0.04 },
+  { name:"Aurora",       sub:"Data experience",          hue:0.72 },
+  { name:"Driftwood",    sub:"3D storytelling",          hue:0.01 }
+];
+const SPACING = 7.5;
+
+// ---------- renderer / scene ----------
+const canvas = document.getElementById('gl');
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, innerWidth/innerHeight, 0.1, 100);
+camera.position.set(0,0,11);
+
+const world = new THREE.Group();
+scene.add(world);
+
+const bgLayer = new THREE.Group();   // refracted background planes
+const crystalLayer = new THREE.Group();
+world.add(bgLayer, crystalLayer);
+
+// soft smoke-trail backdrop
+(function smoke(){
+  const c = document.createElement('canvas'); c.width=512;c.height=1400;
+  const ctx = c.getContext('2d');
+  ctx.filter='blur(30px)';
+  ctx.strokeStyle='rgba(50,50,55,0.28)';
+  ctx.lineWidth=90;
+  ctx.beginPath();
+  ctx.moveTo(80,0);
+  for(let i=0;i<8;i++){
+    ctx.quadraticCurveTo(440*( i%2),  (i+0.5)*175,  80+ (i%2?-60:60), (i+1)*175);
+  }
+  ctx.stroke();
+  const tex = new THREE.CanvasTexture(c);
+  const mat = new THREE.MeshBasicMaterial({map:tex, transparent:true, opacity:.5, depthWrite:false});
+  const geo = new THREE.PlaneGeometry(14, 38);
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.position.set(1.5, -SPACING*1.5, -6);
+  bgLayer.add(mesh);
+})();
+
+// ---------- texture for project "glyph" planes ----------
+function makeProjectTexture(p, seed){
+  const c = document.createElement('canvas'); c.width=640;c.height=640;
+  const ctx = c.getContext('2d');
+  const grad = ctx.createRadialGradient(320,320,40,320,320,420);
+  grad.addColorStop(0, `rgba(20,21,26,1)`);
+  grad.addColorStop(1, `rgba(3,3,5,1)`);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0,0,640,640);
+
+  // blocky pixel glyph
+  const rng = mulberry32(seed);
+  ctx.fillStyle = 'rgba(244,243,238,0.95)';
+  const cols=6, rows=6, cell=46, ox=320-cols*cell/2, oy=320-rows*cell/2;
+  for(let y=0;y<rows;y++){
+    for(let x=0;x<cols;x++){
+      if(rng() > 0.52){
+        ctx.fillRect(ox+x*cell, oy+y*cell, cell-6, cell-6);
+      }
+    }
+  }
+  // initials
+  ctx.font='600 64px Georgia, serif';
+  ctx.fillStyle='rgba(11,14,26,0.9)';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.fillText(p.name[0], 320, 320);
+
+  // fade the whole panel to transparent at its edges so the square
+  // silhouette dissolves into the black space background
+  ctx.globalCompositeOperation = 'destination-in';
+  const fade = ctx.createRadialGradient(320,320,140,320,320,320);
+  fade.addColorStop(0, 'rgba(255,255,255,1)');
+  fade.addColorStop(0.75, 'rgba(255,255,255,0.85)');
+  fade.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = fade;
+  ctx.fillRect(0,0,640,640);
+  ctx.globalCompositeOperation = 'source-over';
+
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace || tex.colorSpace;
+  return tex;
+}
+function mulberry32(a){
+  return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  }
+}
+
+// ---------- crystal geometry ----------
+function noise3(x,y,z){
+  return Math.sin(x*1.3+y*2.1)*Math.cos(y*1.7-z*1.1)*Math.sin(z*1.9+x*0.7);
+}
+function makeCrystalGeometry(seed){
+  const geo = new THREE.IcosahedronGeometry(1, 2);
+  const pos = geo.attributes.position;
+  const sx = seed*3.1, sy = seed*1.7, sz = seed*2.3;
+  for(let i=0;i<pos.count;i++){
+    const v = new THREE.Vector3(pos.getX(i), pos.getY(i), pos.getZ(i)).normalize();
+    let d = 1.0
+      + 0.32*noise3(v.x*1.6+sx, v.y*1.6+sy, v.z*1.6+sz)
+      + 0.14*noise3(v.x*3.4+sx*2.0, v.y*3.4+sy*2.0, v.z*3.4+sz*2.0);
+    d = Math.max(d, 0.55);
+    pos.setXYZ(i, v.x*d, v.y*d, v.z*d);
+  }
+  geo.computeVertexNormals();
+  const flat = geo.index ? geo.toNonIndexed() : geo;
+  flat.computeVertexNormals();
+  return flat;
+}
+
+// ---------- crystal shader material ----------
+const vertexShader = `
+varying vec3 vNormal;
+varying vec3 vViewPosition;
+varying vec2 vScreenUV;
+void main(){
+  vNormal = normalize(normalMatrix * normal);
+  vec4 mvPosition = modelViewMatrix * vec4(position,1.0);
+  vViewPosition = -mvPosition.xyz;
+  vec4 proj = projectionMatrix * mvPosition;
+  gl_Position = proj;
+  vScreenUV = (proj.xy/proj.w)*0.5+0.5;
+}`;
+const fragmentShader = `
+precision highp float;
+uniform sampler2D tBackground;
+uniform float uTime;
+uniform float uAberration;
+uniform float uRefraction;
+uniform float uHue;
+varying vec3 vNormal;
+varying vec3 vViewPosition;
+varying vec2 vScreenUV;
+
+vec3 palette(float t){
+  vec3 a = vec3(0.5,0.5,0.5);
+  vec3 b = vec3(0.5,0.5,0.5);
+  vec3 c = vec3(1.0,1.0,1.0);
+  vec3 d = vec3(0.0,0.33,0.67) + uHue;
+  return a + b*cos(6.28318*(c*t+d));
+}
+
+void main(){
+  vec3 normal = normalize(vNormal);
+  if(!gl_FrontFacing) normal = -normal;
+  vec3 viewDir = normalize(vViewPosition);
+
+  float NdV = clamp(dot(normal, viewDir), 0.0, 1.0);
+  float fresnel = pow(1.0 - NdV, 3.2);
+
+  vec2 refractOffset = normal.xy * uRefraction;
+  vec2 uvR = vScreenUV + refractOffset * (1.0 - uAberration);
+  vec2 uvG = vScreenUV + refractOffset;
+  vec2 uvB = vScreenUV + refractOffset * (1.0 + uAberration);
+
+  float r = texture2D(tBackground, clamp(uvR,0.001,0.999)).r;
+  float g = texture2D(tBackground, clamp(uvG,0.001,0.999)).g;
+  float b = texture2D(tBackground, clamp(uvB,0.001,0.999)).b;
+  vec3 refracted = vec3(r,g,b);
+
+  float iridT = fresnel*1.6 + normal.x*0.4 + normal.y*0.25 + uTime*0.015;
+  vec3 irid = palette(iridT);
+
+  vec3 lightDir = normalize(vec3(0.4, 0.6, 0.7));
+  vec3 halfV = normalize(lightDir + viewDir);
+  float spec = pow(clamp(dot(normal, halfV), 0.0, 1.0), 60.0);
+
+  vec3 lightDir2 = normalize(vec3(-0.5, -0.3, 0.6));
+  vec3 halfV2 = normalize(lightDir2 + viewDir);
+  float spec2 = pow(clamp(dot(normal, halfV2), 0.0, 1.0), 90.0);
+
+  vec3 color = refracted;
+  color = mix(color, color + irid*0.5, fresnel*0.35);
+  color = mix(color, vec3(1.0), fresnel*0.22);
+  color += spec*1.4 + spec2*1.1;
+
+  gl_FragColor = vec4(color, 1.0);
+}`;
+
+// ---------- render target for refraction capture ----------
+let rt = new THREE.WebGLRenderTarget(innerWidth, innerHeight, {
+  minFilter:THREE.LinearFilter, magFilter:THREE.LinearFilter
+});
+
+// ---------- build crystals ----------
+const crystals = [];
+for(let i=0;i<PROJECTS.length;i++){
+  const p = PROJECTS[i];
+
+  const seed = i*7.13 + 1.0;
+  const geo = makeCrystalGeometry(seed);
+  const mat = new THREE.ShaderMaterial({
+    vertexShader, fragmentShader,
+    uniforms:{
+      tBackground:{value:rt.texture},
+      uTime:{value:0},
+      uAberration:{value:0.05},
+      uRefraction:{value:0.14},
+      uHue:{value:p.hue}
+    }
+  });
+  const mesh = new THREE.Mesh(geo, mat);
+
+  const sideSign = i%2===0 ? -1 : 1;
+  const baseX = sideSign * (1.3 + Math.random()*1.0);
+  const baseY = -i*SPACING + (Math.random()-0.5)*0.6;
+  const baseZ = -Math.random()*2.2;
+  const scale = 1.5 + Math.random()*0.9;
+  mesh.position.set(baseX, baseY, baseZ);
+  mesh.scale.setScalar(scale);
+  mesh.rotation.set(Math.random()*6, Math.random()*6, Math.random()*6);
+
+  crystalLayer.add(mesh);
+
+  // companion glyph plane sitting just behind it
+  const tex = makeProjectTexture(p, Math.floor(seed*1000));
+  const planeMat = new THREE.MeshBasicMaterial({map:tex, transparent:true, depthWrite:false});
+  const plane = new THREE.Mesh(new THREE.PlaneGeometry(scale*2.6, scale*2.6), planeMat);
+  plane.position.set(baseX*0.7, baseY, baseZ-2.4);
+  bgLayer.add(plane);
+
+  crystals.push({
+    mesh, plane,
+    baseX, baseY, baseZ,
+    spin:new THREE.Vector3((Math.random()-0.5)*0.15,(Math.random()-0.5)*0.2,(Math.random()-0.5)*0.1),
+    bobSpeed: 0.4+Math.random()*0.4,
+    bobAmp: 0.18+Math.random()*0.12,
+    phase: Math.random()*Math.PI*2,
+    index:i
+  });
+}
+
+
+
+// ---------- starfield ----------
+const starField = new THREE.Group();
+scene.add(starField);
+
+(function buildStars(){
+  const COUNT = 1400;
+  const positions = new Float32Array(COUNT*3);
+  const scales = new Float32Array(COUNT);
+  const phases = new Float32Array(COUNT);
+
+  const yRange = SPACING*(PROJECTS.length+2);
+  for(let i=0;i<COUNT;i++){
+    const r = 18 + Math.random()*30;
+    const theta = Math.random()*Math.PI*2;
+    const depthBias = Math.random();
+    positions[i*3+0] = Math.cos(theta)*r*(0.4+depthBias*0.6);
+    positions[i*3+1] = (Math.random()-0.5)*yRange - yRange*0.15;
+    positions[i*3+2] = -6 - depthBias*34;
+    scales[i] = (Math.random()*1.6+0.4) * (depthBias*0.6+0.5);
+    phases[i] = Math.random()*Math.PI*2;
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+  geo.setAttribute('aScale', new THREE.BufferAttribute(scales,1));
+  geo.setAttribute('aPhase', new THREE.BufferAttribute(phases,1));
+
+  const mat = new THREE.ShaderMaterial({
+    transparent:true,
+    depthWrite:false,
+    uniforms:{ uTime:{value:0} },
+    vertexShader:`
+      attribute float aScale;
+      attribute float aPhase;
+      varying float vPhase;
+      varying float vScale;
+      void main(){
+        vPhase = aPhase;
+        vScale = aScale;
+        vec4 mvPosition = modelViewMatrix * vec4(position,1.0);
+        gl_PointSize = aScale * (240.0 / -mvPosition.z);
+        gl_Position = projectionMatrix * mvPosition;
+      }`,
+    fragmentShader:`
+      precision highp float;
+      uniform float uTime;
+      varying float vPhase;
+      varying float vScale;
+      void main(){
+        float d = length(gl_PointCoord - vec2(0.5));
+        float disc = smoothstep(0.5, 0.0, d);
+        float twinkle = 0.55 + 0.45*sin(uTime*1.2 + vPhase);
+        float alpha = disc * twinkle * min(vScale, 1.0);
+        vec3 col = vec3(1.0);
+        gl_FragColor = vec4(col, alpha);
+      }`
+  });
+
+  const points = new THREE.Points(geo, mat);
+  starField.add(points);
+  starField.userData.material = mat;
+})();
+
+
+// ---------- scroll handling ----------
+let targetScroll = 0, currentScroll = 0;
+const maxScroll = (PROJECTS.length-1)*SPACING + 2;
+window.addEventListener('wheel', (e)=>{
+  targetScroll += e.deltaY * 0.012;
+  targetScroll = Math.max(0, Math.min(maxScroll, targetScroll));
+  hideScrollHint();
+}, {passive:true});
+
+let touchY=null;
+window.addEventListener('touchstart', e=>{touchY=e.touches[0].clientY;}, {passive:true});
+window.addEventListener('touchmove', e=>{
+  if(touchY===null) return;
+  const dy = touchY - e.touches[0].clientY;
+  targetScroll += dy*0.02;
+  targetScroll = Math.max(0, Math.min(maxScroll, targetScroll));
+  touchY = e.touches[0].clientY;
+  hideScrollHint();
+}, {passive:true});
+
+const scrollHintEl = document.getElementById('scrollhint');
+let hintHidden=false;
+function hideScrollHint(){ if(!hintHidden){hintHidden=true; scrollHintEl.classList.add('hidden');} }
+
+// ---------- mouse / cursor ----------
+const mouse = new THREE.Vector2(0,0);
+const mouseTarget = new THREE.Vector2(0,0);
+const cursorEl = document.getElementById('cursor');
+const raycaster = new THREE.Raycaster();
+
+window.addEventListener('mousemove', (e)=>{
+  mouseTarget.x = (e.clientX/innerWidth)*2-1;
+  mouseTarget.y = -(e.clientY/innerHeight)*2+1;
+  cursorEl.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%,-50%)`;
+});
+
+// ---------- title block ----------
+const titleBlock = document.getElementById('titleblock');
+const tName = document.getElementById('t-name');
+const tSub = document.getElementById('t-sub');
+let activeIndex = 0;
+function setActive(i){
+  if(i===activeIndex) return;
+  activeIndex = i;
+  titleBlock.classList.remove('show');
+  setTimeout(()=>{
+    const p = PROJECTS[Math.max(0,Math.min(PROJECTS.length-1,i))];
+    if(p){ tName.textContent = p.name; tSub.textContent = p.sub; }
+    titleBlock.classList.add('show');
+  }, 180);
+}
+setTimeout(()=>titleBlock.classList.add('show'), 400);
+
+// ---------- resize ----------
+function resize(){
+  const w = innerWidth, h = innerHeight;
+  renderer.setSize(w,h);
+  camera.aspect = w/h;
+  camera.updateProjectionMatrix();
+  rt.setSize(w*Math.min(devicePixelRatio,2), h*Math.min(devicePixelRatio,2));
+}
+window.addEventListener('resize', resize);
+resize();
+
+// ---------- render loop ----------
+const clock = new THREE.Clock();
+function animate(){
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+
+  currentScroll += (targetScroll-currentScroll)*0.07;
+  world.position.y = currentScroll;
+  starField.position.y = currentScroll * 0.25;
+  starField.rotation.y = t*0.006;
+  starField.userData.material.uniforms.uTime.value = t;
+
+  mouse.x += (mouseTarget.x-mouse.x)*0.06;
+  mouse.y += (mouseTarget.y-mouse.y)*0.06;
+  world.rotation.y = mouse.x*0.12;
+  world.rotation.x = -mouse.y*0.06;
+
+  crystals.forEach(c=>{
+    c.mesh.rotation.x += c.spin.x*0.01;
+    c.mesh.rotation.y += c.spin.y*0.01;
+    c.mesh.rotation.z += c.spin.z*0.01;
+    c.mesh.position.y = c.baseY + Math.sin(t*c.bobSpeed+c.phase)*c.bobAmp;
+    c.mesh.position.x = c.baseX + Math.sin(t*c.bobSpeed*0.6+c.phase)*0.12;
+    c.mesh.material.uniforms.uTime.value = t;
+  });
+
+  // determine active project: which crystal's world Y is nearest 0 (screen center)
+  let bestI=0, bestD=Infinity;
+  crystals.forEach(c=>{
+    if(c.index<0) return;
+    const worldY = c.mesh.position.y + currentScroll;
+    const d = Math.abs(worldY);
+    if(d<bestD){bestD=d; bestI=c.index;}
+  });
+  setActive(bestI);
+
+  // hover raycast (throttled by frame is fine)
+  raycaster.setFromCamera(mouse, camera);
+  const hits = raycaster.intersectObjects(crystals.map(c=>c.mesh));
+  cursorEl.classList.toggle('active', hits.length>0);
+
+  // pass 1: render background only
+  crystalLayer.visible = false;
+  renderer.setRenderTarget(rt);
+  renderer.setClearColor(0x0b0e1a, 1);
+  renderer.clear();
+  renderer.render(scene, camera);
+
+  // pass 2: render full scene to screen
+  crystalLayer.visible = true;
+  renderer.setRenderTarget(null);
+  renderer.setClearColor(0x000000, 0);
+  renderer.clear();
+  renderer.render(scene, camera);
+}
+animate();
+
+// ---------- grain animation ----------
+const grainEl = document.getElementById('grain');
+setInterval(()=>{
+  grainEl.style.transform = `translate(${(Math.random()-0.5)*20}px, ${(Math.random()-0.5)*20}px)`;
+}, 90);
+
+})();
+</script>
+</body>
+</html>

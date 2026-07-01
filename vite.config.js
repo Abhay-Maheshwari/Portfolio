@@ -1,10 +1,20 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    visualizer({
+      open: false,
+      filename: "dist/stats.html",
+      gzipSize: true,
+      brotliSize: true,
+    }),
+  ],
 
   build: {
     // Enable code splitting
@@ -20,8 +30,14 @@ export default defineConfig({
     },
     // Optimize chunk size
     chunkSizeWarningLimit: 1000,
-    // Enable minification with esbuild (faster than terser)
+    // Use esbuild for minification (faster than terser)
     minify: 'esbuild',
+    // Target modern browsers for smaller output
+    target: 'es2020',
+    // Disable source maps in production
+    sourcemap: false,
+    // Split CSS per chunk
+    cssCodeSplit: true,
   },
 
   // Optimize dependencies
@@ -31,6 +47,7 @@ export default defineConfig({
 
   // Performance improvements
   server: {
+    allowedHosts: true, // Allow any host (e.g. ngrok tunnels)
     hmr: {
       overlay: false, // Disable error overlay for better performance
     },
