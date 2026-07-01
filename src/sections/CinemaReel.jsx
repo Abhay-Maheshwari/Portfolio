@@ -12,7 +12,7 @@ const TOTAL_RENDERED = N_SLIDES * LOOP_COPIES;
 const INITIAL_IDX = Math.floor(LOOP_COPIES / 2) * N_SLIDES;
 
 const AUTO_START_IDX = INITIAL_IDX - 3;
-const AUTO_END_IDX = INITIAL_IDX; 
+const AUTO_END_IDX = INITIAL_IDX;
 const AUTO_SCROLL_MS = 2500;
 const AUTO_FADE_MS = 800;
 
@@ -99,6 +99,11 @@ const CinemaReel = ({ isOpen, onClose }) => {
 
   const recomputeSizes = () => {
     const h = window.innerHeight;
+    
+    if (sectionRef.current) {
+      sectionRef.current.style.setProperty("--real-vh", `${h / 100}px`);
+    }
+
     scroller.current.viewportH = h;
     scroller.current.pitch = (h * PITCH_VH) / 100;
     scroller.current.slideH = (h * SLIDE_VH) / 100;
@@ -306,7 +311,7 @@ const CinemaReel = ({ isOpen, onClose }) => {
       if (mainTweenRef.current) mainTweenRef.current.kill();
       scroller.current.cursorInit = false;
     }
-    
+
     return () => {
       document.body.classList.remove("hide-global-cursor");
     };
@@ -685,7 +690,7 @@ const CinemaReel = ({ isOpen, onClose }) => {
             >
               <div className="slide-inner" data-slide-inner>
                 <div className="slide-image-wrap" data-slide-image>
-                  <img src={getAssetPath(project.imagePath || project.texture)} alt={project.title || project.titleLines?.join(" ")} loading="lazy" />
+                  <img src={getAssetPath(project.imagePath || project.texture)} alt={project.title || project.titleLines?.join(" ")} />
                 </div>
 
                 <div className="slide-content" data-slide-content>
@@ -775,7 +780,7 @@ const CinemaReel = ({ isOpen, onClose }) => {
           <div className="details-scroll">
             <div className="details-hero">
               {selectedProject.videoPath &&
-              (selectedProject.videoPath.endsWith(".mp4") || selectedProject.videoPath.endsWith(".webm")) ? (
+                (selectedProject.videoPath.endsWith(".mp4") || selectedProject.videoPath.endsWith(".webm")) ? (
                 <video src={getAssetPath(selectedProject.videoPath)} autoPlay loop muted playsInline />
               ) : (
                 <img src={getAssetPath(selectedProject.imagePath || selectedProject.texture)} alt={selectedProject.title || selectedProject.titleLines?.join(" ")} loading="lazy" />

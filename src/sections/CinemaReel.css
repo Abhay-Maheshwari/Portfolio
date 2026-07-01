@@ -49,8 +49,8 @@
 /* ── SLIDE FRAME ── */
 .slide-frame {
   position: relative;
-  height: 80vh;
-  margin-bottom: 5vh;
+  height: calc(var(--real-vh, 1vh) * 80);
+  margin-bottom: calc(var(--real-vh, 1vh) * 5);
   perspective: 2000px;
 }
 
@@ -61,7 +61,7 @@
   overflow: hidden;
   border-radius: 48px;
   transform-origin: 0% 50%;
-  transform-style: preserve-3d;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
   transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 700ms cubic-bezier(0.22, 1, 0.36, 1);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -78,8 +78,8 @@
   top: 50%;
   left: 50%;
   width: 100vw;
-  height: 120vh;
-  margin-top: -60vh;
+  height: calc(var(--real-vh, 1vh) * 120);
+  margin-top: calc(var(--real-vh, 1vh) * -60);
   margin-left: -50vw;
   will-change: transform;
 }
@@ -102,7 +102,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 4vh var(--cinema-pad-x) 4vh var(--cinema-pad-x);
+  padding: calc(var(--real-vh, 1vh) * 4) var(--cinema-pad-x) calc(var(--real-vh, 1vh) * 4) var(--cinema-pad-x);
   color: white;
   pointer-events: none;
 }
@@ -270,7 +270,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  height: 10vh;
+  height: calc(var(--real-vh, 1vh) * 10);
   z-index: 30;
   pointer-events: none;
 }
@@ -365,11 +365,11 @@
 .details-backdrop {
   position: absolute;
   z-index: 40;
-  top: 10vh;
-  height: 80vh;
+  top: calc(var(--real-vh, 1vh) * 10);
+  height: calc(var(--real-vh, 1vh) * 80);
   left: var(--cinema-pad-x);
   right: var(--cinema-pad-x);
-  border-radius: 48px;
+  border-radius: 24px;
   overflow: hidden;
   background: transparent;
   backdrop-filter: blur(0px) saturate(100%);
@@ -387,11 +387,11 @@
 .details-aside {
   position: absolute;
   z-index: 50;
-  top: 10vh;
-  height: 80vh;
+  top: calc(var(--real-vh, 1vh) * 10);
+  height: calc(var(--real-vh, 1vh) * 80);
   right: var(--cinema-pad-x);
   width: min(640px, 52%);
-  border-radius: 48px;
+  border-radius: 24px;
   overflow: hidden;
   color: white;
   transform: translateX(calc(100% + var(--cinema-pad-x) + 2vh));
@@ -441,7 +441,9 @@
 
 .details-hero {
   position: relative;
-  height: 35vh;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
   overflow: hidden;
 }
 
@@ -449,7 +451,7 @@
 .details-hero video {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .details-hero-fade {
@@ -725,4 +727,14 @@
   width: 0;
   height: 0;
   pointer-events: none;
+}
+
+/* ── RESPONSIVE TWEAKS ── */
+@media (max-width: 768px) {
+  .slide-awards-col {
+    display: none;
+  }
+  .slide-title {
+    font-size: clamp(1.8rem, 5.5vh, 3.5rem);
+  }
 }
