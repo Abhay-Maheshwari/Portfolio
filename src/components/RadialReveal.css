@@ -50,11 +50,7 @@
     z-index: 1000;
     pointer-events: auto;
     
-    /* GPU acceleration */
-    transform: translateZ(0);
-    will-change: mask-image, -webkit-mask-image;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+    /* GPU acceleration removed to prevent mobile black screen bugs with massive masks */
     
     /* Mask rendering */
     -webkit-mask-size: cover;
@@ -99,10 +95,7 @@
         0 0 60px 10px rgba(255, 255, 255, 0.3),
         inset 0 0 15px 2px rgba(255, 255, 255, 0.3);
     
-    /* GPU acceleration */
-    will-change: width, height;
-    backface-visibility: hidden;
-    transform-style: preserve-3d;
+    /* Removed problematic will-change and 3d transforms for mobile stability */
 }
 
 /* Hero content fills the overlay */

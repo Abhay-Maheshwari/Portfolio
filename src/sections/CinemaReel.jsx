@@ -159,7 +159,8 @@ const CinemaReel = ({ isOpen, onClose }) => {
 
     if (trackRef.current) {
       trackRef.current.style.transform = `translate3d(0, ${initialY}px, 0)`;
-      trackRef.current.style.filter = "url(#cinema-motion-blur)";
+      // Removed trackRef.current.style.filter = "url(#cinema-motion-blur)"; 
+      // due to max texture size limits on mobile GPUs causing black screen.
     }
 
     if (scanlinesRef.current) {
@@ -242,7 +243,6 @@ const CinemaReel = ({ isOpen, onClose }) => {
         }
 
         scroller.current.autoScrolling = false;
-        if (trackRef.current) trackRef.current.style.filter = "";
         if (scanlinesRef.current) scanlinesRef.current.style.display = "none";
 
         scroller.current.idx = AUTO_END_IDX;
