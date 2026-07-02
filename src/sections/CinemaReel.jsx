@@ -6,7 +6,7 @@ import "./CinemaReel.css";
 
 gsap.registerPlugin(ScrollToPlugin);
 
-const LOOP_COPIES = 7;
+const LOOP_COPIES = 5;
 const N_SLIDES = projects.length;
 const TOTAL_RENDERED = N_SLIDES * LOOP_COPIES;
 const INITIAL_IDX = Math.floor(LOOP_COPIES / 2) * N_SLIDES;

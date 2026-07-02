@@ -42,6 +42,8 @@ const Hero3D = () => {
         let lastFlickerTime = 0;
         let flickerIndex = 0;
 
+        let lastSeekTime = 0;
+
         const smoothSeek = (time) => {
             // Lerp for smooth scrubbing
             currentTimeVal += (targetTime - currentTimeVal) * 0.15;
@@ -52,7 +54,16 @@ const Hero3D = () => {
             }
 
             if (video.readyState >= 1) {
-                video.currentTime = currentTimeVal;
+                const isMobile = window.innerWidth <= 768;
+                // Throttle currentTime updates on mobile to ~15-20fps to prevent decoder stutter
+                if (isMobile) {
+                    if (time - lastSeekTime > 60) {
+                        video.currentTime = currentTimeVal;
+                        lastSeekTime = time;
+                    }
+                } else {
+                    video.currentTime = currentTimeVal;
+                }
             }
 
             let needsContinuousUpdate = false;
