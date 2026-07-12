@@ -31,6 +31,15 @@ const PersistentNav = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [isOpen]);
 
+    // Open from avatar helper
+    useEffect(() => {
+        const handleToggleNav = () => {
+            setIsOpen(true);
+        };
+        window.addEventListener('toggle-nav', handleToggleNav);
+        return () => window.removeEventListener('toggle-nav', handleToggleNav);
+    }, []);
+
     // Close on Escape
     useEffect(() => {
         const handleEscape = (e) => {

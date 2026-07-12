@@ -305,15 +305,18 @@ const CinemaReel = ({ isOpen, onClose }) => {
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add("hide-global-cursor");
+      document.body.classList.add("cinema-active");
       runEntranceTransition();
     } else {
       document.body.classList.remove("hide-global-cursor");
+      document.body.classList.remove("cinema-active");
       if (mainTweenRef.current) mainTweenRef.current.kill();
       scroller.current.cursorInit = false;
     }
 
     return () => {
       document.body.classList.remove("hide-global-cursor");
+      document.body.classList.remove("cinema-active");
     };
   }, [isOpen]);
 

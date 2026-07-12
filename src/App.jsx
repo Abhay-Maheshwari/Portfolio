@@ -7,6 +7,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import SmoothScroll from "./components/SmoothScroll";
 import PersistentNav from "./components/PersistentNav";
 import Cursor from "./components/Cursor";
+import AvatarHelper from "./components/AvatarHelper";
 
 // Lazy-load page wrappers
 const Home = lazy(() => import("./pages/Home"));
@@ -40,6 +41,7 @@ const AppContent = () => {
             {/* Persistent navbar */}
             <PersistentNav />
             <Cursor />
+            {!isInitialLoad && <AvatarHelper />}
 
             <AnimatePresence mode="wait">
                 <Routes location={location} key={location.pathname}>
