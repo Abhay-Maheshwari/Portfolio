@@ -343,8 +343,7 @@ const StaggeredMenu = forwardRef(({
       if (
         panelRef.current &&
         !panelRef.current.contains(event.target) &&
-        toggleBtnRef.current &&
-        !toggleBtnRef.current.contains(event.target)
+        (!toggleBtnRef.current || !toggleBtnRef.current.contains(event.target))
       ) {
         closeMenu();
       }

@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './AvatarHelper.css';
-import { owner } from '../constants';
+import { owner, navLinks } from '../constants';
+import StaggeredMenu from './ReactBits/StaggeredMenu';
 
 const AvatarHelper = () => {
     const [showMessage, setShowMessage] = useState(false);
     const [hasDismissed, setHasDismissed] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const staggeredMenuRef = React.useRef(null);
 
     // Check scroll position to show message
     useEffect(() => {
@@ -33,19 +35,9 @@ const AvatarHelper = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [hasDismissed]);
 
-    // Keep track of if PersistentNav is open
-    useEffect(() => {
-        const handleNavToggle = () => setIsMenuOpen(true);
-        const handleNavClose = () => setIsMenuOpen(false);
-        // We'll just assume toggling it opens it for the animation state
-        window.addEventListener('toggle-nav', handleNavToggle);
-        
-        // This is a naive way to reset the avatar scale when nav closes.
-        // For simplicity, we just shrink it when nav is toggled.
-        return () => {
-            window.removeEventListener('toggle-nav', handleNavToggle);
-        };
-    }, []);
+    // We don't track the PersistentNav anymore, we track the StaggeredMenu
+    // The StaggeredMenu handles its own open state internally, but we can listen to it if needed.
+    // For now, we will just pass callbacks.
 
     return (
         <div className="avatar-helper-container">
@@ -56,8 +48,10 @@ const AvatarHelper = () => {
                 dragMomentum={false}
                 style={{ touchAction: 'none', pointerEvents: 'auto' }}
                 onTap={(e, info) => {
-                    // Open the PersistentNav instead of deprecated StaggeredMenu
-                    window.dispatchEvent(new Event('toggle-nav'));
+                    // Open the StaggeredMenu
+                    if (staggeredMenuRef.current) {
+                        staggeredMenuRef.current.toggleMenu();
+                    }
                     
                     if (hasDismissed) {
                         setHasDismissed(false);
@@ -87,6 +81,21 @@ const AvatarHelper = () => {
                 />
             </motion.div>
             </motion.div>
+            
+            {/* Restored Staggered Menu */}
+            <StaggeredMenu 
+                ref={staggeredMenuRef}
+                items={navLinks.map(link => ({ 
+                    text: link.name.toUpperCase(), 
+                    link: link.link,
+                    image: `/images/${link.name.toLowerCase()}_menu.png`
+                }))}
+                socialItems={[]}
+                position="left"
+                showHeader={false}
+                onMenuOpen={() => setIsMenuOpen(true)}
+                onMenuClose={() => setIsMenuOpen(false)}
+            />
         </div>
     );
 };
