@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { navLinks } from '../constants';
+import GooeyNav from './ReactBits/GooeyNav';
+import TargetCursor from './ReactBits/TargetCursor';
 import './PersistentNav.css';
 
 /**
@@ -11,6 +13,7 @@ import './PersistentNav.css';
 const PersistentNav = () => {
     const [isOpen, setIsOpen] = useState(false);
     const navRef = useRef(null);
+    const navigate = useNavigate();
 
     const toggleNav = () => {
         setIsOpen(prev => !prev);
@@ -50,11 +53,18 @@ const PersistentNav = () => {
     }, [isOpen]);
 
     return (
-        <div ref={navRef} className={`circle-nav ${isOpen ? 'open' : ''}`}>
-            {/* Toggle Button — the circle */}
-            <button
-                className="circle-nav-toggle"
-                onClick={toggleNav}
+        <>
+            <TargetCursor 
+                spinDuration={2}
+                hideDefaultCursor={false}
+                parallaxOn={true}
+                containerRef={navRef}
+            />
+            <div ref={navRef} className={`circle-nav ${isOpen ? 'open' : ''}`}>
+                {/* Toggle Button — the circle */}
+                <button
+                    className="circle-nav-toggle cursor-target"
+                    onClick={toggleNav}
                 aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
                 aria-expanded={isOpen}
             >
@@ -64,19 +74,19 @@ const PersistentNav = () => {
             </button>
 
             {/* Expanded Horizontal Bar */}
-            <nav className="circle-nav-bar" role="navigation" aria-label="Main navigation">
-                {navLinks.map((item) => (
-                    <NavLink
-                        key={item.name}
-                        to={item.link}
-                        className={({ isActive }) => isActive ? "circle-nav-link active" : "circle-nav-link"}
-                        onClick={handleNavClick}
-                    >
-                        {item.name.toUpperCase()}
-                    </NavLink>
-                ))}
+            <nav className="circle-nav-bar" role="navigation" aria-label="Main navigation" style={{ padding: '0 1rem' }}>
+                <div style={{ height: '100%', display: 'flex', alignItems: 'center', position: 'relative' }}>
+                    <GooeyNav 
+                        items={navLinks.map(link => ({ label: link.name.toUpperCase(), href: link.link }))}
+                        onItemClick={(item) => {
+                            navigate(item.href);
+                            handleNavClick();
+                        }}
+                    />
+                </div>
             </nav>
         </div>
+        </>
     );
 };
 

@@ -34,34 +34,34 @@ const deviconMap = {
 };
 
 const categoryStyles = {
-  "Programming Languages": {
-    spot: "rgba(244, 114, 182, 0.2)",
-    bg: "bg-gradient-to-br from-pink-500/15 via-[#13151a]/80 to-[#13151a]/90",
-    border: "border-pink-500/20 group-hover:border-pink-500/40",
-    accent: "bg-pink-400",
-    textStroke: "rgba(244, 114, 182, 0.3)"
-  },
-  "Frameworks & Technologies": {
-    spot: "rgba(34, 211, 238, 0.2)",
-    bg: "bg-gradient-to-br from-cyan-500/15 via-[#13151a]/80 to-[#13151a]/90",
-    border: "border-cyan-500/20 group-hover:border-cyan-500/40",
-    accent: "bg-cyan-400",
-    textStroke: "rgba(34, 211, 238, 0.3)"
-  },
-  "DevOps & Security": {
-    spot: "rgba(52, 211, 153, 0.2)",
-    bg: "bg-gradient-to-br from-emerald-500/15 via-[#13151a]/80 to-[#13151a]/90",
-    border: "border-emerald-500/20 group-hover:border-emerald-500/40",
-    accent: "bg-emerald-400",
-    textStroke: "rgba(52, 211, 153, 0.3)"
-  },
-  "Data & Automation": {
-    spot: "rgba(251, 191, 36, 0.2)",
-    bg: "bg-gradient-to-br from-amber-500/15 via-[#13151a]/80 to-[#13151a]/90",
-    border: "border-amber-500/20 group-hover:border-amber-500/40",
-    accent: "bg-amber-400",
-    textStroke: "rgba(251, 191, 36, 0.3)"
-  }
+    "Programming Languages": {
+        spot: "rgba(244, 114, 182, 0.2)",
+        bg: "bg-gradient-to-br from-pink-500/15 via-[#13151a]/80 to-[#13151a]/90",
+        border: "border-pink-500/20 group-hover:border-pink-500/40",
+        accent: "bg-pink-400",
+        textStroke: "rgba(244, 114, 182, 0.3)"
+    },
+    "Frameworks & Technologies": {
+        spot: "rgba(34, 211, 238, 0.2)",
+        bg: "bg-gradient-to-br from-cyan-500/15 via-[#13151a]/80 to-[#13151a]/90",
+        border: "border-cyan-500/20 group-hover:border-cyan-500/40",
+        accent: "bg-cyan-400",
+        textStroke: "rgba(34, 211, 238, 0.3)"
+    },
+    "DevOps & Security": {
+        spot: "rgba(52, 211, 153, 0.2)",
+        bg: "bg-gradient-to-br from-emerald-500/15 via-[#13151a]/80 to-[#13151a]/90",
+        border: "border-emerald-500/20 group-hover:border-emerald-500/40",
+        accent: "bg-emerald-400",
+        textStroke: "rgba(52, 211, 153, 0.3)"
+    },
+    "Data & Automation": {
+        spot: "rgba(251, 191, 36, 0.2)",
+        bg: "bg-gradient-to-br from-amber-500/15 via-[#13151a]/80 to-[#13151a]/90",
+        border: "border-amber-500/20 group-hover:border-amber-500/40",
+        accent: "bg-amber-400",
+        textStroke: "rgba(251, 191, 36, 0.3)"
+    }
 };
 
 const getInitials = (skillName) => {
@@ -77,7 +77,7 @@ const TechStack = () => {
     const modalRef = useRef(null);
     const overlayRef = useRef(null);
     const [activeCategory, setActiveCategory] = useState(null);
-    
+
     // Centralized closing function with GSAP exit animation
     const closeModal = () => {
         if (!overlayRef.current || !modalRef.current) {
@@ -95,11 +95,11 @@ const TechStack = () => {
 
         // Box scale down
         gsap.to(modalRef.current, { scale: 0.95, y: 10, duration: 0.25, ease: "power2.in" });
-        
+
         // Full overlay fade out (triggers state clear on complete)
-        gsap.to(overlayRef.current, { 
-            opacity: 0, 
-            duration: 0.3, 
+        gsap.to(overlayRef.current, {
+            opacity: 0,
+            duration: 0.3,
             ease: "power2.inOut",
             onComplete: () => setActiveCategory(null)
         });
@@ -138,7 +138,7 @@ const TechStack = () => {
                 scrollTrigger: { trigger: sectionRef.current, start: "top 75%" }
             }
         );
-        
+
         // Bento Cover Boxes entrance
         gsap.fromTo(
             ".bento-box",
@@ -158,7 +158,7 @@ const TechStack = () => {
         if (activeCategory && modalRef.current && overlayRef.current) {
             // Ensure overlay starts hidden before animating in
             gsap.set(overlayRef.current, { opacity: 0 });
-            
+
             // Fade in overall backdrop
             gsap.to(overlayRef.current, { opacity: 1, duration: 0.3, ease: "power2.out" });
 
@@ -168,7 +168,7 @@ const TechStack = () => {
                 { opacity: 0, scale: 0.9, y: 20 },
                 { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(1.2)" }
             );
-            
+
             // Stagger modal icons
             gsap.fromTo(
                 ".modal-app-icon",
@@ -186,7 +186,7 @@ const TechStack = () => {
 
     return (
         <section ref={sectionRef} id="skills" className="relative w-full bg-[#0b0c10] overflow-hidden flex items-center h-screen">
-            
+
             {/* 3D Immersive Background Canvas */}
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <Canvas camera={{ position: [0, 0, 15], fov: 45 }}>
@@ -202,11 +202,11 @@ const TechStack = () => {
             </div>
 
             <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-8 lg:px-12 pointer-events-auto flex flex-col xl:flex-row items-center justify-center gap-8 xl:gap-16 h-full">
-                
+
                 {/* Left Side: Title */}
                 <div className="tech-title-anim w-full xl:w-4/12 flex-shrink-0 text-center xl:text-left mt-8 xl:mt-0">
                     <h2 className="text-[3rem] lg:text-[4rem] xl:text-[4.5rem] font-bold text-white leading-[1.05] tracking-tight mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
-                        Tools of<br/>the trade.
+                        Tools of<br />the trade.
                     </h2>
                     <p className="text-white/40 text-base lg:text-lg tracking-wide font-medium max-w-lg mx-auto xl:mx-0">
                         A curated selection of the technologies, frameworks, and infrastructure I leverage to build production-grade software. Click to explore.
@@ -216,18 +216,18 @@ const TechStack = () => {
                 {/* Right Side: Categorized 2x2 Bento Covers */}
                 <div className="w-full xl:w-8/12 flex justify-center xl:justify-end">
                     <div className="bento-container grid grid-cols-2 gap-4 lg:gap-6 w-full max-w-4xl aspect-[4/3] xl:aspect-auto xl:h-[60vh]">
-                        
+
                         {skillsData.map((category, boxIdx) => {
                             const style = categoryStyles[category.category] || categoryStyles["Programming Languages"];
                             const coverNumber = `0${boxIdx + 1}`;
 
                             return (
-                                <div 
-                                    key={category.category} 
+                                <div
+                                    key={category.category}
                                     className="cursor-pointer group h-full"
                                     onClick={() => setActiveCategory(category)}
                                 >
-                                    <SpotlightCard 
+                                    <SpotlightCard
                                         spotlightColor={style.spot}
                                         className={`bento-box flex flex-col justify-between p-6 lg:p-8 rounded-[1.5rem] lg:rounded-[2rem] ${style.bg} backdrop-blur-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)] border ${style.border} relative overflow-hidden h-full transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-[0_0_80px_rgba(0,0,0,0.8)]`}
                                     >
@@ -243,7 +243,7 @@ const TechStack = () => {
                                             <span className={`w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full ${style.accent} opacity-50 group-hover:opacity-100 transition-opacity`} />
                                             {category.category}
                                         </h3>
-                                        
+
                                         {/* Bottom: Item Count */}
                                         <div className="z-10 mt-auto">
                                             <span className="text-white/40 text-sm font-medium tracking-widest uppercase flex items-center gap-2 group-hover:text-white/70 transition-colors">
@@ -257,7 +257,7 @@ const TechStack = () => {
                                 </div>
                             );
                         })}
-                        
+
                     </div>
                 </div>
 
@@ -267,22 +267,30 @@ const TechStack = () => {
             {activeCategory && (
                 <div ref={overlayRef} className="fixed inset-0 z-50 flex items-center justify-center px-4">
                     {/* Backdrop */}
-                    <div 
-                        className="absolute inset-0 bg-black/60 backdrop-blur-md" 
+                    <div
+                        className="absolute inset-0 bg-[#050505]/70 backdrop-blur-xl"
                         onClick={closeModal}
                     />
-                    
+
                     {/* Modal Content Container */}
-                    <div 
+                    <div
                         ref={modalRef}
-                        className="relative z-10 w-full max-w-4xl p-8 lg:p-12 rounded-[2.5rem] bg-[#13151a]/95 border border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.8)]"
+                        className="relative z-10 w-full max-w-5xl p-8 lg:p-14 rounded-[2.5rem] bg-gradient-to-b from-[#181a20]/95 to-[#0d0e12]/95 border border-white/[0.05] shadow-[0_0_80px_rgba(0,0,0,0.8)] overflow-hidden"
                         style={{
-                            boxShadow: "inset 0 1px 1px rgba(255,255,255,0.1), 0 20px 40px rgba(0,0,0,0.8)"
+                            boxShadow: "inset 0 1px 1px rgba(255,255,255,0.1), 0 20px 60px rgba(0,0,0,0.9)"
                         }}
                     >
+                        {/* Ambient glow matching category inside modal */}
+                        <div 
+                            className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[300px] blur-[120px] rounded-full pointer-events-none opacity-40" 
+                            style={{ 
+                                background: (categoryStyles[activeCategory.category] || categoryStyles["Programming Languages"]).spot 
+                            }} 
+                        />
+
                         {/* Close Button */}
-                        <button 
-                            className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:bg-white/10 hover:text-white transition-all z-20"
+                        <button
+                            className="absolute top-6 right-6 lg:top-8 lg:right-8 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:bg-white/10 hover:text-white hover:rotate-90 hover:scale-110 transition-all duration-300 z-20"
                             onClick={closeModal}
                         >
                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -290,42 +298,62 @@ const TechStack = () => {
                             </svg>
                         </button>
 
-                        <h3 className="text-3xl lg:text-4xl font-bold text-white tracking-tight mb-8">
-                            {activeCategory.category}
-                        </h3>
+                        <div className="relative z-10 mb-10 lg:mb-14 text-center lg:text-left">
+                            <h3 className="text-4xl lg:text-5xl font-extrabold text-white tracking-tight flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-4">
+                                <span 
+                                    className="w-3 h-3 lg:w-4 lg:h-4 rounded-full shadow-[0_0_20px_currentColor] hidden lg:block"
+                                    style={{ 
+                                        backgroundColor: (categoryStyles[activeCategory.category] || categoryStyles["Programming Languages"]).accent,
+                                        color: (categoryStyles[activeCategory.category] || categoryStyles["Programming Languages"]).accent 
+                                    }}
+                                />
+                                {activeCategory.category}
+                            </h3>
+                            <p className="text-white/40 mt-3 text-lg font-medium">
+                                Explore {activeCategory.skills.length} core technologies in this stack.
+                            </p>
+                        </div>
 
-                        {/* Full Dense Grid Inside Modal */}
-                        <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-3 lg:gap-4 relative perspective-1000">
+                        {/* Refined Grid Inside Modal */}
+                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-5 lg:gap-8 relative z-10 perspective-1000">
                             {activeCategory.skills.map((skillName, idx) => {
                                 const svgUrl = deviconMap[skillName];
-                                
+                                const currentStyle = categoryStyles[activeCategory.category] || categoryStyles["Programming Languages"];
+
                                 return (
-                                    <div key={idx} className="modal-app-icon relative w-full aspect-square">
-                                        <div 
-                                            className="peer absolute inset-0 flex flex-col items-center justify-center rounded-xl bg-[#1c1f26] border border-[#2a2d36] transition-all duration-300 hover:scale-110 hover:bg-[#22252e] hover:shadow-[0_0_20px_rgba(255,255,255,0.08)] cursor-default hover:z-20"
+                                    <div key={idx} className="modal-app-icon relative w-full aspect-square group cursor-pointer">
+                                        <div
+                                            className="absolute inset-0 rounded-[1.8rem] opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"
+                                            style={{ background: currentStyle.spot }}
+                                        />
+                                        <div
+                                            className="relative w-full h-full flex flex-col items-center justify-center rounded-[1.5rem] bg-[#1a1d24]/60 backdrop-blur-md border border-white/[0.05] transition-all duration-500 group-hover:-translate-y-2 group-hover:border-white/[0.15] shadow-lg"
                                             style={{
-                                                boxShadow: "inset 1px 1px 2px rgba(255, 255, 255, 0.08), inset -1px -1px 2px rgba(0, 0, 0, 0.4), 2px 2px 8px rgba(0, 0, 0, 0.5)"
+                                                boxShadow: "inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 10px 20px rgba(0,0,0,0.3)"
                                             }}
                                         >
+                                            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                            
                                             {/* Icon Render */}
                                             {svgUrl ? (
-                                                <img 
-                                                    src={svgUrl} 
-                                                    alt={skillName} 
-                                                    loading="lazy"
-                                                    className="w-8 h-8 lg:w-10 lg:h-10 object-contain filter drop-shadow-md transition-transform duration-300 peer-hover:scale-110" 
-                                                />
+                                                <div className="w-12 h-12 lg:w-16 lg:h-16 mb-2 relative flex items-center justify-center">
+                                                    <img
+                                                        src={svgUrl}
+                                                        alt={skillName}
+                                                        loading="lazy"
+                                                        className="w-full h-full object-contain filter drop-shadow-md transition-transform duration-500 group-hover:scale-110"
+                                                    />
+                                                </div>
                                             ) : (
-                                                <span className="text-white/60 font-bold text-sm lg:text-base tracking-wider select-none">
+                                                <span className="text-white/70 font-bold text-xl lg:text-2xl tracking-wider select-none mb-2 transition-colors duration-300 group-hover:text-white">
                                                     {getInitials(skillName)}
                                                 </span>
                                             )}
+                                            
+                                            <span className="text-xs lg:text-sm font-semibold text-white/50 tracking-wide group-hover:text-white transition-colors duration-300 text-center px-2">
+                                                {skillName}
+                                            </span>
                                         </div>
-
-                                        {/* Tooltip on hover */}
-                                        <span className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 peer-hover:opacity-100 transition-opacity duration-200 text-xs font-semibold text-white bg-[#2a2d36] px-2.5 py-1 rounded-md whitespace-nowrap pointer-events-none shadow-xl border border-white/10 z-30">
-                                            {skillName}
-                                        </span>
                                     </div>
                                 );
                             })}
@@ -333,7 +361,7 @@ const TechStack = () => {
                     </div>
                 </div>
             )}
-            
+
         </section>
     );
 };

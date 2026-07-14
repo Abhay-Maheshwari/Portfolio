@@ -49,6 +49,39 @@ const Contact = () => {
             { x: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" },
             "-=1.2"
         );
+
+        // CSS Fluid Glass Cursor Animation
+        const cursor = document.querySelector('.fluid-glass-cursor');
+        const xTo = gsap.quickTo(cursor, "x", { duration: 0.3, ease: "power3" });
+        const yTo = gsap.quickTo(cursor, "y", { duration: 0.3, ease: "power3" });
+
+        const onMouseMove = (e) => {
+            xTo(e.clientX);
+            yTo(e.clientY);
+        };
+
+        const onMouseEnter = () => {
+            gsap.to(cursor, { opacity: 1, scale: 1, duration: 0.3 });
+        };
+
+        const onMouseLeave = () => {
+            gsap.to(cursor, { opacity: 0, scale: 0.5, duration: 0.3 });
+        };
+
+        const contactEl = contactRef.current;
+        if (contactEl) {
+            contactEl.addEventListener('mousemove', onMouseMove);
+            contactEl.addEventListener('mouseenter', onMouseEnter);
+            contactEl.addEventListener('mouseleave', onMouseLeave);
+        }
+
+        return () => {
+            if (contactEl) {
+                contactEl.removeEventListener('mousemove', onMouseMove);
+                contactEl.removeEventListener('mouseenter', onMouseEnter);
+                contactEl.removeEventListener('mouseleave', onMouseLeave);
+            }
+        };
     }, { scope: contactRef });
 
     const handleChange = (e) => {
@@ -103,7 +136,24 @@ const Contact = () => {
     };
 
     return (
-        <section ref={contactRef} className="relative w-full h-screen bg-[#020202] text-white overflow-hidden flex flex-col pt-12" id="contact">
+        <section ref={contactRef} className="relative w-full h-screen bg-[#020202] text-white overflow-hidden flex flex-col pt-12" id="contact" style={{ cursor: 'none' }}>
+            {/* CSS Fluid Glass Cursor Overlay */}
+            <div 
+                className="fluid-glass-cursor fixed pointer-events-none z-[100] rounded-full border border-white/20 shadow-[inset_0_0_20px_rgba(255,255,255,0.1),_0_10px_40px_rgba(0,0,0,0.5)]"
+                style={{
+                    width: '150px',
+                    height: '150px',
+                    backdropFilter: 'blur(8px) saturate(150%) brightness(1.2)',
+                    WebkitBackdropFilter: 'blur(8px) saturate(150%) brightness(1.2)',
+                    top: '-75px',
+                    left: '-75px',
+                    opacity: 0,
+                    transform: 'translate(0px, 0px) scale(0.5)',
+                    transformOrigin: 'center center',
+                    transition: 'opacity 0.3s ease-out, transform 0.1s ease-out'
+                }}
+            />
+
             {/* Background Watermark/Decor */}
             <div className="absolute bottom-20 left-0 w-full pointer-events-none z-0 px-6 md:px-10 overflow-hidden">
                 <div className="contact-watermark text-[11vw] font-bold tracking-tight leading-none text-white whitespace-nowrap select-none opacity-5" aria-hidden="true">

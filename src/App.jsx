@@ -12,7 +12,7 @@ import AvatarHelper from "./components/AvatarHelper";
 // Lazy-load page wrappers
 const Home = lazy(() => import("./pages/Home"));
 const Work = lazy(() => import("./pages/Work"));
-const Journey = lazy(() => import("./pages/Journey"));
+const Experience = lazy(() => import("./pages/Experience"));
 const Skills = lazy(() => import("./pages/Skills"));
 const Contact = lazy(() => import("./pages/Contact"));
 
@@ -47,7 +47,7 @@ const AppContent = () => {
                 <Routes location={location} key={location.pathname}>
                     <Route path="/" element={<Suspense fallback={<PageFallback />}><Home /></Suspense>} />
                     <Route path="/work" element={<Suspense fallback={<PageFallback />}><Work /></Suspense>} />
-                    <Route path="/journey" element={<Suspense fallback={<PageFallback />}><Journey /></Suspense>} />
+                    <Route path="/experience" element={<Suspense fallback={<PageFallback />}><Experience /></Suspense>} />
                     <Route path="/skills" element={<Suspense fallback={<PageFallback />}><Skills /></Suspense>} />
                     <Route path="/contact" element={<Suspense fallback={<PageFallback />}><Contact /></Suspense>} />
                     {/* Fallback to Home */}

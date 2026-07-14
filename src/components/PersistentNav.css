@@ -9,10 +9,16 @@
     z-index: 1000000;
     display: flex;
     align-items: center;
+    /* Hide default cursor so custom TargetCursor is used here */
+    cursor: none;
     /* Entry animation */
     opacity: 0;
     transform: scale(0.5);
     animation: circleNavIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.5s forwards;
+}
+
+.circle-nav * {
+    cursor: none !important;
 }
 
 @keyframes circleNavIn {
@@ -122,7 +128,7 @@
 }
 
 .circle-nav.open .circle-nav-bar {
-    max-width: 500px;
+    max-width: 800px;
     opacity: 1;
     padding: 0 1.5rem 0 1rem;
 }

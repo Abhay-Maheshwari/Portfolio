@@ -15,6 +15,7 @@ export default defineConfig({
       brotliSize: true,
     }),
   ],
+  assetsInclude: ['**/*.glb'],
 
   build: {
     // Enable code splitting

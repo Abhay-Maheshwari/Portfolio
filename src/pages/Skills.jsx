@@ -5,7 +5,7 @@ import SEO from "../components/SEO";
 const TechStackSection = lazy(() => import("../sections/TechStack"));
 
 const SectionFallback = () => (
-    <div style={{ minHeight: '40vh' }} />
+    <div style={{ minHeight: '100vh' }} className="w-full bg-[#0b0c10]" />
 );
 
 const Skills = () => {

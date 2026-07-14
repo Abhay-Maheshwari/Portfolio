@@ -9,8 +9,8 @@ const navLinks = [
     link: "/work",
   },
   {
-    name: "Journey",
-    link: "/journey",
+    name: "Experience",
+    link: "/experience",
   },
   {
     name: "Skills",
@@ -36,68 +36,6 @@ const owner = {
     "Building interactive experiences and robust products — available for collaboration and freelance.",
 };
 
-
-
-const counterItems = [
-  { value: 4, suffix: "+", label: "Years of Experience" },
-  { value: 15, suffix: "+", label: "Clients Served" },
-  { value: 25, suffix: "+", label: "Events & Projects" },
-  { value: 8.81, suffix: "", label: "VIT CGPA" },
-];
-
-const logoIconsList = [
-  {
-    imgPath: "/images/logos/company-logo-1.webp",
-  },
-  {
-    imgPath: "/images/logos/company-logo-2.webp",
-  },
-  {
-    imgPath: "/images/logos/company-logo-3.webp",
-  },
-  {
-    imgPath: "/images/logos/company-logo-4.webp",
-  },
-  {
-    imgPath: "/images/logos/company-logo-5.webp",
-  },
-  {
-    imgPath: "/images/logos/company-logo-6.webp",
-  },
-  {
-    imgPath: "/images/logos/company-logo-7.webp",
-  },
-  {
-    imgPath: "/images/logos/company-logo-8.webp",
-  },
-  {
-    imgPath: "/images/logos/company-logo-11.webp",
-  },
-];
-
-
-const educationList = [
-  {
-    id: 1,
-    institution: "Vellore Institute of Technology, Vellore",
-    date: "Sept 2022 - July 2026",
-    degree: "B.Tech Computer Science and Engineering",
-    grade: "CGPA: 8.81",
-    desc: "Focused on core CS fundamentals, algorithms, and system design. Active in technical clubs and leadership roles.",
-    icon: "/images/logos/logo-placeholder.webp",
-    coursework: [
-      "Data Structures and Algorithms",
-      "Software Engineering",
-      "Object Oriented Programming",
-      "Database Management System",
-      "Machine Learning",
-      "Computer Networks",
-      "Operating Systems",
-      "IoT Programming",
-      "Artificial Intelligence"
-    ]
-  },
-];
 
 const skillsData = [
   {
@@ -388,198 +326,53 @@ const projects = [
   }
 ];
 
-const techStackIcons = [
-  // Technical Skills
-  {
-    name: "React",
-    modelPath: "/models/react_logo-transformed.glb",
-    scale: 1,
-    rotation: [0, -Math.PI, 0],
-    category: "tech"
-  },
-  {
-    name: "Python",
-    modelPath: "/models/python-transformed.glb",
-    scale: 0.8,
-    rotation: [0, -Math.PI, 0],
-    category: "tech"
-  },
-  {
-    name: "Node.js",
-    modelPath: "/models/node-transformed.glb",
-    scale: 5,
-    rotation: [0, -Math.PI / 2, 0],
-    category: "tech"
-  },
-  {
-    name: "Three.js",
-    modelPath: "/models/three.js-transformed.glb",
-    scale: 1.3,
-    rotation: [0, -Math.PI / 4, 0],
-    category: "tech"
-  },
-
-
-  // Roles
-  {
-    name: "Project Manager",
-    modelPath: "/models/git-svg-transformed.glb",
-    scale: 0.05,
-    rotation: [0, -Math.PI / 4, 0],
-    category: "role"
-  },
-  {
-    name: "Product Manager",
-    modelPath: "/models/react_logo-transformed.glb", // Reusing React model
-    scale: 1,
-    rotation: [0, 0, 0],
-    category: "role"
-  },
-  {
-    name: "Content Creator",
-    modelPath: "/models/python-transformed.glb", // Reusing Python model
-    scale: 0.8,
-    rotation: [0, -Math.PI, 0],
-    category: "role"
-  },
-];
-
 const expCards = [
   {
     review: "Led development of two enterprise applications: Visitor Management System (VMS) and R|Elan CMS. Delivered 160+ tasks for VMS including full-stack features, security hardening (AES-256 encryption, HP Fortify remediation), Kubernetes deployment, and CI/CD pipelines. Built 55+ CMS features for dynamic content management with AWS S3 media storage. Resolved 32+ vulnerabilities, achieved SonarQube & BlackDuck compliance, and established multi-environment infrastructure.",
+    imgPath: "/images/reliance.webp",
+    logoPath: "/images/protiviti.webp",
     title: "Software Development Intern",
-    company: "Reliance Industries Limited",
-    roleType: "MNC",
-    date: "Jan–May 2025",
-    technologies: [
-      { name: "Angular 18", featured: true },
-      { name: "Spring Boot", featured: true },
-      { name: "Kubernetes", featured: false },
-      { name: "AWS S3", featured: false },
-      { name: "MySQL", featured: false },
-      { name: "Redis", featured: false },
-      { name: "Java 17", featured: false }
-    ],
+    company: "Reliance Industries Limited (RIL)",
+    date: "Jan 2026 - May 2026",
+    technologies: ["Angular 19", "Spring Boot", "Kubernetes", "Istio", "AWS S3", "MySQL", "Redis", "Java 17"],
+    lanyardImage: "/images/id-card.jpg",
   },
   {
     review: "Designed and developed multi-table SAP reports using ABAP programming for seamless data integration. Created custom database tables and maintenance generators. Executed data migration ensuring data integrity and presented RICEFW framework best practices for transport management.",
+    imgPath: "/images/protiviti.webp",
+    logoPath: "/images/logo-placeholder.webp",
     title: "SAP ABAP Project Intern",
     company: "Protiviti India Member Firm",
-    roleType: "Consulting",
-    date: "May–Jun 2025",
-    technologies: [
-      { name: "SAP ABAP", featured: true },
-      { name: "SQL", featured: false },
-      { name: "Data Migration", featured: false },
-      { name: "RICFW", featured: false }
-    ],
+    date: "May 2025 - June 2025",
+    technologies: ["SAP ABAP", "SQL", "Data Migration", "RICEFW"],
+    lanyardImage: "/images/id-card.jpg",
   },
   {
     review: "Directed technical strategy for cloud-based hosting platform, deploying 20+ client servers. Managed end-to-end client communications and service delivery. Spearheaded quality assurance processes including plugin testing, vulnerability analysis, and performance optimization.",
-    title: "Technical Lead & Co-Founder",
+    imgPath: "/images/logo2.webp",
+    logoPath: "/images/logo2.webp",
+    title: "Technical Lead & CoFounder",
     company: "iCave Enterprises",
-    roleType: "Startup",
-    date: "Jan–May 2024",
-    technologies: [
-      { name: "Server Management", featured: true },
-      { name: "Ionos", featured: false },
-      { name: "Plesk", featured: false },
-      { name: "RabbitMQ", featured: false }
-    ],
+    date: "Jan 2021 - May 2024",
+    technologies: ["Server Management", "Ionos", "Pterodactyl", "Bukkit"],
+    lanyardImage: "/images/id-card.jpg",
   },
   {
     review: "Guiding a 40+ member team and mentoring juniors through large-scale events pushed me to think like a strategist, balancing technical depth with accessibility. The role showed me that real impact comes from empowering people and building a culture where ideas can thrive.",
-    title: "Chairperson",
-    company: "IEEE PCS Student Chapter",
-    roleType: "Academic",
-    date: "Apr 2024–Apr 2025",
-    technologies: [
-      { name: "Event Management", featured: false },
-      { name: "Leadership", featured: true },
-      { name: "Public Speaking", featured: false },
-      { name: "Team Building", featured: false }
-    ],
-  },
-];
-
-const expLogos = [
-  {
-    name: "Reliance",
-    imgPath: "/images/reliance.webp",
-  },
-  {
-    name: "Protiviti",
-    imgPath: "/images/protiviti.webp",
-  },
-  {
-    name: "iCave",
-    imgPath: "/images/logo2.webp",
-  },
-  {
-    name: "IEEE",
     imgPath: "/images/logo3.webp",
-  },
-];
-
-const testimonials = [
-  {
-    name: "Oracle Cloud Infrastructure",
-    mentions: "2025 Certified Foundations Associate",
-    review:
-      "Demonstrated foundational knowledge of Oracle Cloud Infrastructure services, core concepts, and cloud computing principles.",
-    imgPath: "/images/logos/oracle.svg",
-    verifyUrl: "https://catalog-education.oracle.com/pls/certview/sharebadge?id=0CCEAAE647C2189A33A8663AB15C0824B8E8CFFE7266A3FDED8DA0FCB93CFD70",
-  },
-  {
-    name: "Oracle Data Platform",
-    mentions: "2025 Certified Foundations Associate",
-    review:
-      "Certified in Oracle Data Platform fundamentals including data management, analytics, and database services.",
-    imgPath: "/images/logos/oracle.svg",
-    verifyUrl: "https://catalog-education.oracle.com/pls/certview/sharebadge?id=C6F5C9E1C822240A2C71F1F16E5E4104932493D545B7BD8F8965BA54E542443C",
-  },
-  {
-    name: "Oracle Fusion AI Agent Studio",
-    mentions: "Foundations Associate - Rel 1",
-    review:
-      "Foundational certification in Oracle AI/ML capabilities and Fusion applications architecture.",
-    imgPath: "/images/logos/oracle.svg",
-    verifyUrl: "https://catalog-education.oracle.com/pls/certview/sharebadge?id=44368F567B96BE67522E8359DD32A2538AFACB55A2DAB94D5107415DCD53CACF",
-  },
-  {
-    name: "NVIDIA Deep Learning Institute",
-    mentions: "DLI Certificate in Deep Learning",
-    review:
-      "Completed hands-on training in deep learning fundamentals, neural networks, and GPU-accelerated computing.",
-    imgPath: "/images/logos/nvidia.webp",
-    verifyUrl: "https://drive.google.com/file/d/1D2orgW9GhdT8-MWHu8bKQSKmbQ_6gTU4/view?usp=sharing",
-  },
-];
-
-const socialImgs = [
-  {
-    name: "linkedin",
-    imgPath: "/images/linkedin.webp",
-  },
-  {
-    name: "github",
-    imgPath: "/images/git.svg",
+    logoPath: "/images/logo3.webp",
+    title: "Chairperson",
+    company: "Student Chapter",
+    date: "April 2024 - April 2025",
+    technologies: ["Event Management", "Leadership", "Public Speaking", "Team Building"],
+    lanyardImage: "/images/id-card.jpg",
   },
 ];
 
 export {
-
-
-  logoIconsList,
-  counterItems,
-  expCards,
-  expLogos,
-  testimonials,
-  socialImgs,
-  techStackIcons,
   navLinks,
   owner,
-  educationList,
   projects,
-  skillsData
+  skillsData,
+  expCards
 };

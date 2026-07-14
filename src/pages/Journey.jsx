@@ -4,6 +4,7 @@ import AnimatedPage from "../components/AnimatedPage";
 import { expCards, expLogos } from "../constants";
 import { motion, AnimatePresence } from "framer-motion";
 import SEO from "../components/SEO";
+import GradualBlur from "../components/GradualBlur";
 import "./Journey.css";
 
 const Journey = () => {
@@ -75,6 +76,7 @@ const Journey = () => {
             if (geo !== flat) geometriesToDispose.push(geo);
             return flat;
         }
+
 
         // ---------- crystal shader material ----------
         const vertexShader = `
@@ -187,17 +189,17 @@ const Journey = () => {
             const logoPath = expLogos[i % expLogos.length].imgPath;
             const logoTex = textureLoader.load(logoPath);
             texturesToDispose.push(logoTex);
-            
-            const spriteMat = new THREE.SpriteMaterial({ 
-                map: logoTex, 
+
+            const spriteMat = new THREE.SpriteMaterial({
+                map: logoTex,
                 color: new THREE.Color().setRGB(8, 8, 8), // Super bright multiplier
-                transparent: true, 
+                transparent: true,
                 opacity: 0.1,
                 depthWrite: false,
-                blending: THREE.AdditiveBlending 
+                blending: THREE.AdditiveBlending
             });
             materialsToDispose.push(spriteMat);
-            
+
             const logoSprite = new THREE.Sprite(spriteMat);
             const spriteScale = isMobile ? 1.8 : 3.5;
             logoSprite.scale.set(spriteScale, spriteScale, 1);
@@ -335,12 +337,12 @@ const Journey = () => {
                 const rect = tooltipRef.current.getBoundingClientRect();
                 let x = e.clientX + 20;
                 let y = e.clientY + 20;
-                
+
                 // Prevent overflowing right side
                 if (x + rect.width > window.innerWidth - 20) {
                     x = e.clientX - rect.width - 20;
                 }
-                
+
                 // Prevent overflowing bottom
                 if (y + rect.height > window.innerHeight - 20) {
                     y = e.clientY - rect.height - 20;
@@ -401,7 +403,7 @@ const Journey = () => {
 
             crystals.forEach(c => {
                 const isHovered = c.index === lastHoveredI;
-                
+
                 const targetS = isHovered ? c.baseScale * 1.25 : c.baseScale;
                 c.currentScale += (targetS - c.currentScale) * 0.1;
                 c.mesh.scale.setScalar(c.currentScale);
@@ -418,7 +420,7 @@ const Journey = () => {
                 c.mesh.rotation.x += c.spin.x * 0.01 * speedMult;
                 c.mesh.rotation.y += c.spin.y * 0.01 * speedMult;
                 c.mesh.rotation.z += c.spin.z * 0.01 * speedMult;
-                
+
                 c.mesh.position.y = c.baseY + Math.sin(t * c.bobSpeed + c.phase) * c.bobAmp;
                 c.mesh.position.x = c.baseX + Math.sin(t * c.bobSpeed * 0.6 + c.phase) * 0.12;
                 c.mesh.material.uniforms.uTime.value = t;
@@ -492,7 +494,7 @@ const Journey = () => {
 
     return (
         <AnimatedPage>
-            <SEO 
+            <SEO
                 title="Professional Journey | Abhay Maheshwari"
                 description="My career timeline and experience as a Software Engineer."
                 url="https://abhay-maheshwari.site/journey"
@@ -501,6 +503,17 @@ const Journey = () => {
                 <canvas ref={canvasRef} id="gl-journey"></canvas>
                 <div className="journey-vignette"></div>
                 <div className="journey-grain" ref={grainRef}></div>
+
+                <GradualBlur
+                    target="parent"
+                    position="bottom"
+                    height="8rem"
+                    strength={3}
+                    divCount={5}
+                    curve="bezier"
+                    exponential={true}
+                    opacity={1}
+                />
 
                 <div className="journey-header">
                     <h1>Professional Journey</h1>
@@ -520,7 +533,7 @@ const Journey = () => {
 
                 <AnimatePresence>
                     {selectedExp && (
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.95 }}
@@ -535,11 +548,11 @@ const Journey = () => {
                                 <h2>{selectedExp.title}</h2>
                                 <h3>{selectedExp.company}</h3>
                                 <p className="journey-popup-date">{selectedExp.date} &bull; {selectedExp.roleType}</p>
-                                
+
                                 <div className="journey-popup-review">
                                     <p>"{selectedExp.review}"</p>
                                 </div>
-                                
+
                                 <div className="journey-popup-tech">
                                     {selectedExp.technologies.map((tech, i) => (
                                         <span key={i} className="tech-badge">{tech.name}</span>
