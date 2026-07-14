@@ -14,7 +14,6 @@ const TrueFocus = ({
 }) => {
   const words = sentence.split(separator);
   const [currentIndex, setCurrentIndex] = useState(manualMode ? -1 : 0);
-  const [lastActiveIndex, setLastActiveIndex] = useState(manualMode ? -1 : null);
   const containerRef = useRef(null);
   const wordRefs = useRef([]);
   const [focusRect, setFocusRect] = useState({ x: 0, y: 0, width: 0, height: 0 });
@@ -50,7 +49,6 @@ const TrueFocus = ({
 
   const handleMouseEnter = index => {
     if (manualMode) {
-      setLastActiveIndex(index);
       setCurrentIndex(index);
     }
   };

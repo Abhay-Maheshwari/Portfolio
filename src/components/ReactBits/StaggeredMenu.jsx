@@ -9,7 +9,6 @@ const StaggeredMenu = forwardRef(({
   items = [],
   socialItems = [],
   displaySocials = true,
-  displayItemNumbering = true, // Not used when we swap to FlowingMenu, but kept for signature
   className,
   logoUrl = '/images/Abhay-Logo-2.svg',
   menuButtonColor = '#fff',

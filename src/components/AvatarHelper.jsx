@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './AvatarHelper.css';
-import { owner, navLinks } from '../constants';
+import { navLinks } from '../constants';
 import StaggeredMenu from './ReactBits/StaggeredMenu';
 
 const AvatarHelper = () => {
@@ -47,7 +47,7 @@ const AvatarHelper = () => {
                 dragElastic={0.1}
                 dragMomentum={false}
                 style={{ touchAction: 'none', pointerEvents: 'auto' }}
-                onTap={(e, info) => {
+                onTap={() => {
                     // Open the StaggeredMenu
                     if (staggeredMenuRef.current) {
                         staggeredMenuRef.current.toggleMenu();

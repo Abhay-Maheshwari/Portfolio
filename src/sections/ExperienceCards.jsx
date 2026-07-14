@@ -14,6 +14,14 @@ const ExperienceCards = () => {
     const modalRef = useRef(null);
     const overlayRef = useRef(null);
     const [activeExp, setActiveExp] = useState(null);
+    const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+
+    useEffect(() => {
+        setIsMobile(window.innerWidth < 768);
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // Modal Close Handler
     const closeModal = () => {
@@ -136,7 +144,7 @@ const ExperienceCards = () => {
                 </div>
 
                 {/* Cards Grid */}
-                <div 
+                <div
                     className="exp-timeline-grid grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-3 lg:gap-4 flex-1 overflow-y-auto min-h-0 pb-2"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
@@ -205,19 +213,19 @@ const ExperienceCards = () => {
 
             {/* GSAP Modal Overlay */}
             {activeExp && (
-                <div 
-                    ref={overlayRef} 
+                <div
+                    ref={overlayRef}
                     className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/60 backdrop-blur-md"
                 >
                     {/* Background click listener */}
                     <div className="absolute inset-0" onClick={closeModal} />
-                    
-                    <div 
-                        ref={modalRef} 
+
+                    <div
+                        ref={modalRef}
                         className="relative w-full max-w-5xl h-[80vh] flex flex-col md:flex-row bg-[#0b0c10]/90 border border-white/10 rounded-3xl overflow-hidden shadow-2xl"
                     >
                         {/* Close Button */}
-                        <button 
+                        <button
                             onClick={closeModal}
                             className="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors"
                         >
@@ -228,19 +236,19 @@ const ExperienceCards = () => {
 
                         {/* Left Side: 3D Lanyard */}
                         <div className="w-full md:w-1/2 h-[40vh] md:h-full relative bg-gradient-to-br from-white/5 to-transparent border-b md:border-b-0 md:border-r border-white/5 overflow-hidden">
-                            <div className="absolute inset-0 w-full h-[130%] -top-[15%]">
+                            <div className="absolute inset-0 w-full h-full md:h-[130%] md:-top-[15%]">
                                 <ErrorBoundary>
-                                    <Lanyard position={[0, 0, 17]} gravity={[0, -40, 0]} frontImage={activeExp.lanyardImage || "/images/id-card.jpg"} />
+                                    <Lanyard position={isMobile ? [0, -1, 23] : [0, 0, 17]} gravity={[0, -40, 0]} frontImage={activeExp.lanyardImage || "/images/id-card.jpg"} />
                                 </ErrorBoundary>
                             </div>
                             <div className="absolute bottom-4 left-0 w-full text-center pointer-events-none">
-                                <span className="text-white/20 text-[10px] uppercase tracking-widest font-mono">Interactive ID • Drag to spin</span>
+                                <span className="text-white/20 text-[10px] uppercase tracking-widest font-mono z-10 relative">Interactive ID • Drag to spin</span>
                             </div>
                         </div>
 
                         {/* Right Side: Content Details */}
                         <div className="w-full md:w-1/2 h-[40vh] md:h-full overflow-y-auto p-6 lg:p-10 hide-scrollbar flex flex-col justify-center">
-                            
+
                             <div className="flex items-center gap-4 mb-6">
                                 <img src={activeExp.imgPath} alt={activeExp.company} className="w-12 h-12 object-contain bg-white/5 p-2 rounded-xl" />
                                 <div>
@@ -248,7 +256,7 @@ const ExperienceCards = () => {
                                     <p className="text-white/50 text-sm font-medium">{activeExp.company}</p>
                                 </div>
                             </div>
-                            
+
                             <div className="mb-6 inline-block bg-white/5 border border-white/10 rounded-full px-4 py-1.5 w-fit">
                                 <span className="text-white/40 text-xs font-mono tracking-wider">{activeExp.date}</span>
                             </div>

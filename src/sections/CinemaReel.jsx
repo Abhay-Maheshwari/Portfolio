@@ -318,6 +318,7 @@ const CinemaReel = ({ isOpen, onClose }) => {
       document.body.classList.remove("hide-global-cursor");
       document.body.classList.remove("cinema-active");
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   // 2. Continuous 60fps update loop (Lerp spring scrolling & custom cursor)
@@ -512,7 +513,7 @@ const CinemaReel = ({ isOpen, onClose }) => {
 
     try {
       sectionRef.current.setPointerCapture(e.pointerId);
-    } catch (_) {
+    } catch {
       // ignore
     }
   };
@@ -563,7 +564,7 @@ const CinemaReel = ({ isOpen, onClose }) => {
 
     try {
       sectionRef.current.releasePointerCapture(drag.current.pointerId);
-    } catch (_) {
+    } catch {
       // ignore
     }
 
@@ -625,6 +626,7 @@ const CinemaReel = ({ isOpen, onClose }) => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, isModalOpen]);
 
   // Window Resize

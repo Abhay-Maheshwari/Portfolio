@@ -13,6 +13,7 @@ const SmoothScrollContext = createContext(null);
  * Hook to access Lenis instance
  * @returns {Lenis | null} Lenis instance
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export const useSmoothScroll = () => useContext(SmoothScrollContext);
 
 /**

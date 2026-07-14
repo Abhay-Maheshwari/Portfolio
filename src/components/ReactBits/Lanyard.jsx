@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unknown-property */
+
 'use client';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
@@ -29,7 +29,6 @@ export default function Lanyard({
   transparent = true,
   frontImage = null,
   backImage = null,
-  imageFit = 'cover',
   lanyardImage = null,
   lanyardWidth = 1
 }) {
@@ -54,12 +53,11 @@ export default function Lanyard({
       >
         <React.Suspense fallback={null}>
           <ambientLight intensity={Math.PI} />
-          <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
+          <Physics gravity={gravity} timeStep={1 / 60}>
             <Band
               isMobile={isMobile}
               frontImage={frontImage}
               backImage={backImage}
-              imageFit={imageFit}
               lanyardImage={lanyardImage}
               lanyardWidth={lanyardWidth}
             />
@@ -106,7 +104,6 @@ function Band({
   isMobile = false,
   frontImage = null,
   backImage = null,
-  imageFit = 'cover',
   lanyardImage = null,
   lanyardWidth = 1
 }) {
@@ -141,7 +138,7 @@ function Band({
     // widest source image, and the height must be ≥ the tallest source image
     // (divided by the UV-rect fraction so edges outside the UV rect are covered).
     const srcFront = frontImage && frontTex.image ? frontTex.image : null;
-    const srcBack  = backImage  && backTex.image  ? backTex.image  : null;
+    const srcBack = backImage && backTex.image ? backTex.image : null;
 
     const maxSrcW = Math.max(srcFront?.naturalWidth || 0, srcBack?.naturalWidth || 0, baseImg.width);
     const maxSrcH = Math.max(srcFront?.naturalHeight || 0, srcBack?.naturalHeight || 0, baseImg.height);
@@ -180,7 +177,7 @@ function Band({
     };
 
     if (srcFront) drawFitted(srcFront, FRONT_UV_RECT);
-    if (srcBack)  drawFitted(srcBack,  BACK_UV_RECT);
+    if (srcBack) drawFitted(srcBack, BACK_UV_RECT);
 
     const composite = new THREE.CanvasTexture(canvas);
     composite.colorSpace = THREE.SRGBColorSpace;
@@ -193,7 +190,7 @@ function Band({
     composite.needsUpdate = true;
     return composite;
   }, [frontImage, backImage, frontTex, backTex, materials.base.map]);
-  
+
   const [curve] = useState(
     () =>
       new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()])
@@ -237,7 +234,7 @@ function Band({
       curve.points[1].copy(j2.current.lerped);
       curve.points[2].copy(j1.current.lerped);
       curve.points[3].copy(fixed.current.translation());
-      band.current.geometry.setPoints(curve.getPoints(isMobile ? 16 : 32));
+      band.current?.geometry.setPoints(curve.getPoints(isMobile ? 16 : 32));
       ang.copy(card.current.angvel());
       rot.copy(card.current.rotation());
       card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
@@ -264,7 +261,7 @@ function Band({
           <CuboidCollider args={[0.8, 1.125, 0.01]} />
           <group
             scale={2.25}
-            position={[0, -1.2, -0.05]}
+            position={isMobile ? [0, 2, -0.05] : [0, -1.2, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={e => (e.target.releasePointerCapture(e.pointerId), drag(false))}
@@ -280,23 +277,29 @@ function Band({
                 toneMapped={false}
               />
             </mesh>
-            <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
-            <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
+            {!isMobile && (
+              <>
+                <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
+                <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
+              </>
+            )}
           </group>
         </RigidBody>
       </group>
-      <mesh ref={band}>
-        <meshLineGeometry />
-        <meshLineMaterial
-          color="white"
-          depthTest={false}
-          resolution={isMobile ? [1000, 2000] : [1000, 1000]}
-          useMap
-          map={texture}
-          repeat={[-4, 1]}
-          lineWidth={lanyardWidth}
-        />
-      </mesh>
+      {!isMobile && (
+        <mesh ref={band}>
+          <meshLineGeometry />
+          <meshLineMaterial
+            color="white"
+            depthTest={false}
+            resolution={isMobile ? [1000, 2000] : [1000, 1000]}
+            useMap
+            map={texture}
+            repeat={[-4, 1]}
+            lineWidth={lanyardWidth}
+          />
+        </mesh>
+      )}
     </>
   );
 }

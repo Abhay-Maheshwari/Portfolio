@@ -405,7 +405,8 @@ const TargetCursor = ({
     hoverDuration,
     parallaxOn,
     cursorColor,
-    cursorColorOnTarget
+    cursorColorOnTarget,
+    containerRef
   ]);
 
   useEffect(() => {
