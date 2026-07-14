@@ -5,7 +5,12 @@ import SEO from '../components/SEO';
 const ExperienceCards = lazy(() => import('../sections/ExperienceCards'));
 
 const SectionFallback = () => (
-    <div style={{ minHeight: '100vh' }} className="w-full bg-[#0b0c10]" />
+    <div className="w-full h-screen bg-[#0b0c10] flex flex-col items-center justify-center gap-4">
+        <div className="w-6 h-6 border-2 border-white/10 border-t-white/80 rounded-full animate-spin" />
+        <span className="text-white/30 text-[0.65rem] font-mono tracking-[0.3em] uppercase animate-pulse">
+            Initializing Timeline...
+        </span>
+    </div>
 );
 
 const Experience = () => {

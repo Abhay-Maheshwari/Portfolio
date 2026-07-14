@@ -185,7 +185,7 @@ const TechStack = () => {
     }, [activeCategory]);
 
     return (
-        <section ref={sectionRef} id="skills" className="relative w-full bg-[#0b0c10] overflow-hidden flex items-center h-screen">
+        <section ref={sectionRef} id="skills" className="relative w-full min-h-screen bg-[#0b0c10] overflow-hidden pt-24 pb-12 lg:pt-32 lg:pb-20">
 
             {/* 3D Immersive Background Canvas */}
             <div className="absolute inset-0 z-0 pointer-events-none">

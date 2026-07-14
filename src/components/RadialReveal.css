@@ -16,12 +16,12 @@
 
 /* ========================================
    SCROLL TRIGGER ZONE
-   200vh video scrub + 100vh radial reveal = 300vh total
+   400vh video scrub + 100vh radial reveal = 500vh total
    ======================================== */
 .scroll-trigger-zone {
     position: relative;
     width: 100%;
-    height: 300vh;
+    height: 500vh;
     pointer-events: none;
     background: transparent;
 }

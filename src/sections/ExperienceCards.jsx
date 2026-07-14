@@ -95,7 +95,7 @@ const ExperienceCards = () => {
     return (
         <section
             ref={sectionRef}
-            className="relative w-full bg-[#0b0c10] overflow-hidden min-h-screen flex items-center py-4 lg:py-6"
+            className="relative w-full bg-[#0b0c10] overflow-hidden h-screen flex flex-col pt-16 lg:pt-24 pb-4 lg:pb-6"
         >
             {/* Background Beams Component */}
             <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
@@ -117,31 +117,34 @@ const ExperienceCards = () => {
                 <div className="absolute bottom-[20%] left-[15%] w-[400px] h-[400px] bg-cyan-600/20 rounded-full blur-[120px]" />
             </div>
 
-            <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-8 lg:px-12">
+            <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-8 lg:px-12 flex-1 flex flex-col justify-start min-h-0">
                 {/* Section Header */}
-                <div className="exp-section-title mb-6 lg:mb-8">
-                    <span className="text-white/30 text-xs font-medium tracking-[0.3em] uppercase mb-2 block">
+                <div className="exp-section-title mb-3 lg:mb-4 shrink-0">
+                    <span className="text-white/30 text-[0.65rem] font-medium tracking-[0.3em] uppercase mb-1.5 block">
                         Career Timeline
                     </span>
                     <h2
-                        className="text-[2rem] lg:text-[2.5rem] xl:text-[3rem] font-bold text-white leading-[1.1] tracking-tight"
+                        className="text-[1.8rem] lg:text-[2.2rem] xl:text-[2.6rem] font-bold text-white leading-[1.1] tracking-tight"
                         style={{ fontFamily: "Playfair Display, serif" }}
                     >
                         Where I've<br />worked.
                     </h2>
-                    <p className="text-white/40 text-[0.85rem] lg:text-[0.95rem] tracking-wide font-medium max-w-xl mt-3">
+                    <p className="text-white/40 text-[0.8rem] lg:text-[0.85rem] tracking-wide font-medium max-w-xl mt-2 line-clamp-2">
                         From enterprise internships to founding startups — a timeline of hands-on
                         experience building real products. Click any role for details.
                     </p>
                 </div>
 
                 {/* Cards Grid */}
-                <div className="exp-timeline-grid grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5">
+                <div 
+                    className="exp-timeline-grid grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-3 lg:gap-4 flex-1 overflow-y-auto min-h-0 pb-2"
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                >
                     {expCards.map((exp, idx) => (
                         <div
                             key={idx}
                             onClick={() => setActiveExp(exp)}
-                            className="cursor-pointer flex flex-col h-full exp-timeline-card group relative rounded-[1rem] bg-gradient-to-b from-white/[0.05] to-white/[0.02] border border-white/[0.07] backdrop-blur-xl p-5 lg:p-6 transition-all duration-500 hover:border-white/[0.15] hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.4)]"
+                            className="cursor-pointer flex flex-col h-full overflow-hidden exp-timeline-card group relative rounded-[1rem] bg-gradient-to-b from-white/[0.05] to-white/[0.02] border border-white/[0.07] backdrop-blur-xl p-3.5 lg:p-4 transition-all duration-500 hover:border-white/[0.15] hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.4)]"
                             style={{
                                 boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)",
                             }}
@@ -150,37 +153,39 @@ const ExperienceCards = () => {
                             <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                             {/* Header Row */}
-                            <div className="flex items-start gap-4 mb-4">
+                            <div className="flex items-start gap-3 mb-2.5">
                                 {/* Company Logo */}
-                                <div className="w-10 h-10 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center flex-shrink-0 overflow-hidden group-hover:border-white/[0.15] transition-colors duration-300">
+                                <div className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center flex-shrink-0 overflow-hidden group-hover:border-white/[0.15] transition-colors duration-300">
                                     <img
                                         src={exp.imgPath}
                                         alt={exp.company}
-                                        className="w-6 h-6 object-contain"
+                                        className="w-5 h-5 object-contain"
                                         loading="lazy"
                                     />
                                 </div>
 
                                 {/* Title & Company */}
                                 <div className="flex-1 min-w-0">
-                                    <h3 className="text-white/95 text-[0.9rem] font-semibold leading-snug tracking-tight">
+                                    <h3 className="text-white/95 text-[0.85rem] font-semibold leading-snug tracking-tight truncate">
                                         {exp.title}
                                     </h3>
-                                    <p className="text-white/40 text-[0.75rem] mt-0.5 font-medium">
+                                    <p className="text-white/40 text-[0.7rem] mt-0.5 font-medium truncate">
                                         {exp.company}
                                     </p>
                                 </div>
 
                                 {/* Date Badge */}
-                                <span className="text-white/25 text-[0.6rem] font-mono font-medium tracking-wide whitespace-nowrap mt-1">
+                                <span className="text-white/25 text-[0.55rem] font-mono font-medium tracking-wide whitespace-nowrap mt-1">
                                     {exp.date}
                                 </span>
                             </div>
 
                             {/* Description */}
-                            <p className="text-white/45 text-[0.75rem] lg:text-[0.78rem] leading-[1.6] mb-4 font-normal line-clamp-4 lg:line-clamp-none">
-                                {exp.review}
-                            </p>
+                            <div className="flex-1 min-h-0 overflow-y-auto mb-2.5 pr-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                                <p className="text-white/45 text-[0.7rem] lg:text-[0.75rem] leading-[1.5] font-normal">
+                                    {exp.review}
+                                </p>
+                            </div>
 
                             {/* Tech Tags - pushed to bottom */}
                             <div className="flex flex-wrap gap-1.5 mt-auto pt-2">

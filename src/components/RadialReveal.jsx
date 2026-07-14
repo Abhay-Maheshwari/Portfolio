@@ -83,8 +83,8 @@ const RadialReveal = ({ heroContent, children }) => {
                 const scrollY = window.scrollY;
                 const triggerHeight = window.innerHeight;
 
-                // Reveal starts after 2× viewport height (video phase finishes first)
-                const revealStart = triggerHeight * 2;
+                // Reveal starts after 4× viewport height (video phase finishes first)
+                const revealStart = triggerHeight * 4;
                 const revealRange = triggerHeight; // 1× viewport height for the reveal
                 const rawProgress = Math.min(Math.max((scrollY - revealStart) / revealRange, 0), 1);
                 // Smooth ease-in-out

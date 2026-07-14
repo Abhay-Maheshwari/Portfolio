@@ -87,7 +87,7 @@
 .hero3d-loader {
     position: absolute;
     inset: 0;
-    z-index: 10000;
+    z-index: 50;
     background: #050507;
     display: flex;
     align-items: center;

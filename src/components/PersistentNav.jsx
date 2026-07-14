@@ -78,6 +78,7 @@ const PersistentNav = () => {
                 <div style={{ height: '100%', display: 'flex', alignItems: 'center', position: 'relative' }}>
                     <GooeyNav 
                         items={navLinks.map(link => ({ label: link.name.toUpperCase(), href: link.link }))}
+                        activeIndex={Math.max(0, navLinks.findIndex(link => link.link === window.location.pathname))}
                         onItemClick={(item) => {
                             navigate(item.href);
                             handleNavClick();

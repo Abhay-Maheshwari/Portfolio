@@ -9,14 +9,18 @@ const GooeyNav = ({
   particleR = 100,
   timeVariance = 300,
   colors = [1, 2, 3, 1, 2, 3, 1, 4],
-  initialActiveIndex = 0,
+  activeIndex: externalActiveIndex = 0,
   onItemClick
 }) => {
   const containerRef = useRef(null);
   const navRef = useRef(null);
   const filterRef = useRef(null);
   const textRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
+  const [activeIndex, setActiveIndex] = useState(externalActiveIndex);
+
+  useEffect(() => {
+    setActiveIndex(externalActiveIndex);
+  }, [externalActiveIndex]);
 
   const noise = (n = 1) => n / 2 - Math.random() * n;
 

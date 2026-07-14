@@ -16,7 +16,6 @@ const Hero3D = () => {
     const videoRef = useRef(null);
     const rafRef = useRef(null);
     const abhayTextRef = useRef(null);
-    const jackTextRef = useRef(null);
     const [isLoading, setIsLoading] = useState(true);
     const [progress, setProgress] = useState(0);
 
@@ -24,13 +23,14 @@ const Hero3D = () => {
         const video = videoRef.current;
         if (!video) return;
 
-        let isVideoReady = false;
         let fontsReady = false;
         let isFullyLoaded = false;
+        let blobUrl = null;
 
         const checkCompletion = () => {
-            if (isVideoReady && fontsReady) {
-                isFullyLoaded = true;
+            if (fontsReady && isFullyLoaded) {
+                // Add a small delay so user can see 100%
+                setTimeout(() => setIsLoading(false), 200);
             }
         };
 
@@ -41,39 +41,45 @@ const Hero3D = () => {
         let animating = false;
         let lastFlickerTime = 0;
         let flickerIndex = 0;
-
-        let lastSeekTime = 0;
+        let isSeeking = false; // Guard to prevent decoder overload
 
         const smoothSeek = (time) => {
-            // Lerp for smooth scrubbing
-            currentTimeVal += (targetTime - currentTimeVal) * 0.15;
+            // Lerp for smooth scrubbing - lowered from 0.15 to 0.06 for much softer starts/stops (more inertia)
+            currentTimeVal += (targetTime - currentTimeVal) * 0.06;
 
-            // Snap when close enough
-            if (Math.abs(targetTime - currentTimeVal) < 0.01) {
+            // Snap when close enough - lowered threshold to prevent abrupt halt
+            if (Math.abs(targetTime - currentTimeVal) < 0.001) {
                 currentTimeVal = targetTime;
             }
 
             if (video.readyState >= 1) {
-                const isMobile = window.innerWidth <= 768;
-                // Throttle currentTime updates on mobile to ~15-20fps to prevent decoder stutter
-                if (isMobile) {
-                    if (time - lastSeekTime > 60) {
-                        video.currentTime = currentTimeVal;
-                        lastSeekTime = time;
-                    }
-                } else {
+                // NEVER hammer currentTime faster than the browser can decode
+                if (!isSeeking && Math.abs(video.currentTime - currentTimeVal) > 0.01) {
+                    isSeeking = true;
                     video.currentTime = currentTimeVal;
                 }
             }
 
             let needsContinuousUpdate = false;
+            const d = video.duration || 10;
 
-            // Sync text overlays to video time
+            // Sync text overlays to video time dynamically based on duration
             if (abhayTextRef.current) {
                 let op = 0;
-                if (currentTimeVal > 2.0 && currentTimeVal < 3.0) op = (currentTimeVal - 2.0);
-                else if (currentTimeVal >= 3.0 && currentTimeVal <= 5.8) op = 1;
-                else if (currentTimeVal > 5.8 && currentTimeVal < 6.8) op = 1 - (currentTimeVal - 5.8);
+                // Fade in 35%-45%, Visible 45%-55%, Fade out 55%-65%
+                // Pushed much later into the video to strictly avoid the intro/outro Jack Card frames
+                const fadeInStart = d * 0.35;
+                const fadeInEnd = d * 0.45;
+                const fadeOutStart = d * 0.55;
+                const fadeOutEnd = d * 0.65;
+
+                if (currentTimeVal > fadeInStart && currentTimeVal < fadeInEnd) {
+                    op = (currentTimeVal - fadeInStart) / (fadeInEnd - fadeInStart);
+                } else if (currentTimeVal >= fadeInEnd && currentTimeVal <= fadeOutStart) {
+                    op = 1;
+                } else if (currentTimeVal > fadeOutStart && currentTimeVal < fadeOutEnd) {
+                    op = 1 - (currentTimeVal - fadeOutStart) / (fadeOutEnd - fadeOutStart);
+                }
 
                 abhayTextRef.current.style.opacity = op;
                 abhayTextRef.current.style.transform = `translate(-50%, -50%) scale(${0.95 + op * 0.05}) translateY(${20 - op * 20}px)`;
@@ -93,16 +99,6 @@ const Hero3D = () => {
                 }
             }
 
-            if (jackTextRef.current) {
-                let op = 0;
-                if (currentTimeVal > 7.0 && currentTimeVal < 8.0) op = (currentTimeVal - 7.0);
-                else if (currentTimeVal >= 8.0) op = 1;
-
-                jackTextRef.current.style.opacity = op;
-                jackTextRef.current.style.transform = `translate(-50%, -50%) scale(${0.95 + op * 0.05})`;
-                jackTextRef.current.style.pointerEvents = op > 0.1 ? 'auto' : 'none';
-            }
-
             if (Math.abs(targetTime - currentTimeVal) > 0.001 || needsContinuousUpdate) {
                 rafRef.current = requestAnimationFrame(smoothSeek);
             } else {
@@ -113,8 +109,8 @@ const Hero3D = () => {
         const updateVideoTime = () => {
             if (!video || !video.duration || !isFinite(video.duration)) return;
 
-            // Video scrubs through first 2× viewport height of scroll
-            const scrollHeight = window.innerHeight * 2;
+            // Video scrubs through first 4× viewport height of scroll (slower exploration)
+            const scrollHeight = window.innerHeight * 4;
             const scrollProgress = Math.min(Math.max(window.scrollY / scrollHeight, 0), 1);
             targetTime = scrollProgress * video.duration;
 
@@ -127,8 +123,13 @@ const Hero3D = () => {
         const handleScroll = () => {
             updateVideoTime();
         };
+        
+        const handleSeeked = () => {
+            isSeeking = false;
+        };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
+        video.addEventListener('seeked', handleSeeked);
 
         // Font load check
         document.fonts.ready.then(() => {
@@ -139,51 +140,67 @@ const Hero3D = () => {
             checkCompletion();
         });
 
-        // Video ready check
-        const handleCanPlay = () => {
-            isVideoReady = true;
-            checkCompletion();
-            // Pause immediately — scroll controls playback
-            video.pause();
-            // Set initial frame based on current scroll
-            updateVideoTime();
+        // Fetch video as Blob
+        const loadVideo = () => {
+            const isMobile = window.innerWidth <= 768;
+            const videoUrl = isMobile ? '/images/hero-kf-mob.webm' : '/images/hero-kf-desk.webm';
+            
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', videoUrl, true);
+            xhr.responseType = 'blob';
+
+            xhr.onprogress = (event) => {
+                if (event.lengthComputable) {
+                    const percentComplete = (event.loaded / event.total) * 100;
+                    setProgress(percentComplete);
+                }
+            };
+
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    blobUrl = URL.createObjectURL(xhr.response);
+                    video.src = blobUrl;
+                    
+                    video.addEventListener('loadedmetadata', () => {
+                        isFullyLoaded = true;
+                        setProgress(100);
+                        checkCompletion();
+                        
+                        // Decoder warmup trick for iOS/Safari
+                        const playPromise = video.play();
+                        if (playPromise !== undefined) {
+                            playPromise.then(() => {
+                                video.pause();
+                                updateVideoTime();
+                            }).catch(() => {
+                                // Ignore autoplay errors, just setup timeline
+                                updateVideoTime();
+                            });
+                        } else {
+                            video.pause();
+                            updateVideoTime();
+                        }
+                    }, { once: true });
+                }
+            };
+            
+            xhr.onerror = () => {
+                // Fallback if XHR fails
+                isFullyLoaded = true;
+                setProgress(100);
+                checkCompletion();
+            };
+
+            xhr.send();
         };
 
-        if (video.readyState >= 3) {
-            handleCanPlay();
-        } else {
-            video.addEventListener('canplaythrough', handleCanPlay, { once: true });
-        }
-
-        // Progress bar simulation loop
-        let currentProgress = 0;
-        const progressInterval = setInterval(() => {
-            if (!isFullyLoaded) {
-                if (currentProgress < 90) {
-                    currentProgress += Math.random() * 3 + 1;
-                    if (currentProgress > 90) currentProgress = 90;
-                    setProgress(currentProgress);
-                }
-            } else {
-                if (currentProgress < 100) {
-                    currentProgress += Math.random() * 8 + 4;
-                    if (currentProgress >= 100) {
-                        currentProgress = 100;
-                        clearInterval(progressInterval);
-                        setTimeout(() => {
-                            setIsLoading(false);
-                        }, 200);
-                    }
-                    setProgress(currentProgress);
-                }
-            }
-        }, 30);
+        loadVideo();
 
         return () => {
-            clearInterval(progressInterval);
             window.removeEventListener('scroll', handleScroll);
+            video.removeEventListener('seeked', handleSeeked);
             if (rafRef.current) cancelAnimationFrame(rafRef.current);
-            video.removeEventListener('canplaythrough', handleCanPlay);
+            if (blobUrl) URL.revokeObjectURL(blobUrl);
         };
     }, []);
 
@@ -197,10 +214,7 @@ const Hero3D = () => {
                 playsInline
                 preload="auto"
                 aria-hidden="true"
-            >
-                <source src="/images/hero-kf-mob.webm" media="(max-width: 768px)" type="video/webm" />
-                <source src="/images/hero-kf-desk.webm" type="video/webm" />
-            </video>
+            />
 
             {/* Darkening overlay for readability */}
             <div className="hero-video-overlay" />
@@ -214,10 +228,7 @@ const Hero3D = () => {
                 <div className="video-text-line">ENGINEER</div>
             </div>
 
-            <div className="video-text-overlay" ref={jackTextRef}>
-                <div className="video-text-line"></div>
-                <div className="video-text-line"></div>
-            </div>
+
 
             {/* Loading Screen */}
             <div className={`hero3d-loader ${isLoading ? '' : 'loaded'}`} aria-live="polite" aria-busy={isLoading}>
