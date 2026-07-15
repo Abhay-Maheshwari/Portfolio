@@ -145,14 +145,14 @@ const ExperienceCards = () => {
 
                 {/* Cards Grid */}
                 <div
-                    className="exp-timeline-grid grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-3 lg:gap-4 flex-1 overflow-y-auto min-h-0 pb-2"
+                    className="exp-timeline-grid grid grid-cols-1 md:grid-cols-2 auto-rows-max gap-4 lg:gap-6 flex-1 overflow-y-auto min-h-0 pb-2"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
                     {expCards.map((exp, idx) => (
                         <div
                             key={idx}
                             onClick={() => setActiveExp(exp)}
-                            className="cursor-pointer flex flex-col h-full overflow-hidden exp-timeline-card group relative rounded-[1rem] bg-gradient-to-b from-white/[0.05] to-white/[0.02] border border-white/[0.07] backdrop-blur-xl p-3.5 lg:p-4 transition-all duration-500 hover:border-white/[0.15] hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.4)]"
+                            className="cursor-pointer flex flex-col overflow-hidden exp-timeline-card group relative rounded-[1rem] bg-gradient-to-b from-white/[0.05] to-white/[0.02] border border-white/[0.07] backdrop-blur-xl p-4 lg:p-5 transition-all duration-500 hover:border-white/[0.15] hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.4)]"
                             style={{
                                 boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)",
                             }}
@@ -189,8 +189,8 @@ const ExperienceCards = () => {
                             </div>
 
                             {/* Description */}
-                            <div className="flex-1 min-h-0 overflow-y-auto mb-2.5 pr-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                                <p className="text-white/45 text-[0.7rem] lg:text-[0.75rem] leading-[1.5] font-normal">
+                            <div className="mb-4 pr-1">
+                                <p className="text-white/45 text-[0.75rem] lg:text-[0.8rem] leading-[1.6] font-normal">
                                     {exp.review}
                                 </p>
                             </div>
